@@ -1,4 +1,4 @@
-#include "../Includes/minishell.h"
+#include <minishell.h>
 
 int main(int argc, char **argv, char **env)
 {
@@ -7,11 +7,15 @@ int main(int argc, char **argv, char **env)
 	(void)env;
 	ft_memset(&data, 0, sizeof(t_data));
 	if (!check_execution(&data, argc, argv))
-		exit_shelly();
+	{
+		print_msg(INPUT_ERROR, RED);
+		return(EXIT_FAILURE);
+	}
+	//	exit_shelly();
 	if (data.is_interactive)
 		exect_interactive(&data);
 	else
-		exect_noninteractive(&data, argc, argv);//temporal, hasta que rellenemos el data en checkexecution
+		exect_noninteractive(&data, argc, argv);//temporal
 //	exit_shelly(&data);
-	return (0);
+	return (EXIT_SUCCESS);
 }

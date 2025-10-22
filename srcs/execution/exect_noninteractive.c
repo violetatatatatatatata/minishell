@@ -6,7 +6,7 @@ void	exectscript(t_data *data)
 	printf("Script\n");
 }
 
-void	exectnointeractive(t_data *data)
+void	exect_noninteractive(t_data *data)
 {
 	data->is_interactive = 0;
 	printf("Oneline\n");

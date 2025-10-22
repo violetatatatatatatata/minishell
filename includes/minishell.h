@@ -1,21 +1,32 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// Includes
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
+/*	LIBRERIAS !	*/
 # include <unistd.h>
 # include <fcntl.h>
+# include <string.h>
+# include <errno.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/wait.h>
+# include "libft.h"
+
+// Terminal y entorno
+# include <termios.h>
+# include <sys/ioctl.h>
+# include <termcap.h>
+
+// Archivos y directorios
+# include <dirent.h>
+# include <sys/stat.h>
+
+// Senyales
+# include <signal.h>
+
+// Readline
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <sys/wait.h>
-# include <sys/stat.h>
-# include <sys/ioctl.h>
-# include <signal.h>
-# include <dirent.h>
-# include <termios.h>
-# include <termcap.h>
+
 # include "../libft/Includes/libft.h"
 # include "colors.h"
 
@@ -27,7 +38,7 @@
 int	g_status;
 
 // definir mensajes de error
-# define INPUT_FAILED "ponermensajeaqui"
+# define INPUT_ERROR "ponermensajeaqui"
 
 // mensajes de ejecucion
 # define PROMPT ">>> shelly: "
@@ -36,18 +47,20 @@ int	g_status;
 typedef struct	s_data
 {
 	int			is_interactive;
-	t_token		*token;
+//	t_token		*token;
 	char		*user_input;
 	char		**env;
 	char		*working_dir;
 	char		*old_working_dir;
-	t_command	*cmd;
+//	t_command	*cmd;
 	pid_t		pid;
 }	t_data;
 
-//Definiciones de funciones del proyecto
+/*	Definiciones de funciones del proyecto	*/
 
-// Comprovadores de definiciones
+void    print_msg(char *msg, int *exit);
+
+// is_definition
 int	ft_isblank(int c);
 int	ft_ismeta(int c);
 int	is_controlop(const char *str);
@@ -59,10 +72,8 @@ int	is_token(const char *str);
 int	is_word(const char *s);
 
 
-//Builtins
+// builtins
 void	enver(char**environ);
-
-void	exit_shelly();
 
 // PARSER
 // execution.c
@@ -93,6 +104,6 @@ void	non_interactive(t_data *data, int argc, char **argv);
 
 // TERMINATOR
 void	free_data();
-void	exit_shelly();
+// void	exit_shelly();
 
 #endif

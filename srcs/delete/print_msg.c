@@ -1,11 +1,6 @@
 #include <minishell.h>
 
-void	print_msg(char *msg, int *exit)
+void	print_msg(char *msg, int COLOR)
 {
-	if (*exit == EXIT_SUCCESS)
-		printf("%s%s%s\n", GREEN, msg, RESET);
-	else if (*exit == EXIT_FAILURE)
-		printf("%s%s%s\n", RED, msg, RESET);
-	else
-		printf("%s\n", msg);
+	printf("%s%s%s\n", COLOR, msg, RESET);
 }
