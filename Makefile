@@ -18,7 +18,7 @@ INC_DIR		= ./includes/
 DEPS_DIR	= deps
 
 # Source files
-#SRC_FILES = $(shell find $(SRC_DIR) -name "*.c")
+# CAMBIAR EL WILDCARD AL FINAL DEL PROYECTO!!!
 SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES = $(SRC_FILES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEP_FILES = $(SRC_FILES:$(SRC_DIR)/%.c=$(DEPS_DIR)/%.d)
@@ -26,6 +26,7 @@ CLIB = .a
 
 # Rules
 all: $(NAME)
+	echo "Minishell done."
 
 $(NAME): $(OBJ_FILES) $(LIB_DIR)/$(LIBFT_DIR)$(CLIB)
 	$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft
@@ -57,9 +58,12 @@ clean:
 	@rm -rf $(LIB_DIR)
 	@rm -rf $(DEPS_DIR) 
 	@make fclean -C $(LIBFT_DIR) 
+	echo "Minishell cleaned."
 
 fclean: clean
 	@rm -f $(NAME) 
+	echo "Everything erased."
+
 
 re: fclean all 
 

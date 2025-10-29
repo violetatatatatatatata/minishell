@@ -10,15 +10,18 @@
 #define CYAN    "\x1b[36m"
 #define WHITE   "\x1B[37m"
 
+#define COLOR0 "\x1B[38;2;209;247;255m"
+#define COLOR1 "\x1B[38;2;19;62;124m"
+#define COLOR2 "\x1B[38;2;154;159;23m"
+#define COLOR3 "\x1B[38;2;254;232;1m"
+#define COLOR4 "\x1B[38;2;84;193;230m"
+#define COLOR5 "\x1B[38;2;57;196;230m"
+#define COLOR6 "\x1B[38;2;234;0;217m"
+#define COLOR7 "\x1B[38;2;113;28;145m"
+#define RESET "\x1b[m"
+
 // Para modificar el RGB
 // \x1B[38;2;R;G;Bm
-
-#define ORANGE  "\x1B[38;2;255;128;0m"
-#define ROSE    "\x1B[38;2;255;151;203m"
-#define LBLUE   "\x1B[38;2;53;149;240m"
-#define LGREEN  "\x1B[38;2;17;245;120m"
-#define GRAY    "\x1B[38;2;176;174;174m"
-#define RESET   "\x1b[0m"
 
 #define BG_BLACK   "\x1B[40m"
 #define BG_RED     "\x1B[41m"
