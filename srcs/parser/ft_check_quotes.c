@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_check_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,30 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	main(int count, char **args, char **env)
+t_quote_type	ft_check_quotes(char *token, t_quote_type t_type)
 {
-	//t_values	values;
-	char		*line;
+	char	quote;
+	int		i;
 
-	if (count != 1 || args[1] != NULL)
-		return (1);
-	//values.env = env;
-	while (1)
+	quote = *token;
+	if (t_type != DEFAULT)
 	{
-		line = NULL;
-		printf("stdin = %d, isatty(stdin)? %d\n",
-			STDIN_FILENO, isatty(STDIN_FILENO));
-		line = readline(">> ");
-		add_history(line);
-		if (ft_lexer(line) == FALSE)
-		{
-			printf("LEXER ERROR\n");
-			continue ;
-		}
-		ft_parse(line, env);
-		free(line);
+		if ((t_type == DOUBLE_QUOTES && quote == '"')
+			|| (t_type == SIMPLE_QUOTES && quote == '\''))
+			return (DEFAULT);
+		return (t_type);
 	}
-	return (0);
+	i = 1;
+	while (token[i])
+	{
+		if (token[i] == quote)
+		{
+			if (token[i] == '"')
+				return (DOUBLE_QUOTES);
+			else
+				return (SIMPLE_QUOTES);
+		}
+		i++;
+	}
+	return (DEFAULT);
 }

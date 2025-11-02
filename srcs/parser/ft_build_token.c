@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenize.c                                      :+:      :+:    :+:   */
+/*   ft_build_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,38 +12,20 @@
 
 #include "../minishell.h"
 
-static void	ft_count_cmds(char **tokens, int *num_cmds)
+t_token	*ft_build_token(char *str_token)
 {
-	int	i;
+	t_token	*token;
 
-	*num_cmds = 1;
-	i = 0;
-	while (tokens[i])
+	token = malloc(sizeof(t_token));
+	token->content = str_token;
+	token->left_side = NULL;
+	token->right_side = NULL;
+	token->type = WORD;
+	if (ft_is_redirection(str_token))
 	{
-		if (strncmp(tokens[i], "|", 2) == 0)
-			(*num_cmds)++;
-		i++;
+		token->type = REDIR;
+		token->redir_content = NULL;
+		token->redir_type = INPUT;
 	}
-}
-
-char	**ft_tokenize(char *text, int *num_cmds, char **env)
-{
-	char	**tokens;
-	int		num_tokens;
-	int		i;
-
-	num_tokens = ft_tokens_count(text, env);
-	tokens = malloc(sizeof(char *) * (num_tokens + 1));
-	printf("num: %i\n", num_tokens);
-	i = 0;
-	while (i < num_tokens)
-	{
-		tokens[i] = ft_get_token(text);
-		printf("Token: %s\n", tokens[i]);
-		text += ft_strlen(tokens[i]) + 1;
-		i++;
-	}
-	tokens[num_tokens] = NULL;
-	ft_count_cmds(tokens, num_cmds);
-	return (tokens);
+	return (token);
 }

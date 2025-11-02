@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 static int	ft_one_sentence(const char *text, char c)
 {
@@ -42,44 +42,27 @@ static int	ft_handle_quotes(char *text, int *i, int *count, int *is_in_word)
 	return (0);
 }
 
-static void	ft_handle_non_quotes(char c, int *is_in_word, int *count)
+static void	ft_handle_non_quotes(char *c, int *is_in_word, int *count,
+	int	*index)
 {
-	if (!*is_in_word && !ft_isspace(c))
+	if (ft_is_pipe(c) || ft_is_redirection(c))
+	{
+		(*count)++;
+		while (ft_is_redirection(c + 1))
+		{
+			(*index)++;
+			c++;
+		}
+		*is_in_word = 0;
+	}
+	else if (!*is_in_word && !ft_isspace(*c))
 	{
 		*is_in_word = 1;
 		(*count)++;
 	}
-	else if (*is_in_word && ft_isspace(c))
+	else if (*is_in_word && ft_isspace(*c))
 		*is_in_word = 0;
 }
-
-/*static int	ft_expand(char *start, char **env)
-{
-	char	*word;
-	char	*str_expand;
-	int		count;
-	int		i;
-
-	count = 0;
-	i = 0;
-	while (start[i])
-	{
-		if (!ft_isspace(start[i]))
-			i++;
-		else
-			break ;
-	}
-	word = malloc(sizeof(char) * (i + 1));
-	i = 0;
-	while (start[i])
-	{
-		if (!ft_isspace(start[i]))
-			word[i] = start[i];
-		else
-			break ;
-	}
-	str_expand = ft_getenv(word, env);
-}*/
 
 static int	ft_process_character(t_tokens_values *tokens_vals,
 	int *i,	int *is_in_word)
@@ -91,12 +74,12 @@ static int	ft_process_character(t_tokens_values *tokens_vals,
 			return (1);
 	}
 	else
-		ft_handle_non_quotes(tokens_vals->text[*i], is_in_word,
-			&tokens_vals->count);
+		ft_handle_non_quotes(&tokens_vals->text[*i], is_in_word,
+			&tokens_vals->count, i);
 	return (0);
 }
 
-int	ft_tokens_count(char *text, char **env)
+int	ft_tokens_count(char *text)
 {
 	t_tokens_values	tokens_vals;
 	int				is_in_word;
@@ -105,7 +88,6 @@ int	ft_tokens_count(char *text, char **env)
 
 	i = 0;
 	tokens_vals.count = 0;
-	tokens_vals.env = env;
 	tokens_vals.text = text;
 	is_in_word = 0;
 	text_len = ft_strlen(text);

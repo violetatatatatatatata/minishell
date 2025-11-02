@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_quotes.c                                  :+:      :+:    :+:   */
+/*   ft_tokenize_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,32 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-t_token_type	ft_check_quotes(char *token, t_token_type t_type)
+int	ft_is_redirection(char *s)
 {
-	char	quote;
-	int		i;
+	return (!ft_strncmp(s, ">>", 2) || !ft_strncmp(s, ">", 1)
+		|| !ft_strncmp(s, "<<", 2) || !ft_strncmp(s, "<", 1));
+}
 
-	quote = *token;
-	if (t_type != DEFAULT)
-	{
-		if ((t_type == DOUBLE_QUOTES && quote == '"')
-			|| (t_type == SIMPLE_QUOTES && quote == '\''))
-			return (DEFAULT);
-		return (t_type);
-	}
-	i = 1;
-	while (token[i])
-	{
-		if (token[i] == quote)
-		{
-			if (token[i] == '"')
-				return (DOUBLE_QUOTES);
-			else
-				return (SIMPLE_QUOTES);
-		}
-		i++;
-	}
-	return (DEFAULT);
+int	ft_is_pipe(char *s)
+{
+	return (!ft_strncmp(s, "|", 1));
 }

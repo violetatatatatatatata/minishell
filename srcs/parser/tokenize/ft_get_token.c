@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 static int	ft_one_sentence(const char *text, char c)
 {
@@ -24,6 +24,16 @@ static int	ft_one_sentence(const char *text, char c)
 	return (-1);
 }
 
+static int	ft_special_char_len(char *c)
+{
+	int	i;
+
+	i = 0;
+	while (ft_is_redirection(&c[i]) || ft_is_pipe(&c[i]))
+		i++;
+	return (i);
+}
+
 static int	ft_subtoken_len(char *text, int text_len)
 {
 	int	i;
@@ -32,11 +42,14 @@ static int	ft_subtoken_len(char *text, int text_len)
 	i = 0;
 	while (text[i] && text_len > i)
 	{
+		if (i == 0 && (ft_is_pipe(&text[i]) || ft_is_redirection(&text[i])))
+			return (ft_special_char_len(&text[i]));
+		if (ft_is_pipe(&text[i]) || ft_is_redirection(&text[i]))
+			return (i);
 		if (text[i] == '"' || text[i] == '\'')
 		{
 			len = ft_one_sentence(&text[i + 1], text[i]);
 			i += len + 2;
-			printf("One sentence: n-%i c-%c\n", i, text[i]);
 		}
 		else if (!ft_isspace(text[i]))
 			i++;
@@ -52,11 +65,8 @@ char	*ft_get_token(char *text)
 	int		text_len;
 	int		i;
 
-	while (ft_isspace(*text))
-		text++;
 	text_len = ft_strlen(text);
 	i = ft_subtoken_len(text, text_len);
-	printf("Token size: %i\n", i);
 	token = malloc(sizeof(char) * (i + 1));
 	text_len = i;
 	i = 0;
@@ -66,9 +76,5 @@ char	*ft_get_token(char *text)
 		i++;
 	}
 	token[i] = '\0';
-	printf("Get token: %s\n", token);
-	/*if (ft_contains_quotes(token))
-		ft_trim_quotes(&token, ft_strlen(token));
-	printf("Get new token: %s\n", token);*/
 	return (token);
 }

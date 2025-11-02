@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse.c                                         :+:      :+:    :+:   */
+/*   ft_tokenize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,23 +10,43 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
-void	ft_parse(t_values *values)
+/*static void	ft_count_cmds(char **tokens, int *num_cmds)
 {
+	int	i;
+
+	*num_cmds = 1;
+	i = 0;
+	while (tokens[i])
+	{
+		if (strncmp(tokens[i], "|", 2) == 0)
+			(*num_cmds)++;
+		i++;
+	}
+}*/
+
+char	**ft_tokenize(char *text)
+{
+	char	**tokens;
+	int		num_tokens;
 	int		i;
 
+	num_tokens = ft_tokens_count(text);
+	printf("Tokens count: %i\n", num_tokens);
+	tokens = malloc(sizeof(char *) * (num_tokens + 1));
 	i = 0;
-	while (values->tokens[i])
+	while (i < num_tokens)
 	{
-		ft_expand_dolar(&values->tokens, i, values->env);
+		tokens[i] = ft_get_token(text);
+		printf("Token: %s\n", tokens[i]);
+		printf("LEN: %lu\n", ft_strlen(tokens[i]));
+		text += ft_strlen(tokens[i]);
+		while (ft_isspace(*text))
+			text++;
 		i++;
+		printf("Character: %c\n", *text);
 	}
-	ft_exec_cmd_line(values);
-	i = 0;
-	while (values->tokens[i])
-	{
-		printf("Token final: %s of %i\n", values->tokens[i], i);
-		i++;
-	}
+	tokens[num_tokens] = NULL;
+	return (tokens);
 }
