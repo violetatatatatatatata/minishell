@@ -1,7 +1,10 @@
 int	bt_pwd()
 {
-	if (getcwd() == NULL)
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
 		return (EXIT_FAILURE);
-	printf("%s", getcwd());
+	printf("%s", pwd);
 	return (EXIT_SUCCESS);
 }
