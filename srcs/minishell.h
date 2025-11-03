@@ -90,9 +90,8 @@ typedef struct s_redirs
 
 typedef struct s_cmd_table
 {
-	t_token			*cmd;
-	t_token			*args;
-	t_redirs		*redirs;
+	t_token	*token;
+	char	**args;
 }				t_cmd_table;
 
 typedef struct s_values
@@ -161,11 +160,13 @@ int		ft_open_outfile(char ***args);
 /*			PARSE				*/
 void	ft_parse(char *prompt, char **env);
 char	***ft_command_list(t_values *vals);
-void	ft_word_split(char *env_var, char ****dolars_ex);
+void	ft_word_split(char *env_var, char *prev_content, t_token **token);
+void	ft_add_tokentolist(char *content, t_token *token);
 char	***ft_expand_dolar(char *tokens, char **env);
 t_list	*ft_split_tokens(char **tokens);
 t_token	*ft_build_token(char *str_token);
 t_quote_type	ft_check_quotes(char *token, t_quote_type t_type);
+t_list	*ft_build_cmd_table(t_list *tokens);
 
 /*			GET_ENV				*/
 char	*ft_getenv(const char *name, char **env);

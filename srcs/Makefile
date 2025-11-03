@@ -10,7 +10,8 @@ SRCS_LEXER = ft_lexer.c
 SRCS_TOKENIZE = ft_tokens_count.c ft_tokenize.c ft_get_token.c ft_tokenize_utils.c
 
 # PARSE
-SRCS_PARSE = ft_trim_quotes.c ft_parse.c ft_word_split.c ft_expand_dolar.c ft_check_quotes.c ft_split_tokens.c ft_build_token.c
+SRCS_PARSER = ft_trim_quotes.c ft_parse.c ft_word_split.c ft_expand_dolar.c ft_check_quotes.c ft_split_tokens.c ft_build_token.c\
+ft_add_token.c ft_build_cmd_table.c
 
 # FD_FILES
 SRCS_FD_FILES = ft_here_doc.c ft_set_infile.c ft_open_outfile.c ft_open_infile.c
@@ -23,8 +24,8 @@ SRCS_UTILS = ft_getenv.c
 
 # SRCS_DIRS
 LEXER_DIR = lexer
-PARSE_DIR = parser
-TOKENIZE_DIR = $(PARSE_DIR)/tokenize
+PARSER_DIR = parser
+TOKENIZE_DIR = $(PARSER_DIR)/tokenize
 FD_FILES_DIR = fd_files
 EXECUTE_DIR = execute
 UTILS_DIR = utils
@@ -35,7 +36,7 @@ ft_extend_dolar.c ft_free_memory.c ft_isspace.c ft_quotes_count.c\
 ft_token_expanded_len.c ft_utils.c\
 $(addprefix $(LEXER_DIR)/, $(SRCS_LEXER))\
 $(addprefix $(TOKENIZE_DIR)/, $(SRCS_TOKENIZE))\
-$(addprefix $(PARSE_DIR)/, $(SRCS_PARSE))\
+$(addprefix $(PARSER_DIR)/, $(SRCS_PARSER))\
 $(addprefix $(FD_FILES_DIR)/, $(SRCS_FD_FILES))\
 $(addprefix $(EXECUTE_DIR)/, $(SRCS_EXECUTE))\
 $(addprefix $(UTILS_DIR)/, $(SRCS_UTILS))

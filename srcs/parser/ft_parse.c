@@ -292,8 +292,34 @@ static int	*ft_add_tokens(char *token, char ***dolars,
 	}
 }*/
 
+static void	ft_add_token(char *env_var, char *prev_str, t_token **token)
+{
+	char	*new_content;
+	char	*tmp_content;
+
+	printf("Add token\n");
+	if (!(*token)->content)
+	{
+		printf("Prev_str: %s", prev_str);
+		new_content = ft_strjoin(prev_str, env_var);
+		printf("new_content: %s", new_content);
+		free(prev_str);
+		prev_str = NULL;
+		(*token)->content = new_content;
+	}
+	else
+	{
+		tmp_content = ft_strjoin((*token)->content, prev_str);
+		free((*token)->content);
+		new_content = ft_strjoin(tmp_content, env_var);
+		free(tmp_content);
+		printf("Add token, existing list\n");
+		(*token)->content = new_content;
+	}
+}
+
 static void	ft_handle_env_var(t_token **token, char *name,
-	t_quote_type type, char **env)
+	t_quote_type type, char *prev_str, char **env)
 {
 	char	*env_var;
 
@@ -306,9 +332,9 @@ static void	ft_handle_env_var(t_token **token, char *name,
 	{
 		printf("Valid env\n");
 		if (type == DEFAULT)
-			ft_word_split(env_var, token);
+			ft_word_split(env_var, prev_str, token);
 		else
-			ft_add_token(env_var, token);
+			ft_add_token(env_var, prev_str, token);
 	}
 	free(name);
 }
@@ -317,11 +343,14 @@ static void	ft_expansion(char *content, t_token **token, int *index,
 	int *sub_start, t_quote_type current_quote, char **env)
 {
 	int		start;
+	int		sub_end;
 	char	*name;
+	char	*prev_str;
 
-	*sub_start = (*index)++;
-	if (*sub_start > 0)
-		(*sub_start)--;
+	prev_str = NULL;
+	sub_end = (*index)++;
+	if (sub_end > 0 && *sub_start != 0)
+		sub_end--;
 	if (content[*index] == '{')
 	{
 		start = ++(*index);
@@ -332,13 +361,17 @@ static void	ft_expansion(char *content, t_token **token, int *index,
 		{
 			name = ft_strndup(
 					content + start, *index - start);
+			prev_str = ft_substr(content, *sub_start, sub_end - *sub_start);
 			ft_handle_env_var(token, name,
-				current_quote, env);
+				current_quote, prev_str, env);
+			*sub_start = *index + 1;
 		}
 	}
 	if (ft_isalpha(content[*index])
 		|| content[*index] == '_')
 	{
+		if (sub_end < 0)
+			sub_end = 0;
 		start = *index;
 		while (ft_isalnum(content[*index])
 			|| content[*index] == '_')
@@ -346,12 +379,16 @@ static void	ft_expansion(char *content, t_token **token, int *index,
 		name = ft_strndup(
 				content + start, *index - start);
 		printf("Name: %s\n", name);
+		prev_str = ft_substr(content, *sub_start, sub_end - *sub_start);
 		ft_handle_env_var(token, name,
-			current_quote, env);
+			current_quote, prev_str, env);
+		*sub_start = *index + 1;
 		printf("Current char: %c\n", content[*index]);
 		//continue ;
-		*index--;
+		(*index)--;
 	}
+	if (prev_str != NULL)
+		free(prev_str);
 }
 
 static void	ft_expand_dolars(t_list **cmd_list, char **env)
@@ -361,15 +398,21 @@ static void	ft_expand_dolars(t_list **cmd_list, char **env)
 	t_quote_type	current_quote;
 	char			*content;
 	int				sub_start;
+	int				is_expanded;
 	int				i;
 
 	iter = *cmd_list;
 	while (iter)
 	{
+		is_expanded = 0;
+		current_quote = DEFAULT;
 		token = (t_token *)iter->content;
 		while (token)
 		{
 			content = ft_strdup(token->content);
+			free(token->content);
+			token->content = NULL;
+			sub_start = 0;
 			i = 0;
 			while (content[i])
 			{
@@ -377,13 +420,16 @@ static void	ft_expand_dolars(t_list **cmd_list, char **env)
 					|| content[i] == '\'')
 					current_quote = ft_check_quotes(&content[i],
 							current_quote);
-				if (content[i] == '$')
+				if (content[i] == '$' && content[i + 1])
 				{
+					is_expanded = 1;
 					ft_expansion(content, &token, &i,
 						&sub_start, current_quote, env);
 				}
 				i++;
 			}
+			if (!token->content && !is_expanded)
+				token->content = ft_strdup(content);
 			token = token->right_side;
 			free(content);
 		}
@@ -421,4 +467,8 @@ void	ft_parse(char *prompt, char **env)
 	tokens = ft_tokenize(prompt);
 	cmd_list = ft_split_tokens(tokens);
 	ft_print_debug(cmd_list);
+	printf("---------------------\n");
+	ft_expand_dolars(&cmd_list, env);
+	ft_print_debug(cmd_list);
+	cmd_list = ft_build_cmd_table(cmd_list);
 }

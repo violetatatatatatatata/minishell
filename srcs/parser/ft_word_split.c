@@ -132,33 +132,35 @@ void	ft_first_expansion(char ****dolars_ex,
 	*dolars_ex = tmp;
 }*/
 
-static void	ft_add_token(char *content, t_token *token)
-{
-	t_token	*prev_token;
-	t_token	*new_token;
-
-	prev_token = token->right_side;
-	new_token = ft_build_token(content);
-	token->right_side = new_token;
-	new_token->right_side = prev_token;
-}
-
 void	ft_word_split(char *env_var, char *prev_content, t_token **token)
 {
 	char	**word_split;
 	int		tokens_count;
 	int		i;
 	char	*tmp_content;
+	char	*cpy_str;
 
 	word_split = ft_split(env_var, ' ');
 	tokens_count = ft_double_arr_size(word_split);
-	tmp_content = ft_strjoin(prev_content, word_split[0]);
-	free((*token)->content);
-	(*token)->content = tmp_content;
+	if (!(*token)->content)
+	{
+		tmp_content = ft_strjoin(prev_content, word_split[0]);
+		prev_content = NULL;
+		free((*token)->content);
+		(*token)->content = tmp_content;
+	}
+	else
+	{
+		cpy_str = ft_strdup((*token)->content);
+		free((*token)->content);
+		tmp_content = ft_strjoin(cpy_str, word_split[0]);
+		free(cpy_str);
+		(*token)->content = tmp_content;
+	}
 	i = 1;
 	while (i < tokens_count)
 	{
-		ft_add_token(word_split[i], (*token));
+		ft_add_tokentolist(word_split[i], (*token));
 		(*token) = (*token)->right_side;
 		i++;
 	}

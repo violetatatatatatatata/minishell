@@ -46,7 +46,7 @@ static void	process_token(char **tokens, int *i,
 	{
 		if (ft_strncmp(tokens[*i], "|", 2) == 0)
 			(*i)++;
-		*token = add_new_token(split_tokens, tokens[*i]);
+		*token = ft_add_new_token(split_tokens, tokens[*i]);
 	}
 	else
 		handle_token_relation(token, tokens[*i]);

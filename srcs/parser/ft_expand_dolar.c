@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static void	ft_add_token(char *env_var, char ****dolars_ex)
+/*static void	ft_add_token(char *env_var, char ****dolars_ex)
 {
 	char	***tmp_con;
 	int		arr_size;
@@ -135,4 +135,4 @@ char	***ft_expand_dolar(char *tokens, char **env)
 		i++;
 	}
 	return (dolars_ex);
-}
+	}*/
