@@ -10,11 +10,14 @@
 	- parameters:
 		- without parameters: when executed `exit`, closes the current terminal session. When executed, the terminal will simply close.
 		- specific status code: `exit [status]`the terminal will close and return the said status
-		- exit a root sesion: (? este se implementa???
-		- display help info: using `exit --help` it will display the help information for the exit command
+		- when called, the [exit](https://www.ibm.com/docs/en/zos/2.5.0?topic=functions-exit-end-program) function in C performs the following operations:
+			- flushes unwritten buffered data.
+			- closes all open files.
+			- removes temporary files.
+			- returns an integer exit status to the operating system.
 ###	RETURN VALUE:
-		0 indicates no error
-		1 encountered minor errors
+		0 EXIT_SUCCESS indicates no error
+		1 EXIT_FAILURE encountered minor errors
 		2 indicate the misuse of shell bultins
 ## [cd](https://www.ibm.com/docs/es/aix/7.3.0?topic=c-cd-command)
 	- uses the function [chdir](https://man7.org/linux/man-pages/man2/chdir.2.html)
@@ -83,7 +86,7 @@
 			the curpath variable is null, no further steps shall be
 			taken.
 
-	9. If curpath is longer than {PATH_MAX} bytes (including the
+	9. 	If curpath is longer than {PATH_MAX} bytes (including the
 		terminating null) and the directory operand was not longer
 		than {PATH_MAX} bytes (including the terminating null), then
 		curpath shall be converted from an absolute pathname to an
@@ -135,7 +138,18 @@
 ## [unset]()
 ###	RETURN VALUE:
 
-## [export]()
+## [export](https://www.geeksforgeeks.org/linux-unix/export-command-in-linux-with-examples/)
+	- It allows variables to be available in the current shell session and any child processes, which helps in setting up and configuring your shell environment dynamically.
+	-  The shell shall format the output, including the proper use of
+       quoting, so that it is suitable for reinput to the shell as
+       commands that achieve the same exporting results, except:
+        1. Read-only variables with values cannot be reset.
+        2. Variables that were unset at the time they were output need
+           not be reset to the unset state if a value is assigned to the
+           variable between the time the state was saved and the time at
+           which the saved output is reinput to the shell.
+       When no arguments are given, the results are unspecified.
+
 ###	RETURN VALUE:
 
 ## [env]()

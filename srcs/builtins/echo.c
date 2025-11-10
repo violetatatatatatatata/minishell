@@ -9,8 +9,8 @@ int	bt_echo(int argc, char **argv, int print_newline)
 	{
 		while (i < ft_strlen(argv[num_arg]))
 		{
-			write(1, &argv[num_arg][i], 1)
-			if (/*error en el write*/)
+			/*error en el write*/
+			if (write(1, &argv[num_arg][i], 1) < 0)
 				return (EXIT_FAILURE);
 			i++;
 		}
