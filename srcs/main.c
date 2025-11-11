@@ -2,10 +2,6 @@
 
 int main(int argc, char **argv, char **env)
 {
-	// t_data	data;
-
-	(void)env;
-	// ft_memset(&data, 0, sizeof(t_data));
 	if (!init_shell(argc, argv, env))
 	{
 		print_msg(INPUT_ERROR, RED);
