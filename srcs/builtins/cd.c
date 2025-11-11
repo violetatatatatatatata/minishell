@@ -1,31 +1,28 @@
-int	bt_cd(char dc)
+int bt_cd(char *dc)
 {
-	char	*pwd;
-	char	*last_dc;
-	char	*curpath;
+	char	*current;
+	char	*target_path;
+	char	*env_home;
 
-	if(!bt_pwd())
-		return(EXIT_FAILURE);
-	pwd = getcwd(NULL, 0);
-	curpath = dc;
-	// CON RUTAS RELATIVAS
-	// if no dc operand and the HOME env variable is not empty, take it to home
-	if (curpath == NULL /*&& env_home != NULL*/)
-		chdir("~");
-//	else if (dc[0] == '/')
-		// hacer algo
-	// si se le pasa el ..
-	last_dc = ft_strrchr(curpath, '/');
-	while (ft_strncmp(last_dc, "..") == 0 && curpath != NULL)
+	current = getcwd(NULL, 0);
+	if (current == NULL)
+		perror("cd: failed to retrieve current directory");
+	env_home = get_env("HOME");
+	if (dc == NULL)
 	{
-		last_dc = ft_strrchr(curpath, '/');
-		curpath = ft_strtrim(curpath, last_dc);
+		target_path = env_home;
+		if (target_path == NULL)
+		{
+			free(current);
+			perror("cd: HOME not set");
+		}
 	}
-	// RUTAS ABSOLUTAS
-	if (curpath != NULL)
+	else
+		target_path = dc;
+	if (chdir(target_path) != 0)
 	{
-		if(chdir(dc) != 0)
-			print_msg(MSG, EXIT_FAILURE);
+		free(current); 
+		perror("Error: No such file or directory");
 	}
-	return (EXIT_SUCCESS);
+	return (update_variables((current));
 }

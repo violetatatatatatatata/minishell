@@ -27,7 +27,17 @@
 	 	- the current directory string is converted to use the same case as the names on the disk. For example, cd c:\temp would set the current directory to C:\Temp if that is the case on the disk.
 		- spaces aren't treated as delimiters, so <path> can contain spaces without enclosing quotation marks
 		- [curpath](https://unix.stackexchange.com/questions/621596/what-does-curpath-stand-for) is like a "temporary variable". Let's say that initially it is defined and assigned a dummy value. The following steps can modify its value, and finally curpath will hold the result of the processing.
-
+### ALGORITM
+	1.	get the current directory ($OLDPWD)
+	2.	get the destination directory
+		- if theres no destination, change to $HOME
+		- if the argument is -, no action ($HOME = $OLDPWD)
+		- assign the value of the argument to the current directory
+	3.	change directory
+		- if chdir fails it returns -1
+		- if it doesnt, actualizate old and current path with getcwd
+			- uses the [setenv](https://man7.org/linux/man-pages/man3/setenv.3.html) function which is not allowed in the subject
+	int set_env(const char *name, const char *value, int ow)
 ### BEHAVIOR
  	1. If *no directory* operand is given and the HOME environment
 		variable is empty or undefined, the default behavior is
