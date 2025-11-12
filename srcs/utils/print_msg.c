@@ -1,6 +1,10 @@
 #include <minishell.h>
 
-void	print_msg(char *msg, int COLOR)
+int	print_msg(char *function, char *msg, int exit)
 {
-	printf("%s%s%s\n", COLOR, msg, RESET);
+	printf("minishell: ");
+	if (function)
+		printf("%s: ", function);
+	printf("%s\n", msg);
+	return(exit);
 }

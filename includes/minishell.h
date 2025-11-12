@@ -31,15 +31,104 @@
 # include "colors.h"
 # include "messages.h"
 
+// Enums
+typedef enum e_quote_type
+{
+	SIMPLE_QUOTES,
+	DOUBLE_QUOTES,
+	DEFAULT
+}		t_quote_type;
+
+typedef enum e_token_type
+{
+	REDIR,
+	WORD
+}			t_token_type;
+
+typedef enum e_redir_type
+{
+	APPEND,
+	HEREDOC,
+	INPUT,
+	OUTPUT
+}		t_redir_type;
+
+typedef enum e_cmd_type
+{
+	COMMAND,
+	ARGS,
+	REDIRS,
+	INDEX,
+	HEREDOC_NAME
+}		t_cmd_type;
+
+// Data structures
+typedef struct s_tokens_values
+{
+	char	*text;
+	t_values	*val;
+	int		count;
+}				t_tokens_values;
+
+typedef struct s_process_vars
+{
+	t_quote_type	current_quote;
+	int				i;
+	int				sub_start;
+	int				is_expanded;
+}	t_process_vars;
+
+typedef struct s_token	t_token;
+
+typedef struct s_expand_data
+{
+	char			*content;
+	t_token			**token;
+	t_values		*val;
+	int				*index;
+	int				*sub_start;
+	t_quote_type	current_quote;
+}	t_expand_data;
+
+typedef struct s_redir
+{
+	t_token			*redir_content;
+	t_redir_type	redir_type;
+}	t_redir;
+
+typedef struct s_token
+{
+	t_token			*left_side;
+	t_token			*right_side;
+	char			*content;
+	t_token_type	type;
+	t_redir			*redir;
+}	t_token;
+
+typedef struct s_cmd_table
+{
+	t_token	*token;
+	char	**args;
+}				t_cmd_table;
+
+typedef struct s_values
+{
+	char	**env;
+	char	**args;
+	t_token	*token;
+	pid_t	*pids;
+	int		index;
+	int		cmds_size;
+	int		status;
+	int		fd_prev;
+	int		fd_in;
+	int		fd_out;
+}				t_values;
 
 // deberia ponerlo volatile sigatomic??
 int	g_status;
 
-// Data structures
-
 /*	Definiciones de funciones del proyecto	*/
-
-void    print_msg(char *msg, int *exit);
 
 // is_definition
 int	ft_isblank(int c);

@@ -1,11 +1,11 @@
-int	bt_echo(int argc, char **argv, int print_newline)
+int	bt_echo(char **args, int print_newline)
 {
 	int	i;
 	int	num_arg;
 
 	i = 0;
 	num_arg = 1;
-	while (num_arg < argc)
+	while (args[i] && )
 	{
 		while (i < ft_strlen(argv[num_arg]))
 		{
