@@ -1,27 +1,26 @@
-<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenize.c                                      :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: epascual <epascual@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*   Created: 2024/09/16 12:32:59 by epascual          #+#    #+#             */
+/*   Updated: 2025/02/11 18:39:17 by epascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-=======
-#include "../Includes/minishell.h"
->>>>>>> main
+#include "../Includes/libft.h"
 
-int	ft_isspace(int c)
+void	*ft_memset(void *dest, int c, size_t count)
 {
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' \
-	|| c == '\f' || c == '\r')
+	size_t	iter;
+
+	iter = 0;
+	while (iter < count)
 	{
-		return (1);
+		((char *)dest)[iter] = (char)c;
+		iter++;
 	}
-	return (0);
+	return (dest);
 }

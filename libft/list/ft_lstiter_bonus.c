@@ -1,27 +1,24 @@
-<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenize.c                                      :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: epascual <epascual@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*   Created: 2024/09/16 12:49:07 by epascual          #+#    #+#             */
+/*   Updated: 2025/02/11 18:36:48 by epascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-=======
-#include "../Includes/minishell.h"
->>>>>>> main
+#include "../Includes/libft.h"
 
-int	ft_isspace(int c)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' \
-	|| c == '\f' || c == '\r')
+	if (!lst || !f)
+		return ;
+	while (lst)
 	{
-		return (1);
+		f(lst->content);
+		lst = lst->next;
 	}
-	return (0);
 }

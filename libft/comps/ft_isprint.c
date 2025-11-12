@@ -1,27 +1,22 @@
-<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenize.c                                      :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: epascual <epascual@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*   Created: 2024/08/16 12:52:04 by epascual          #+#    #+#             */
+/*   Updated: 2025/02/11 18:34:39 by epascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-=======
-#include "../Includes/minishell.h"
->>>>>>> main
+#include "../Includes/libft.h"
 
-int	ft_isspace(int c)
+int	ft_isprint(int c)
 {
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' \
-	|| c == '\f' || c == '\r')
+	if (c < 32 || c > 126)
 	{
-		return (1);
+		return (0);
 	}
-	return (0);
+	return (1);
 }

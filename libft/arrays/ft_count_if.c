@@ -1,27 +1,31 @@
-<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenize.c                                      :+:      :+:    :+:   */
+/*   ft_count_if.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: epascual <epascual@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*   Created: 2024/09/09 18:07:39 by epascual          #+#    #+#             */
+/*   Updated: 2025/02/11 18:48:15 by epascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-=======
-#include "../Includes/minishell.h"
->>>>>>> main
+#include "../Includes/libft.h"
 
-int	ft_isspace(int c)
+int	ft_count_if(char **tab, int (*f)(char*))
 {
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' \
-	|| c == '\f' || c == '\r')
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (tab[i] != 0)
 	{
-		return (1);
+		if (f(tab[i]))
+		{
+			count++;
+		}
+		i++;
 	}
-	return (0);
+	return (count);
 }

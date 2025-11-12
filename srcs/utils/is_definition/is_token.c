@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenize.c                                      :+:      :+:    :+:   */
+/*   ft_is_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,17 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-=======
-#include "../Includes/minishell.h"
->>>>>>> main
+#include "../../../includes/minishell.h"
 
-int	ft_isspace(int c)
+int	is_token(const char *str)
 {
-	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' \
-	|| c == '\f' || c == '\r')
-	{
+	if (is_word(str) || is_controlop(str) || is_redop(str))
 		return (1);
-	}
 	return (0);
 }

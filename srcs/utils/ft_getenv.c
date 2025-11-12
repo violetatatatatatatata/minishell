@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*ft_getenv(const char *name, char **env)
 {
@@ -30,7 +30,7 @@ char	*ft_getenv(const char *name, char **env)
 			continue ;
 		var_name_len = equal_sign - env[i];
 		if (var_name_len == name_len
-			&& ft_strncmp(env[i], name, name_len) == 0)
+			&& ft_strncmp(env[i], (char *)name, name_len) == 0)
 			return (equal_sign + 1);
 		i++;
 	}

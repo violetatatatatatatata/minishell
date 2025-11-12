@@ -40,8 +40,8 @@
 # include <readline/history.h>
 
 // implemented
-# include "../libft/libft.h"
-//# include "../libft/Includes/libft.h"
+//# include "../libft/libft.h"
+# include "../libft/Includes/libft.h"
 # include "colors.h"
 # include "messages.h"
 
