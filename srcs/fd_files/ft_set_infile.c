@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 static int	is_exact_match(const char *line,
 	const char *limiter, size_t limiter_len)

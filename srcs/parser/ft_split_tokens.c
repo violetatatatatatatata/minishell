@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 static t_token	*ft_add_new_token(t_list **split_tokens, char *token_str)
 {
@@ -31,7 +31,7 @@ static void	handle_token_relation(t_token **token, char *token_str)
 
 	tmp = ft_build_token(token_str);
 	if ((*token)->type == REDIR)
-		(*token)->redir_content = tmp;
+		(*token)->redir->redir_content = tmp;
 	else
 	{
 		(*token)->right_side = tmp;

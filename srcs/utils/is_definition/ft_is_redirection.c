@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_tokenize_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,30 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
-int	main(int count, char **args, char **env)
+int	ft_is_redirection(char *s)
 {
-	//t_values	values;
-	char		*line;
-
-	if (count != 1 || args[1] != NULL)
-		return (1);
-	//values.env = env;
-	while (1)
-	{
-		line = NULL;
-		printf("stdin = %d, isatty(stdin)? %d\n",
-			STDIN_FILENO, isatty(STDIN_FILENO));
-		line = readline(">> ");
-		add_history(line);
-		if (ft_lexer(line) == FALSE)
-		{
-			printf("LEXER ERROR\n");
-			continue ;
-		}
-		ft_parse(line, env);
-		free(line);
-	}
-	return (0);
+	return (!ft_strncmp(s, ">>", 2) || !ft_strncmp(s, ">", 1)
+		|| !ft_strncmp(s, "<<", 2) || !ft_strncmp(s, "<", 1));
 }

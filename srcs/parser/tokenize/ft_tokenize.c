@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../includes/minishell.h"
 
 /*static void	ft_count_cmds(char **tokens, int *num_cmds)
 {

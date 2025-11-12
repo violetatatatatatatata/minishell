@@ -10,129 +10,93 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
-/*static void	ft_add_token(char *env_var, char ****dolars_ex)
+static void	ft_finalize_token_expansion(t_token *token,
+		char *content, int sub_start, int is_expanded)
 {
-	char	***tmp_con;
-	int		arr_size;
-	int		i;
-	int		j;
+	char	*sub_str;
+	char	*tmp_str;
 
-	printf("Add token\n");
-	if (!*dolars_ex)
+	if (!token->content && !is_expanded)
+		token->content = ft_strdup(content);
+	else if (token->content)
 	{
-		*dolars_ex = malloc(sizeof(char **) * 2);
-		(*dolars_ex)[0] = malloc(sizeof(char *) * 2);
-		(*dolars_ex)[0][0] = ft_strdup(env_var);
-		(*dolars_ex)[0][1] = NULL;
-		(*dolars_ex)[1] = NULL;
-	}
-	else
-	{
-		printf("Add token, existing list\n");
-		arr_size = ft_triple_arr_size(*dolars_ex);
-		tmp_con = malloc(sizeof(char **) * (arr_size + 1));
-		i = 0;
-		while (i < arr_size && (*dolars_ex)[i + 1])
-		{
-			tmp_con[i] = ft_dup_tokens((*dolars_ex)[i]);
-			i++;
-		}
-		tmp_con[i + 1] = NULL;
-		arr_size = ft_double_arr_size((*dolars_ex)[i]);
-		tmp_con[i] = malloc(sizeof(char *) * (arr_size + 2));
-		j = 0;
-		while (j < arr_size)
-		{
-			tmp_con[i][j] = ft_strdup((*dolars_ex)[i][j]);
-			j++;
-		}
-		tmp_con[i][j] = ft_strdup(env_var);
-		tmp_con[i][j + 1] = NULL;
-		ft_free_triple(*dolars_ex);
-		*dolars_ex = tmp_con;
+		sub_str = ft_substr(content, sub_start - 1,
+				ft_strlen(content) + 1 - sub_start);
+		printf("Token content: %s.\n", token->content);
+		tmp_str = token->content;
+		token->content = ft_strjoin(tmp_str, sub_str);
+		if (tmp_str)
+			free(tmp_str);
+		if (sub_str)
+			free(sub_str);
 	}
 }
 
-// Solucionar que cuando sea comillas simples meter dolar el principio
-static void	ft_handle_env_var(char ****dolars_ex, char *name,
-	t_quote_type type, char **env)
+static void	ft_process_char(t_process_vars *v, t_expand_data *data,
+	char *content, t_token *token)
 {
-	char	*env_var;
-
-	if (type == SIMPLE_QUOTES)
-		env_var = name;
-	else
-		env_var = ft_getenv(name, env);
-	printf("Get_env: %s\n", env_var);
-	if (env_var)
+	if (content[v->i] == '"' || content[v->i] == '\'')
+		v->current_quote = ft_check_quotes(&content[v->i], v->current_quote);
+	printf("-----CURRENT QUOTES %i\n", v->current_quote);
+	if (content[v->i] == '$' && content[v->i + 1]
+		&& (ft_isalnum(content[v->i + 1]) || content[v->i + 1] == '_'
+			|| content[v->i + 1] == '{'))
 	{
-		printf("Valid env\n");
-		if (type == DEFAULT)
-			ft_word_split(env_var, dolars_ex);
-		else
-			ft_add_token(env_var, dolars_ex);
+		v->is_expanded = 1;
+		data->content = content;
+		data->token = &token;
+		data->index = &v->i;
+		data->sub_start = &v->sub_start;
+		data->current_quote = v->current_quote;
+		ft_expansion(data);
 	}
-	free(name);
 }
 
-char	***ft_expand_dolar(char *tokens, char **env)
+static void	ft_process_content(char *content, t_token *token, char **env)
 {
-	char			***dolars_ex;
-	t_quote_type	token_type;
-	int				i;
-	int				start;
-	char			*name;
+	t_process_vars	v;
+	t_expand_data	data;
 
-	dolars_ex = NULL;
-	token_type = DEFAULT;
-	i = 0;
-	while (tokens[i])
+	v.current_quote = DEFAULT;
+	v.is_expanded = 0;
+	v.sub_start = 0;
+	v.i = 0;
+	data.env = env;
+	while (content[v.i])
 	{
-		printf("char: %c\n", tokens[i]);
-		if (tokens[i] == '"'
-			|| tokens[i] == '\'')
-			token_type = ft_check_quotes(&tokens[i],
-					token_type);
-		else if (tokens[i] == '$')
-		{
-			i++;
-			if (tokens[i] == '?')
-			{
-
-			}
-			if (tokens[i] == '{')
-			{
-				start = ++i;
-				while (ft_isalnum(tokens[i])
-					|| tokens[i] == '_')
-					i++;
-				if (tokens[i] == '}')
-				{
-					name = ft_strndup(
-							tokens + start, i - start);
-					ft_handle_env_var(&dolars_ex, name,
-						token_type, env);
-				}
-			}
-			if (ft_isalpha(tokens[i])
-				|| tokens[i] == '_')
-			{
-				start = i;
-				while (ft_isalnum(tokens[i])
-					|| tokens[i] == '_')
-					i++;
-				name = ft_strndup(
-						tokens + start, i - start);
-				printf("Name: %s\n", name);
-				ft_handle_env_var(&dolars_ex, name,
-					token_type, env);
-				printf("Current char: %c\n", tokens[i]);
-				continue ;
-			}
-		}
-		i++;
+		ft_process_char(&v, &data, content, token);
+		v.i++;
 	}
-	return (dolars_ex);
-	}*/
+	ft_finalize_token_expansion(token, content, v.sub_start, v.is_expanded);
+}
+
+static void	ft_expand_token_list(t_token *token, char **env)
+{
+	char	*content;
+
+	while (token)
+	{
+		content = ft_strdup(token->content);
+		free(token->content);
+		token->content = NULL;
+		ft_process_content(content, token, env);
+		free(content);
+		token = token->right_side;
+	}
+}
+
+void	ft_expand_dolar(t_list **cmd_list, char **env)
+{
+	t_list	*iter;
+	t_token	*token;
+
+	iter = *cmd_list;
+	while (iter)
+	{
+		token = (t_token *)iter->content;
+		ft_expand_token_list(token, env);
+		iter = iter->next;
+	}
+}

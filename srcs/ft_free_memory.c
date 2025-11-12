@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenize_utils.c                                :+:      :+:    :+:   */
+/*   ft_free_memory.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,15 +10,60 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "includes/minishell.h"
 
-int	ft_is_redirection(char *s)
+void	ft_free_triple(char ***arr)
 {
-	return (!ft_strncmp(s, ">>", 2) || !ft_strncmp(s, ">", 1)
-		|| !ft_strncmp(s, "<<", 2) || !ft_strncmp(s, "<", 1));
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+		ft_free_double(arr[i++]);
+	free(arr);
+	arr = NULL;
 }
 
-int	ft_is_pipe(char *s)
+void	ft_free_double(char **arr)
 {
-	return (!ft_strncmp(s, "|", 1));
+	int	i;
+
+	if (!arr ||!*arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+	free(arr);
+	arr = NULL;
+}
+
+void	ft_free_cmd_list(char ***list)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (list[i])
+	{
+		while (list[i][j])
+		{
+			free(list[i][j]);
+			j++;
+		}
+		free(list[i]);
+		i++;
+	}
+	free(list);
+}
+
+void	ft_free_vals(t_values *vals)
+{
+	if (vals->pids)
+		free(vals->pids);
 }

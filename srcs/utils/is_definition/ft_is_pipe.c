@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_is_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,34 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "../../includes/minishell.h"
 
-//int	g_status = 0;
-
-int	main(int count, char **args, char **env)
+int	ft_is_pipe(char *s)
 {
-	//t_values	values;
-	char	*line;
-	t_list	*cmd_list;
-
-	if (count != 1 || args[1] != NULL)
-		return (1);
-	//values.env = env;
-	while (1)
-	{
-		line = NULL;
-		printf("stdin = %d, isatty(stdin)? %d\n",
-			STDIN_FILENO, isatty(STDIN_FILENO));
-		line = readline(">> ");
-		add_history(line);
-		if (ft_lexer(line) == FALSE)
-		{
-			printf("LEXER ERROR\n");
-			continue ;
-		}
-		cmd_list = ft_parse(line, env);
-		ft_exec_cmd_line(cmd_list, env);
-		free(line);
-	}
-	return (0);
+	return (!ft_strncmp(s, "|", 1));
 }

@@ -10,7 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
+
+static t_redir_type	ft_get_redir_type(char *str_token)
+{
+	if (!ft_strncmp(str_token, ">>", 2))
+		return (APPEND);
+	if (!ft_strncmp(str_token, ">", 1))
+		return (OUTPUT);
+	if (!ft_strncmp(str_token, "<<", 2))
+		return (HEREDOC);
+	if (!ft_strncmp(str_token, "<", 1))
+		return (INPUT);
+	return (0);
+}
 
 t_token	*ft_build_token(char *str_token)
 {
@@ -24,8 +37,9 @@ t_token	*ft_build_token(char *str_token)
 	if (ft_is_redirection(str_token))
 	{
 		token->type = REDIR;
-		token->redir_content = NULL;
-		token->redir_type = INPUT;
+		token->redir = malloc(sizeof(t_redir));
+		token->redir->redir_content = NULL;
+		token->redir->redir_type = ft_get_redir_type(str_token);
 	}
 	return (token);
 }

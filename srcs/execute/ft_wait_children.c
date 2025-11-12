@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_find_command_path.c                             :+:      :+:    :+:   */
+/*   ft_wait_children.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,42 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
-static void	ft_free_memory(char **arr)
+int	ft_wait_children(int num_cmds, pid_t *pids)
 {
 	int	i;
+	int	status;
+	int	exit_code;
 
+	exit_code = 0;
 	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
-
-char	*ft_find_command_path(const char *cmd, char **env)
-{
-	char	**paths;
-	char	**prefixes;
-	char	*ind_path;
-	char	*correct_path;
-	int		i;
-
-	i = 0;
-	paths = ft_split(ft_getenv("PATH", env), ':');
-	prefixes = ft_split(cmd, ' ');
-	while (paths[i])
+	while (i < num_cmds - 1)
 	{
-		ind_path = ft_strjoin(paths[i], "/");
-		correct_path = ft_strjoin(ind_path, prefixes[0]);
-		free(ind_path);
-		if (access(correct_path, F_OK) == 0
-			&& access(correct_path, X_OK) == 0)
-			return (ft_free_memory(paths),
-				ft_free_memory(prefixes), correct_path);
-		free(correct_path);
+		waitpid(pids[i], NULL, 0);
 		i++;
 	}
-	ft_free_memory(paths);
-	ft_free_memory(prefixes);
-	return (ft_strdup(cmd));
+	if (waitpid(pids[num_cmds - 1], &status, 0) == -1)
+		perror("waitpid");
+	if (WIFEXITED(status))
+		exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		exit_code = 128 + WTERMSIG(status);
+	free(pids);
+	return (exit_code);
 }
