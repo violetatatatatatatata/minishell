@@ -1,20 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_printfd.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: epascual <epascual@student.42barcelon      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/10 17:23:26 by epascual          #+#    #+#             */
-/*   Updated: 2025/02/27 13:03:13 by epascual         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_printfd.h"
 
-//Implemento como musl porque openbsd y glibc no me gustan tanto
-//Restrict significa que este puntero solo puede ser leido
-//A diferencia del printf real de musl no paso el stdout como parametro
 int	ft_printfd(int fd, char const *p, ...)
 {
 	va_list	opc;
@@ -69,5 +54,3 @@ int	realprintfd(int fd, char const *p, va_list opc)
 	}
 	return (ret);
 }
-//int main(){char *s="Probando";
-//ft_printfd(2, "Prueba y %s%i%p", s,12,NULL);return (0);}

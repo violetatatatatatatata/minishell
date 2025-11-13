@@ -1,32 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: epascual <epascual@student.42barcelon      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/13 03:54:20 by epascual          #+#    #+#             */
-/*   Updated: 2025/07/07 22:23:51 by epascual         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef LIBFT_H
 # define LIBFT_H
 
-//protected defines
-//# ifndef NULL
-//#  define NULL ((void *) 0)
-//# endif
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-//includes
+
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
-//structs and typedefs
-//typedef unsigned long	size_t;
 
 typedef struct s_list
 {
@@ -108,17 +90,5 @@ int				printstringfd(int fd, char const *s);
 int				printnumfd(int fd, long n, char *base);
 int				printunumfd(int fd, unsigned int n, char *base);
 int				printpointfd(int fd, unsigned long long n, char *base);
-//gnl
-char			*ft_free_strjoin(char *save, char *tmp);
-char			*crealinea(char *s);
-char			*guardaresto(char *s);
-char			*lector(int fd, char *stash);
-char			*get_next_line(int fd);
-//pipex
-void			ft_free_pointstring(char **tab);
-char			*getenvar(char *name, char **env);
-//fractol
-double			atodbl(const char *n);
-//psw
 
 #endif

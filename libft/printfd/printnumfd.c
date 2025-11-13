@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   printnumfd.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: epascual <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 14:06:11 by epascual          #+#    #+#             */
-/*   Updated: 2025/02/27 13:02:14 by epascual         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_printfd.h"
 
 int	printcharfd(int fd, char a)
@@ -81,4 +69,3 @@ int	printunumfd(int fd, unsigned int n, char *base)
 	}
 	return (res);
 }
-//int main(){printnum(-123, "0123456789");printf("\n%d\n",-123);return(0);}

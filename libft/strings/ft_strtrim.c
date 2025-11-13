@@ -1,39 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: epascual <epascual@student.42barcelon      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 12:37:56 by epascual          #+#    #+#             */
-/*   Updated: 2025/02/11 19:12:15 by epascual         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../Includes/libft.h"
-/*
-char	*ft_strtrim(char const *s1, char const *set)
-{
-	char	*res;
-	char	*tp;
-	size_t	i;
-	size_t	f;
-
-	if (!s1 || !set)
-		return (NULL);
-	tp = (char *)s1;
-	f = ft_strlen(tp);
-	i = 0;
-	while (i < f && ft_strchr(set, tp[i]) != 0)
-		i++;
-	while (i < f && ft_strrchr(set, tp[f]) != 0)
-		f--;
-	res = (char *)malloc(sizeof(char) * (f - i +1));
-	if (!res)
-		return (NULL);
-	ft_strlcpy(res, tp + i, f - i);
-	return (res);
-}*/
 
 static int
 	ft_char_in_set(char c, char const *set)
