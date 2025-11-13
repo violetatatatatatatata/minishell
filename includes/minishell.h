@@ -69,6 +69,7 @@ typedef enum e_cmd_type
 typedef struct s_shell
 {
 	t_env	**env;
+	char	*user_input;
 	int		pid;
 	int		interactive;
 } t_shell;

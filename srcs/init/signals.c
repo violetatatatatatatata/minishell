@@ -15,7 +15,7 @@ void    reset_prompt(int signo)
 ** - SIGQUIT (Ctrl-\): ignorar.
 ** - SIGINT (Ctrl-C): llama a reset_prompt
 */
-void	set_signals_handlers_int()
+void	set_signals_interactive()
 {
     struct sigaction    act;
 
@@ -43,26 +43,18 @@ void	set_signals_handlers_exec()
     sigaction(SIGQUIT, &act, NULL);
 }
 
-void	rl_input()
-{
-    data->user_input = readline(prompt());
-    if (data->user_input == NULL)
-    {
-		print_msg();
-        free_data(data, TRUE);
-    }
-}
-
 void	signals(t_data *data)
 {
-	set_signals_handlers_int();
-    rl_input();
+	data->user_input = readline(prompt());
+    if (data->user_input == NULL)
+    {
+		print_msg(NULL, "empty input", EXIT_FAILURE);
+        terminator(data);
+    }
 	if (*data->user_input && data->user_input)
         add_history(data->user_input);
     if (parse_input(data) == TRUE)
         g_status = execute(data);
     else
         g_status = 1;
-    free_data(data, FALSE);
-
 }

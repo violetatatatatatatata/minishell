@@ -8,6 +8,7 @@ void	init_shell(int argc, char **argv, char **env)
 	print_prompt();
 	shell->pid = getpid();
 	shell->env = env_init(env);
+	// ...
 	return (args_checker(argc, argv));
 }
 
@@ -28,7 +29,7 @@ int	args_checker(int argc, char **argv)
 	return (EXIT_SUCCESS);
 }
 
-/* incluso si envp es NULL o está vacío, deberia poder inicializar
+/* incluso si env es NULL o está vacío, deberia poder inicializar
  * un entorno mínimo (PATH, PWD, SHLVL).
  * */
 void	env_init(char **env)
