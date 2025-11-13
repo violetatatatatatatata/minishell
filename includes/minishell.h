@@ -31,6 +31,9 @@
 # include "colors.h"
 # include "messages.h"
 
+#define TRUE 0
+#define	FALSE 1
+
 // Enums
 typedef enum e_quote_type
 {
@@ -63,6 +66,21 @@ typedef enum e_cmd_type
 }		t_cmd_type;
 
 // Data structures
+typedef struct s_shell
+{
+	t_env	**env;
+	int		pid;
+	int		interactive;
+} t_shell;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	int				visible;
+	struct s_env	*next
+} t_env
+
 typedef struct s_tokens_values
 {
 	char	*text;
@@ -113,7 +131,6 @@ typedef struct s_cmd_table
 
 typedef struct s_values
 {
-	char	**env;
 	char	**args;
 	t_token	*token;
 	pid_t	*pids;
@@ -125,8 +142,7 @@ typedef struct s_values
 	int		fd_out;
 }				t_values;
 
-// deberia ponerlo volatile sigatomic??
-int	g_status;
+volatile sigatomic	g_status;
 
 /*	Definiciones de funciones del proyecto	*/
 
