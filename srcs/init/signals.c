@@ -23,7 +23,7 @@ void	signals(t_data *data)
 	sigaction(SIGQUIT, &act, NULL);
     act.sa_handler = &reset_prompt;
     sigaction(SIGINT, &act, NULL);
-    data->user_input = readline(PROMPT);
+    data->user_input = readline(prompt());
     if (data->user_input == NULL)
     {
         free_data(data, TRUE);
