@@ -6,10 +6,8 @@ void	init_shell(int argc, char **argv, char **env)
 
 	ft_memset(&data, 0, sizeof(data));
 	print_prompt();
-	if (env)
-		data->env = env;
-	else
-		handle_missing_env(data);
+	shell->pid = getpid();
+	shell->env = env_init(env);
 	return (args_checker(argc, argv));
 }
 
@@ -28,4 +26,16 @@ int	args_checker(int argc, char **argv)
 	else
 		data->interactive = TRUE;
 	return (EXIT_SUCCESS);
+}
+
+/* incluso si envp es NULL o está vacío, deberia poder inicializar
+ * un entorno mínimo (PATH, PWD, SHLVL).
+ * */
+void	env_init(char **env)
+{
+	if (env)
+		data->env = env;
+	else
+		handle_missing_env(data);
+	// manejar la lista de la env
 }
