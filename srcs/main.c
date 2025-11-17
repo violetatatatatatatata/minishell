@@ -44,20 +44,9 @@ int	main(int count, char **args, char **env)
 
 /*int main(int argc, char **argv, char **env)
 {
-	t_data	data;
-
-	(void)env;
-	ft_memset(&data, 0, sizeof(t_data));
-	if (!check_execution(&data, argc, argv))
-	{
-		print_msg(INPUT_ERROR, RED);
-		return(EXIT_FAILURE);
-	}
-	//	exit_shelly();
-	if (data.is_interactive)
-		exect_interactive(&data);
-	else
-		exect_noninteractive(&data, argc, argv);//temporal
-//	exit_shelly(&data);
+	if (!init_shell(argc, argv, env))
+		return (EXIT_FAILURE);
+	loop();
+    terminator();
 	return (EXIT_SUCCESS);
 }*/

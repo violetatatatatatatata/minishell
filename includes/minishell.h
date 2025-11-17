@@ -45,8 +45,13 @@
 # include "colors.h"
 # include "messages.h"
 
+<<<<<<< HEAD
 // deberia ponerlo volatile sigatomic??
 //int						g_status;
+=======
+#define TRUE 0
+#define	FALSE 1
+>>>>>>> origin/main
 
 // Enums
 typedef enum e_quote_type
@@ -87,6 +92,7 @@ typedef struct s_tokens_values
 	int		count;
 }				t_tokens_values;
 
+<<<<<<< HEAD
 typedef struct s_process_vars
 {
 	t_quote_type	current_quote;
@@ -96,6 +102,93 @@ typedef struct s_process_vars
 }	t_process_vars;
 
 typedef struct s_token	t_token;
+=======
+// tambien se pueden pillar por rutas absolutas en vez de leer del env
+// path se obtiene de getcwd()
+// si el user es nulo, se imprime "minishell:"
+// los comandos solo funcionan si tienen el path absoluto o si son nuestros builtins
+// // el export ha de funcionar creando una lista
+
+typedef struct s_shell
+{
+	t_env	**env;
+	t_list	*user_input;
+	int		pid;
+} t_shell;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	int				visible;
+	struct s_env	*next;
+} t_env
+
+typedef struct s_tokens_values
+{
+	char	*text;
+	t_shell	*val;
+	int		count;
+}				t_tokens_values;
+
+typedef struct s_process_vars
+{
+	t_quote_type	current_quote;
+	int				i;
+	int				sub_start;
+	int				is_expanded;
+}	t_process_vars;
+
+typedef struct s_token	t_token;
+
+typedef struct s_expand_data
+{
+	char			*content;
+	t_token			**token;
+	t_shell			*val;
+	int				*index;
+	int				*sub_start;
+	t_quote_type	current_quote;
+}	t_expand_data;
+
+typedef struct s_redir
+{
+	t_token			*redir_content;
+	t_redir_type	redir_type;
+}	t_redir;
+
+typedef struct s_token
+{
+	t_token			*left_side;
+	t_token			*right_side;
+	char			*content;
+	t_token_type	type;
+	t_redir			*redir;
+}	t_token;
+
+typedef struct s_cmd_table
+{
+	t_token	*token;
+	char	**args;
+}				t_cmd_table;
+
+typedef struct s_values
+{
+	char	**args;
+	t_token	*token;
+	pid_t	*pids;
+	int		index;
+	int		cmds_size;
+	int		status;
+	int		fd_prev;
+	int		fd_in;
+	int		fd_out;
+}				t_values;
+
+volatile sigatomic	g_status;
+
+/*	Definiciones de funciones del proyecto	*/
+>>>>>>> origin/main
 
 typedef struct s_expand_data
 {
@@ -142,6 +235,7 @@ typedef struct s_values
 	int		fd_out;
 }				t_values;
 
+<<<<<<< HEAD
 // builtins
 
 /*			LEXER				*/
@@ -213,4 +307,6 @@ int				is_word(const char *s);
 int				ft_is_pipe(char *s);
 int				ft_is_redirection(char *s);
 
+=======
+>>>>>>> origin/main
 #endif
