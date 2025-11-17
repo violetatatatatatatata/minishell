@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <minishell.h>
 
 static void	ft_expand_braced_var(t_expand_data *data)
 {
@@ -27,7 +27,7 @@ static void	ft_expand_braced_var(t_expand_data *data)
 		(*data->index)++;
 	if (data->content[*data->index] != '}')
 		return ;
-	name = ft_strndup(data->content + start, *data->index - start);
+	name = ft_substr(data->content + start, 0, *data->index - start);
 	prev_str = ft_substr(data->content, *data->sub_start,
 			sub_end - *data->sub_start);
 	ft_handle_env_var(data, &name, prev_str);
@@ -50,7 +50,7 @@ static void	ft_expand_simple_var(t_expand_data *data)
 	while (ft_isalnum(data->content[*data->index])
 		|| data->content[*data->index] == '_')
 		(*data->index)++;
-	name = ft_strndup(data->content + start, *data->index - start);
+	name = ft_substr(data->content + start, 0, *data->index - start);
 	tmp_start = (*data->sub_start);
 	if (*data->sub_start > 0)
 	{

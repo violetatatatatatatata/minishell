@@ -1,10 +1,10 @@
-#include "../Includes/minishell.h"
+#include <minishell.h>
 
 int	is_word(const char *s)
 {
 	while (*s)
 	{
-		if (*s != ' ' || *s != '\t' || !is_meta(s))
+		if (*s != ' ' || *s != '\t' || !ft_ismeta(*s))
 			return (0);
 		s++;
 	}

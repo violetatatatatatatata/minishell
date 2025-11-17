@@ -1,4 +1,4 @@
-#include "../Includes/minishell.h"
+#include <minishell.h>
 
 int	ft_isblank(int c)
 {
