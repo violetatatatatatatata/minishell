@@ -1,4 +1,0 @@
-void	bt_export()
-{
-
-}
