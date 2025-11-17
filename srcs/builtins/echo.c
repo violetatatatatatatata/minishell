@@ -1,10 +1,10 @@
-int	bt_echo(char **args, int print_newline)
+int	bt_echo(char **args)
 {
+	int	is_n_flag;
 	int	i;
-	int	num_arg;
 
-	i = 0;
-	num_arg = 1;
+	n_arg = 0;
+	n_flag = is_n_flag(args);
 	while (args[i] && )
 	{
 		while (i < ft_strlen(argv[num_arg]))
@@ -19,4 +19,28 @@ int	bt_echo(char **args, int print_newline)
 		num_arg++;
 	}
 	return (EXIT_SUCCESS);
+}
+
+int	is_n_flag
+{
+
+}
+
+void	print_args(char **args, int n_flag, int i)
+{
+	if (!args[i])
+	{
+		if (!n_flag)
+			ft_putchar_fd('\n', STDOUT_FILENO);
+			return ;
+	}
+	while (args[i])
+	{
+		ft_putstr_fd(args[i], STDOUT_FILENO);
+		if (args[i + 1])
+			ft_putchar_fd(' ', STDOUT_FILENO);
+		else if (!n_flag)
+			ft_putchar_fd('\n', STDOUT_FILENO);
+		// i++;
+	}
 }

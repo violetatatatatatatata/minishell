@@ -66,12 +66,18 @@ typedef enum e_cmd_type
 }		t_cmd_type;
 
 // Data structures
+
+// tambien se pueden pillar por rutas absolutas en vez de leer del env
+// path se obtiene de getcwd()
+// si el user es nulo, se imprime "minishell:"
+// los comandos solo funcionan si tienen el path absoluto o si son nuestros builtins
+// // el export ha de funcionar creando una lista
+
 typedef struct s_shell
 {
 	t_env	**env;
-	char	*user_input;
+	t_list	*user_input;
 	int		pid;
-	int		interactive;
 } t_shell;
 
 typedef struct s_env
@@ -79,13 +85,13 @@ typedef struct s_env
 	char			*key;
 	char			*value;
 	int				visible;
-	struct s_env	*next
+	struct s_env	*next;
 } t_env
 
 typedef struct s_tokens_values
 {
 	char	*text;
-	t_values	*val;
+	t_shell	*val;
 	int		count;
 }				t_tokens_values;
 
@@ -103,7 +109,7 @@ typedef struct s_expand_data
 {
 	char			*content;
 	t_token			**token;
-	t_values		*val;
+	t_shell			*val;
 	int				*index;
 	int				*sub_start;
 	t_quote_type	current_quote;
@@ -157,7 +163,5 @@ int	is_filename(const char *s);
 int	is_redop(const char *str);
 int	is_token(const char *str);
 int	is_word(const char *s);
-
-// builtins
 
 #endif
