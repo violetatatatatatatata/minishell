@@ -41,23 +41,7 @@ void	set_signals_handlers_exec()
     struct sigaction    act;
 
     ft_memset(&act, 0, sizeof(act));
-	act.sa_handler = &signal_print_newline;
+	act.sa_handler = SIG_IGN;
     sigaction(SIGINT, &act, NULL);
     sigaction(SIGQUIT, &act, NULL);
-}
-
-void	signals(t_data *data)
-{
-	data->user_input = readline(prompt());
-    if (data->user_input == NULL)
-    {
-		print_msg(NULL, "empty input", EXIT_FAILURE);
-        terminator(data);
-    }
-	if (*data->user_input && data->user_input)
-        add_history(data->user_input);
-    if (parse_input(data) == TRUE)
-        g_status = execute(data);
-    else
-        g_status = 1;
 }
