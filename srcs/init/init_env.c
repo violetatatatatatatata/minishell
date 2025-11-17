@@ -7,7 +7,7 @@ static void	free_node(t_env *node)
 	free(node);
 }
 
-static void	*create_node(t_env node, char *key, char *value, int state)
+static void	create_node(t_env *node, char *key, char *value, int state)
 {
 	node->key = key;
 	node->value = value;
@@ -29,10 +29,10 @@ static t_env	*env_nodes(char *line)
 	else
 	{
 		key = ft_substr(line, 0, (ft_strlen(line) - ft_strlen(separator)));
-		new_node = create_node(new_node, key, ft_strdup(separator + 1), 1);
+		create_node(new_node, key, ft_strdup(separator + 1), 1);
 	}
 	new_node->next = NULL;
-	if (!new_node->key || (separator != NULL && new_node->value))
+	if (!new_node->key || (separator != NULL && !new_node->value))
 	{
 		free_node(new_node);
 		return (NULL);
@@ -54,7 +54,10 @@ t_env	*init_env(char **env)
 	{
 		new_node = env_nodes(env[i]);
 		if (!new_node)
+		{
+			ft_lstclear_env(&head, &free_node);
 			return (NULL);
+		}
 		if (head == NULL)
 		{
 			head = new_node;
