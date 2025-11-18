@@ -2,6 +2,10 @@
 
 # ENV
 	SHLVL: nivel de bash que te encuentras
+		- Buscar el valor actual de SHLVL (que será un string, ej: "1").
+		- Convertir: convertir a entero usando ft_atoi.
+		- Incrementar: sumar 1 (nivel++).
+		- Guardar: convertir de nuevo a string usando ft_itoa y almacenar en la estructura.
 ## Algorithm
 - Allocate memory for the main struct
 - Print the first prompt

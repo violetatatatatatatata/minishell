@@ -10,7 +10,7 @@ int	init_shell(int argc, char **argv, char **env)
 	if (env)
 		data->env = init_env(env);
 	else
-		handle_missing_env(data);
+		handle_missing_env(data, argv[0]);
 }
 
 /*
