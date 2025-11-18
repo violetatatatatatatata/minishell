@@ -26,11 +26,11 @@ char	*prompt()
 	char	*curpath;
 
 	user = ft_getenv("$USER");
-		if (!user)
-			return (handle_missing_user());
+	if (!user)
+		user = handle_missing_user();
 	curpath = ft_getenv("$PWD");
-		if (!curpath)
-			return (handle_missing_path());
+	if (!curpath)
+		curpath = handle_missing_path();
 	p = (char *)malloc(sizeof(char) + ft_strlen(user) + ft_strlen(curpath) + 2);
 	p = ft_strjoin(p, user);
 	p = ft_strjoin(p, ":");
@@ -41,5 +41,10 @@ char	*prompt()
 
 char	*handle_missing_user()
 {
-	return();
+	return("minishell: ");
+}
+
+char	*handle_missing_path()
+{
+	return(getcwd());
 }

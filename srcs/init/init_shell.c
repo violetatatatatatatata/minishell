@@ -1,16 +1,16 @@
 #include <minishell.h>
 
-void	init_shell(int argc, char **argv, char **env)
+int	init_shell(int argc, char **argv, char **env)
 {
 	t_shell	data;
 
 	ft_memset(&data, 0, sizeof(data));
 	print_prompt();
 	shell->pid = getpid();
-	shell->env = env_init(env);
-//	shell->user_input = null;
-	// ...
-	return (args_checker(argc, argv));
+	if (env)
+		data->env = init_env(env);
+	else
+		handle_missing_env(data, argv[0]);
 }
 
 /*
@@ -31,16 +31,3 @@ int	args_checker(int argc, char **argv)
 	return (EXIT_SUCCESS);
 }
 */
-
-/* incluso si env es NULL o está vacío, deberia poder inicializar
- * un entorno mínimo (PATH, PWD, SHLVL). ?????
- * */
-void	env_init(char **env)
-{
-	if (env)
-		data->env = env;
-	else
-		// crear 
-		handle_missing_env(data);
-	// manejar la lista de la env
-}
