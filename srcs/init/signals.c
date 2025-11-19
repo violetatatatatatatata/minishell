@@ -33,7 +33,6 @@ void	set_signals_interactive()
 ** Configura los handlers de señal para la fase de EJECUCIÓN
    (después de readline).
 ** - SIGINT y SIGQUIT: Llama a signal_print_newline
-     (o la lógica para los hijos).
 ** signal_print_newline maneja la interrupcion durante la ejecucion
 */
 void	set_signals_handlers_exec()
