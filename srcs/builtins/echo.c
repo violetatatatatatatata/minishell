@@ -1,46 +1,41 @@
-int	bt_echo(char **args)
+#include <minishell.h>
+
+static int	is_n_flag(char *arg)
 {
-	int	is_n_flag;
 	int	i;
 
-	n_arg = 0;
-	n_flag = is_n_flag(args);
-	while (args[i] && )
-	{
-		while (i < ft_strlen(argv[num_arg]))
-		{
-			/*error en el write*/
-			if (write(1, &argv[num_arg][i], 1) < 0)
-				return (EXIT_FAILURE);
-			i++;
-		}
-		if (print_newline && i == ft_strlen(argv[num_arg]))
-			write(1, "\n", 1);
-		num_arg++;
-	}
-	return (EXIT_SUCCESS);
+	if (!arg || arg[0] != '-')
+		return (0);
+	i = 1;
+	while (arg[i] == 'n')
+		i++;
+	return (arg[i] == '\0');
 }
 
-int	is_n_flag
+void	print_args(char **args, int start, int n_flag)
 {
-
-}
-
-void	print_args(char **args, int n_flag, int i)
-{
-	if (!args[i])
+	while (args[start])
 	{
-		if (!n_flag)
-			ft_putchar_fd('\n', STDOUT_FILENO);
-			return ;
-	}
-	while (args[i])
-	{
-		ft_putstr_fd(args[i], STDOUT_FILENO);
-		if (args[i + 1])
+		ft_putstr_fd(args[start], STDOUT_FILENO);
+		if (args[start + 1])
 			ft_putchar_fd(' ', STDOUT_FILENO);
-		else if (!n_flag)
-			ft_putchar_fd('\n', STDOUT_FILENO);
-		// i++;
+		start++;
 	}
+	if (!n_flag)
+		ft_putchar_fd('\n', STDOUT_FILENO);
+}
+
+void bt_echo(char **args)
+{
+	int		i;
+	int	n_flag;
+
+	i = 1;
+	n_flag = FALSE;
+	while (args[i] && is_n_flag(args[i]))
+	{
+		n_flag = TRUE;
+		i++;
+	}
+	print_args(args, i, n_flag);
 }

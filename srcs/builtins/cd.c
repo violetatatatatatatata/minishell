@@ -1,5 +1,20 @@
 #include <minishell.h>
 
+static int	change_dir(t_values *data, char *dir)
+{
+	char	*curpath;
+	char	cwd[PATH_MAX];
+
+	if (!chdir(dir))
+		return (print_msg(("cd", DIR_FAILED, EXIT_FAILURE)));
+	curpath = getcwd(cwd, PATH_MAX);
+	if (!curpath)
+		return (print_msg(("cd", DIR_FAILED, EXIT_FAILURE)));
+	// deberia ser export???
+	// ft_setenv(data, "PATH", dir);
+	return (EXIT_SUCESS);
+}
+
 int bt_cd(char **args, t_values *data)
 {
 	char	*path;
@@ -21,31 +36,5 @@ int bt_cd(char **args, t_values *data)
 			return (print_msg("cd", "OLDPWD not set", EXIT_FAILURE));
 		return (!change_dir(data, path));
 	}
-	return (!change_dir(data, path));
+	return (change_dir(data, path));
 }
-
-static int	change_dir(t_values *data, char *dir)
-{
-	char	*curpath;
-	char	cwd[PATH_MAX];
-
-	if (!chdir(dir))
-		return (print_msg(("cd", DIR_FAILED, EXIT_FAILURE)));
-	curpath = getcwd(cwd, PATH_MAX);
-	if (!curpath)
-		return (print_msg(("cd", DIR_FAILED, EXIT_FAILURE)));
-	update_env();
-	return (EXIT_SUCESS);
-}
-
-void	update_env()
-{
-	ft_setenv()
-}
-
-/*
-	current = getcwd(NULL, 0);
-	if (current == NULL)
-		return (print_msg(("cd", DIR_FAILED, EXIT_FAILURE)));
-	env_home = get_env(env, "HOME");
-*/

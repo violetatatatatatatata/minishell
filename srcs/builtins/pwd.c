@@ -1,10 +1,23 @@
-int	bt_pwd()
+#include <minishell.h>
+
+void	bt_pwd(t_shell *data)
 {
 	char	*pwd;
+	char	*cwd;
 
-	pwd = getcwd(NULL, 0);
-	if (pwd == NULL)
-		return (EXIT_FAILURE);
-	printf("%s", pwd);
-	return (EXIT_SUCCESS);
+	pwd = ft_getenv("PWD", data->env);
+	if (pwd)
+	{
+		ft_putendl_fd(pwd, STDOUT_FILENO);
+		free(pwd);
+	}
+	else
+	{
+		cwd = getcwd(NULL, 0);
+		if (cwd)
+		{
+			ft_putendl_fd(pwd, STDOUT_FILENO);
+			free(cwd);
+		}
+	}
 }
