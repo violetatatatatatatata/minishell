@@ -24,7 +24,6 @@ static t_env	*env_nodes(char *line)
 {
 	t_env	*new_node;
 	char	*separator;
-	char	*key;
 
 	new_node = (t_env *)malloc(sizeof(t_env));
 	if (!new_node)
@@ -33,10 +32,7 @@ static t_env	*env_nodes(char *line)
 	if (!separator)
 		create_node(new_node, ft_strdup(line), NULL, 0);
 	else
-	{
-		key = ft_substr(line, 0, (ft_strlen(line) - ft_strlen(separator)));
-		create_node(new_node, key, ft_strdup(separator + 1), 1);
-	}
+		create_node(new_node, ft_getkey(line, separator), ft_getvalue(separator), 1);
 	new_node->next = NULL;
 	if (!new_node->key || (separator != NULL && !new_node->value))
 	{
