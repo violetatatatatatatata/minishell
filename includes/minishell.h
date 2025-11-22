@@ -149,6 +149,8 @@ typedef struct s_values
 	int		fd_out;
 }				t_values;
 
+// permite almacenar el estado de salida del ultimo
+// comando ejecutado y expandir $?
 volatile sigatomic	g_status;
 
 /*	Definiciones de funciones del proyecto	*/
