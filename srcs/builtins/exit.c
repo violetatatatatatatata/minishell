@@ -38,8 +38,8 @@ int	is_numeric(char *str)
 
 static void	exit_shell(t_shell *data, int code)
 {
-	terminator(data);
-	exit(code);
+	terminator(data, code);
+	// exit(code);
 }
 
 int	bt_exit(t_shell *data, char **args)

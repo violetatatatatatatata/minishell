@@ -1,25 +1,5 @@
 #include <minishell.h>
 
-// tema doble frees
-void	free_node(t_env *node)
-{
-	if (!node)
-		return ;
-	if (node->key)
-		free(node->key);
-	if (node->value)
-		free(node->value);
-	free(node);
-}
-
-void	create_node(t_env *node, char *key, char *value, int state)
-{
-	node->key = key;
-	node->value = value;
-	node->visible = state;
-	node->next = NULL;
-}
-
 static t_env	*env_nodes(char *line)
 {
 	t_env	*new_node;

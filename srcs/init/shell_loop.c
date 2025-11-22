@@ -1,15 +1,7 @@
-static void	clean_loop_data(t_shell *data)
-{
-	if (data->user_input)
-	{
-		free(data->user_input);
-		data->user_input = NULL;
-	}
+#include <minishell.h>
+
 // puedo hacer que dependiendo del valor de la variable global, libere TODOS
 // los recursos o tan solo los que han sido usados para el ultimo comando ejecutado
-	terminator(); 
-}
-
 void	loop()
 {
 	char	*prompt_str;
@@ -20,10 +12,11 @@ void	loop()
 		prompt_str = prompt();
 		data->user_input = readline(prompt_str);
 		free(prompt_str);
+		// cuando readline detecta ctrl-d devuelve NULL
 		if (data->user_input == NULL)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
-			terminator(data);
+			terminator(data, TRUE);
 		}
 		set_signals_handlers_exec();
 		if (data->user_input && data->user_input[0] != '\0')
@@ -34,7 +27,6 @@ void	loop()
 			else
 				g_status = 1;
 		}
-		clean_loop_data(data);
+		terminator(data, FALSE);
 	}
 }
-

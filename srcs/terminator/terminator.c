@@ -1,15 +1,18 @@
 #include <minishell.h>
 
-void	terminator(t_shell *data)
+void	terminator(t_shell *data, int exit)
 {
     if (data->user_input)
     {   
         free(data->user_input);
         data->user_input = NULL;
-    } 
-	while (data->env && g_status == 1)
+    }
+	// free la parte de alex
+	if (exit)
 	{
-		free_node(data->env)
-		env = env->>next;
+		if (data->env)
+			ft_lstclear_env(&data->env)
+		rl_clear_history();
+		exit(g_status);
 	}
 }
