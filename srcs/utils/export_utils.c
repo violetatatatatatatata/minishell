@@ -38,15 +38,16 @@ static void	sort_env_array(t_env **list, int size)
 	}
 }
 
-static void	dupe_env(t_env *env, t_env *cpy_env)
+static void	dupe_env(t_env *env, t_env *cpy_env, int size)
 {
 	int	i;
 
 	i = 0;
-	while (env)
+	while (env && i < size)
 	{
-		cpy_env[i++] = env;
+		cpy_env[i] = env;
 		env = env->next;
+		i++;
 	}
 	cpy_env[i] = NULL;
 	sort_env_array(cpy_env, size);
@@ -62,7 +63,7 @@ int	print_sorted_env(t_env *env)
 	cpy_env = (t_env **)malloc(sizeof(t_env *) * (size + 1));
 	if (!cpy_env)
 		return (EXIT_FAILURE);
-	dupe_env(env, cpy_env)
+	dupe_env(env, cpy_env, size)
 	i = -1;
 	while (++i < size)
 	{

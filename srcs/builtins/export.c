@@ -23,13 +23,12 @@ static void	handle_export(t_shell *data, char *args)
 {
 	char	*key;
 	char	*value;
-	char	pos;
+	char	*pos;
 
 	pos = ft_strchr(arg, '=');
 	key = ft_getkey(arg, pos);
 	value = ft_getvalue(arg, pos);
-	if ()
-	ft_setenv(data, key, val);
+	ft_setenv(data, key, value);
 	free(key);
 	free(value);
 }
@@ -40,21 +39,23 @@ int	bt_export(t_shell *data, char **args)
 	int	exit_status;
 
 	i = 1;
-	exit_status = TRUE;
+	exit_status = EXIT_SUCCESS;
 	if (!args[1])
-		return (print_sorted_list(data->env));
+		return (print_sorted_env(data->env));
 	while (args[i])
 	{
 		if (!is_valid_id(args[i]))
 		{
 			return (print_msg("export", "not a valid identifier", 1));
-			exit_status = FALSE;
+			exit_status = EXIT_FAILURE;
 		}
-		else if (ft_strchr(args[i], "=") == 0)
+		else if (ft_strchr(args[i], "=") != NULL)
 			handle_export(data, args[i]);
 		else
+		{
 			if (!ft_getenv(args[i], data->env))
 				ft_setenv(data, args[i], NULL);
+		}
 		i++;
 	}
 	return (exit_status);

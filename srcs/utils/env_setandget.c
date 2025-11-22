@@ -16,25 +16,37 @@ t_env   *create_env_variable(char *key, char *value)
 	return (node);
 }
 
-void ft_setenv(t_shell *data, char *key, char *value)
+void	ft_setenv(t_shell *data, char *key, char *value)
 {
-    t_env   *current;
+	t_env	*current;
 
-    current = data->env;
-    while (current->next != NULL)
-    {
-        if (ft_strcmp(current->key, key) == 0)
-        {
-            free(current->value);
-            current->value = ft_strdup(value);
-            return ;
-        }
-        current = actual->next;
-    }
-    if (current)
-        current->next = create_env_variable(key, value);
-    else
-        data->env = create_env_variable(key, value);    // lista vacía
+	current = data->env;
+	if (!current)
+	{
+		data->env = create_env_variable(key, value);
+		return ;
+	}
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			if (value)
+				already_exists(current, value);
+			return ;
+		}
+		if (current->next == NULL)
+			break ;
+		current = current->next;
+	}
+	current->next = create_env_variable(key, value);
+}
+
+void	already_exists(t_env *cpy, char *val)
+{
+	if (cpy->value)
+		free(current->value);
+	cpy->value = ft_strdup(val);
+	cpy->visible = 1;
 }
 
 char    *ft_getenv(const char *key, t_env *env)
