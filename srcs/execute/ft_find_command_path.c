@@ -22,7 +22,7 @@ static void	ft_free_memory(char **arr)
 	free(arr);
 }
 
-char	*ft_find_command_path(const char *cmd, char **env)
+char	*ft_find_command_path(const char *cmd, t_shell *data)
 {
 	char	**paths;
 	char	**prefixes;
@@ -31,7 +31,7 @@ char	*ft_find_command_path(const char *cmd, char **env)
 	int		i;
 
 	i = 0;
-	paths = ft_split(ft_getenv("PATH", env), ':');
+	paths = ft_split(ft_getenv("PATH", data->env), ':');
 	prefixes = ft_split(cmd, ' ');
 	while (paths[i])
 	{

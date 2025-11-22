@@ -18,6 +18,7 @@
 // MACROS
 # define TRUE 1
 # define FALSE 0
+# define PATH_MAX 4096
 
 // EXECUTION MESSAGES
 # define PROMPT ""
@@ -30,12 +31,8 @@
 # define ENOENT_MSG			"No such file or directory"
 # define ENAMETOOLONG_MSG	"path is too long"
 
-<<<<<<< HEAD
-#endif
-=======
 // ** cd
 #define DIR_FAILED "Error: No such file or directory"
 #define	HOME_FAILED "HOME not set"
 
 # endif
->>>>>>> origin/main

@@ -48,7 +48,7 @@ static char	*ft_get_env_value(t_expand_data *data, char **name)
 		env_var = *name;
 	}
 	else
-		env_var = ft_getenv(*name, data->env);
+		env_var = ft_getenv(*name, data->val->env);
 	return (env_var);
 }
 

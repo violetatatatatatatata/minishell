@@ -54,7 +54,7 @@ static void	ft_process_char(t_process_vars *v, t_expand_data *data,
 	}
 }
 
-static void	ft_process_content(char *content, t_token *token, char **env)
+static void	ft_process_content(char *content, t_token *token, t_shell *dat_env)
 {
 	t_process_vars	v;
 	t_expand_data	data;
@@ -63,7 +63,7 @@ static void	ft_process_content(char *content, t_token *token, char **env)
 	v.is_expanded = 0;
 	v.sub_start = 0;
 	v.i = 0;
-	data.env = env;
+	data.val = dat_env;
 	while (content[v.i])
 	{
 		ft_process_char(&v, &data, content, token);
@@ -72,7 +72,7 @@ static void	ft_process_content(char *content, t_token *token, char **env)
 	ft_finalize_token_expansion(token, content, v.sub_start, v.is_expanded);
 }
 
-static void	ft_expand_token_list(t_token *token, char **env)
+static void	ft_expand_token_list(t_token *token, t_shell *data)
 {
 	char	*content;
 
@@ -81,13 +81,13 @@ static void	ft_expand_token_list(t_token *token, char **env)
 		content = ft_strdup(token->content);
 		free(token->content);
 		token->content = NULL;
-		ft_process_content(content, token, env);
+		ft_process_content(content, token, data);
 		free(content);
 		token = token->right_side;
 	}
 }
 
-void	ft_expand_dolar(t_list **cmd_list, char **env)
+void	ft_expand_dolar(t_list **cmd_list, t_shell *data)
 {
 	t_list	*iter;
 	t_token	*token;
@@ -96,7 +96,7 @@ void	ft_expand_dolar(t_list **cmd_list, char **env)
 	while (iter)
 	{
 		token = (t_token *)iter->content;
-		ft_expand_token_list(token, env);
+		ft_expand_token_list(token, data);
 		iter = iter->next;
 	}
 }

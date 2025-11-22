@@ -1,14 +1,14 @@
 #include <minishell.h>
 
-void    reset_prompt(int signo)
+/*void	reset_prompt(int signo)
 {
 	// g_status = 130 (128 + 2) deberia ser relevante para las expansiones de $?
-    (void)signo;
-    write (1, "\n", 1);
-    rl_on_new_line();
-    rl_replace_line("");
-    rl_display();
-}
+	(void)signo;
+	write (1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("");
+	rl_display();
+}*/
 
 /*
 ** Configura los handlers de señal para la fase INTERACTIVA
@@ -16,7 +16,7 @@ void    reset_prompt(int signo)
 ** - SIGQUIT (Ctrl-\): ignorar.
 ** - SIGINT (Ctrl-C): llama a reset_prompt
 */
-void	set_signals_interactive()
+/*void	set_signals_interactive()
 {
     struct sigaction    act;
 
@@ -27,7 +27,7 @@ void	set_signals_interactive()
     // (ctrl C)
 	act.sa_handler = &reset_prompt;
     sigaction(SIGINT, &act, NULL);
-}
+}*/
 
 /*
 ** Configura los handlers de señal para la fase de EJECUCIÓN
@@ -36,7 +36,7 @@ void	set_signals_interactive()
      (o la lógica para los hijos).
 ** signal_print_newline maneja la interrupcion durante la ejecucion
 */
-void	set_signals_handlers_exec()
+/*void	set_signals_handlers_exec()
 {
     struct sigaction    act;
 
@@ -44,9 +44,9 @@ void	set_signals_handlers_exec()
 	act.sa_handler = &signal_print_newline;
     sigaction(SIGINT, &act, NULL);
     sigaction(SIGQUIT, &act, NULL);
-}
+}*/
 
-void	signals(t_data *data)
+/*void	signals(t_data *data)
 {
 	data->user_input = readline(prompt());
     if (data->user_input == NULL)
@@ -60,4 +60,4 @@ void	signals(t_data *data)
         g_status = execute(data);
     else
         g_status = 1;
-}
+}*/

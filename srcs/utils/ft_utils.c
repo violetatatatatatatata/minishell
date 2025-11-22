@@ -88,11 +88,11 @@ char	**ft_dup_tokens(char **tokens)
 	return (dup);
 }
 
-int	ft_isvalid_envvar(char *name, char **env)
+int	ft_isvalid_envvar(char *name, t_shell data)
 {
 	char	*var;
 
-	var = ft_getenv(name, env);
+	var = ft_getenv(name, data.env);
 	if (!var)
 		return (0);
 	return (1);

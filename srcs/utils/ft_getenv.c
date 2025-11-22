@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-char	*ft_getenv(const char *name, char **env)
+/*char	*ft_getenv(const char *name, char **env)
 {
 	size_t	name_len;
 	int		i;
@@ -36,3 +36,4 @@ char	*ft_getenv(const char *name, char **env)
 	}
 	return (NULL);
 }
+*/

@@ -40,12 +40,10 @@ static int	ft_open_output_file(char *filename, int mode)
 
 int	ft_open_outfile(t_token *token)
 {
-	int	i;
 	int	mode;
 	int	fd_out;
 
 	fd_out = STDOUT_FILENO;
-	i = 0;
 	while (token)
 	{
 		if (token->type == WORD)

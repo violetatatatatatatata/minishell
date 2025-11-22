@@ -56,14 +56,9 @@ SRCS = \
 	arrays/ft_count_if.c \
 	arrays/ft_foreach.c \
 	arrays/ft_range.c \
-    printf/ft_printf.c \
-    printf/printnum.c \
-    printf/printstring.c \
-    printf/printpoint.c \
-    printfd/ft_printfd.c \
-    printfd/printnumfd.c \
-    printfd/printstringfd.c \
-    printfd/printpointfd.c \
+	get_next_line/ft_get_next_line.c\
+	get_next_line/ft_get_next_line_utils.c\
+	get_next_line/ft_get_next_line_utils_2.c\
 
 # Object files
 OBJS = $(SRCS:.c=.o)

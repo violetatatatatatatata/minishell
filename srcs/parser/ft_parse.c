@@ -235,7 +235,7 @@ static void	ft_print_cmd_table(t_list *cmd_table)
 	}
 }
 
-t_list	*ft_parse(char *prompt, char **env)
+t_list	*ft_parse(char *prompt, t_shell *data)
 {
 	char	**tokens;
 	t_list	*cmd_list;
@@ -244,7 +244,7 @@ t_list	*ft_parse(char *prompt, char **env)
 	cmd_list = ft_split_tokens(tokens);
 	ft_print_debug(cmd_list);
 	printf("--------- EXPAND ---------\n");
-	ft_expand_dolar(&cmd_list, env);
+	ft_expand_dolar(&cmd_list, data);
 	ft_print_debug(cmd_list);
 	printf("----- REMOVE QUOTES ------\n");
 	ft_remove_quotes(cmd_list);

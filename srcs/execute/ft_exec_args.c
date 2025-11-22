@@ -55,14 +55,14 @@ static void	ft_path_error_message(char **argv)
 	}
 }
 
-static int	ft_prepare_exec(char **args, char **env, char **cmd_path)
+static int	ft_prepare_exec(char **args, t_shell *data, char **cmd_path)
 {
 	if (!args)
 	{
 		ft_path_error_message(args);
 		return (127);
 	}
-	*cmd_path = ft_find_command_path(args[0], env);
+	*cmd_path = ft_find_command_path(args[0], data);
 	if (!*cmd_path)
 	{
 		ft_path_error_message(args);
@@ -71,15 +71,15 @@ static int	ft_prepare_exec(char **args, char **env, char **cmd_path)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_exec_args(char **args, char **env)
+int	ft_exec_args(char **args, t_shell *data)
 {
 	char	*cmd_path;
 	int		return_val;
 
-	return_val = ft_prepare_exec(args, env, &cmd_path);
+	return_val = ft_prepare_exec(args, data, &cmd_path);
 	if (return_val > EXIT_SUCCESS)
 		return (return_val);
-	execve(cmd_path, args, env);
+	execve(cmd_path, args, env_to_array(data->env));
 	perror("execve");
 	free(cmd_path);
 	return (EXIT_FAILURE);

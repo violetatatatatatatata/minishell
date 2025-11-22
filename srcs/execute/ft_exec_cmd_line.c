@@ -12,27 +12,26 @@
 
 #include "../includes/minishell.h"
 
-void debug_fd(int fd)
+void	debug_fd(int fd)
 {
-    if (fd < 0) {
-        printf("fd inválido\n");
-        return;
-    }
+	char	buffer[1024];
+	ssize_t	n;
 
-    // Obtener tamaño aproximado
-    char buffer[1024];
-    ssize_t n;
-
-    // Mover cursor al inicio (solo si es un file normal)
-    lseek(fd, 0, SEEK_SET);
-
-    while ((n = read(fd, buffer, sizeof(buffer)-1)) > 0)
-    {
-        buffer[n] = '\0';  // Terminar string
-        printf("%s", buffer);
-    }
-
-    printf("\n");
+	if (fd < 0)
+	{
+		printf("fd inválido\n");
+		return ;
+	}
+	// Mover cursor al inicio (solo si es un file normal)
+	lseek(fd, 0, SEEK_SET);
+	n = read(fd, buffer, sizeof(buffer) - 1);
+	while (n > 0)
+	{
+		buffer[n] = '\0';
+		printf("%s", buffer);
+		n = read(fd, buffer, sizeof(buffer) - 1);
+	}
+	printf("\n");
 }
 
 static void	ft_child_body(t_values *vals,
@@ -55,7 +54,7 @@ static void	ft_child_body(t_values *vals,
 	close(fd_pipe[1]);
 	if (fd_out > 0)
 		close(fd_out);
-	return_val = ft_exec_args(vals->args, vals->env);
+	return_val = ft_exec_args(vals->args, vals->val_env);
 	ft_free_vals(vals);
 	exit(return_val);
 }
@@ -89,7 +88,7 @@ static void	ft_last_cmd(t_values *vals)
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
 		}
-		return_val = ft_exec_args(vals->args, vals->env);
+		return_val = ft_exec_args(vals->args, vals->val_env);
 		ft_free_vals(vals);
 		exit(return_val);
 	}
@@ -118,14 +117,14 @@ static void	ft_command_loop(t_values *vals, int fd_pipe[2])
 	}
 }
 
-void	ft_exec_cmd_line(t_list *cmd_list, char **env)
+int	ft_exec_cmd_line(t_list *cmd_list, t_shell *data)
 {
 	int			fd_pipe[2];
 	int			ret_val;
 	t_values	vals;
 	t_cmd_table	*table;
 
-	vals.env = env;
+	vals.val_env = data;
 	vals.fd_prev = -1;
 	vals.index = 0;
 	vals.cmds_size = ft_lstsize(cmd_list);
@@ -150,4 +149,5 @@ void	ft_exec_cmd_line(t_list *cmd_list, char **env)
 		close(vals.fd_in);
 	if (vals.fd_prev > 2 && vals.fd_prev != vals.fd_in)
 		close(vals.fd_prev);
+	return (ret_val);
 }

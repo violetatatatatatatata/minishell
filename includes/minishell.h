@@ -45,14 +45,6 @@
 # include "colors.h"
 # include "messages.h"
 
-<<<<<<< HEAD
-// deberia ponerlo volatile sigatomic??
-//int						g_status;
-=======
-#define TRUE 0
-#define	FALSE 1
->>>>>>> origin/main
-
 // Enums
 typedef enum e_quote_type
 {
@@ -84,45 +76,27 @@ typedef enum e_cmd_type
 	HEREDOC_NAME
 }		t_cmd_type;
 
-// Data structures
-typedef struct s_tokens_values
-{
-	char	*text;
-	char	**env;
-	int		count;
-}				t_tokens_values;
-
-<<<<<<< HEAD
-typedef struct s_process_vars
-{
-	t_quote_type	current_quote;
-	int				i;
-	int				sub_start;
-	int				is_expanded;
-}	t_process_vars;
-
-typedef struct s_token	t_token;
-=======
 // tambien se pueden pillar por rutas absolutas en vez de leer del env
 // path se obtiene de getcwd()
 // si el user es nulo, se imprime "minishell:"
 // los comandos solo funcionan si tienen el path absoluto o si son nuestros builtins
 // // el export ha de funcionar creando una lista
 
-typedef struct s_shell
-{
-	t_env	**env;
-	t_list	*user_input;
-	int		pid;
-} t_shell;
-
+// Data structures
 typedef struct s_env
 {
 	char			*key;
 	char			*value;
 	int				visible;
 	struct s_env	*next;
-} t_env
+}	t_env;
+
+typedef struct s_shell
+{
+	t_env	*env;
+	t_list	*user_input;
+	int		pid;
+}	t_shell;
 
 typedef struct s_tokens_values
 {
@@ -176,6 +150,7 @@ typedef struct s_values
 {
 	char	**args;
 	t_token	*token;
+	t_shell	*val_env;
 	pid_t	*pids;
 	int		index;
 	int		cmds_size;
@@ -185,57 +160,9 @@ typedef struct s_values
 	int		fd_out;
 }				t_values;
 
-volatile sigatomic	g_status;
+//volatile	sigatomic	g_status;
 
 /*	Definiciones de funciones del proyecto	*/
->>>>>>> origin/main
-
-typedef struct s_expand_data
-{
-	char			*content;
-	t_token			**token;
-	int				*index;
-	int				*sub_start;
-	t_quote_type	current_quote;
-	char			**env;
-}	t_expand_data;
-
-typedef struct s_redir
-{
-	t_token			*redir_content;
-	t_redir_type	redir_type;
-}	t_redir;
-
-typedef struct s_token
-{
-	t_token			*left_side;
-	t_token			*right_side;
-	char			*content;
-	t_token_type	type;
-	t_redir			*redir;
-}	t_token;
-
-typedef struct s_cmd_table
-{
-	t_token	*token;
-	char	**args;
-}				t_cmd_table;
-
-typedef struct s_values
-{
-	char	**env;
-	char	**args;
-	t_token	*token;
-	pid_t	*pids;
-	int		index;
-	int		cmds_size;
-	int		status;
-	int		fd_prev;
-	int		fd_in;
-	int		fd_out;
-}				t_values;
-
-<<<<<<< HEAD
 // builtins
 
 /*			LEXER				*/
@@ -255,11 +182,11 @@ int				ft_open_infile(t_token *token);
 int				ft_open_outfile(t_token *token);
 
 /*			PARSE				*/
-t_list			*ft_parse(char *prompt, char **env);
+t_list			*ft_parse(char *prompt, t_shell *data);
 void			ft_word_split(char *env_var, char *prev_content,
 					t_token **token);
 void			ft_add_tokentolist(char *content, t_token *token);
-void			ft_expand_dolar(t_list **cmd_list, char **env);
+void			ft_expand_dolar(t_list **cmd_list, t_shell *data);
 void			ft_expansion(t_expand_data *data);
 void			ft_handle_env_var(t_expand_data *data, char **name,
 					char *prev_str);
@@ -270,12 +197,12 @@ t_list			*ft_build_cmd_table(t_list *tokens);
 void			ft_remove_quotes(t_list *cmd_list);
 
 /*			GET_ENV				*/
-char			*ft_getenv(const char *name, char **env);
+//char			*ft_getenv(const char *name, char **env);
 
 /*			EXEC_CMD			*/
-void			ft_exec_cmd_line(t_list *cmd_list, char **env);
-int				ft_exec_args(char **args, char **env);
-char			*ft_find_command_path(const char *cmd, char **env);
+int				ft_exec_cmd_line(t_list *cmd_list, t_shell *data);
+int				ft_exec_args(char **args, t_shell *data);
+char			*ft_find_command_path(const char *cmd, t_shell *data);
 int				ft_wait_children(int num_cmds, pid_t *pids);
 
 /*			FREE_MEMORY			 */
@@ -289,10 +216,21 @@ int				ft_double_arr_size(char **arr);
 int				ft_triple_arr_size(char ***arr);
 int				ft_count_arr(char ***tokens);
 char			**ft_dup_tokens(char **tokens);
-int				ft_isvalid_envvar(char *name, char **env);
+int				ft_isvalid_envvar(char *name, t_shell data);
 
 /*	Definiciones de funciones del proyecto	*/
-void			print_msg(char *msg, int *exit);
+int				print_msg(char *function, char *msg, int exit);
+
+/*			ENV					*/
+t_env			*init_env(char **env);
+void			create_node(t_env *node, char *key, char *value, int state);
+t_env			*create_env_variable(char *key, char *value);
+char			*ft_getenv(const char *key, t_env *env);
+char			**env_to_array(t_env *head);
+void			handle_missing_env(t_shell *data, char *name);
+
+/*			INIT				*/
+void			init_shell(int argc, char **argv, char **env, t_shell *data);
 
 // is_definition
 int				ft_isblank(int c);
@@ -307,6 +245,4 @@ int				is_word(const char *s);
 int				ft_is_pipe(char *s);
 int				ft_is_redirection(char *s);
 
-=======
->>>>>>> origin/main
 #endif

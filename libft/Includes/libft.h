@@ -9,12 +9,21 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdarg.h>
 
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_get_next_line_var
+{
+	char			buffer[BUFFER_SIZE + 1];
+	int				bytes_read;
+	char			*temp_str;
+	char			*str;
+}	t_get_next_line_var;
 
 int				ft_atoi(const char *n);
 void			ft_bzero(void *s, size_t n);
@@ -71,24 +80,19 @@ void			ft_lstadd_back(t_list **lst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 t_list			\
 *ft_lstmap(t_list *lst, void *(*f)(void *),	void (*del)(void *));
-//printf
-void			checker(int *ret, char check, va_list opc);
-int				realprintf(char const *p, va_list opc);
-int				ft_printf(char const *print, ...);
-unsigned int	strilen(char *s);
-int				printchar(char a);
-int				printstring(char const *s);
-int				printnum(long n, char *base);
-int				printunum(unsigned int n, char *base);
-int				printpoint(unsigned long long n, char *base);
-//printfd
-void			checkerfd(int fd, int *ret, char check, va_list opc);
-int				realprintfd(int fd, char const *p, va_list opc);
-int				ft_printfd(int fd, char const *print, ...);
-int				printcharfd(int fd, char a);
-int				printstringfd(int fd, char const *s);
-int				printnumfd(int fd, long n, char *base);
-int				printunumfd(int fd, unsigned int n, char *base);
-int				printpointfd(int fd, unsigned long long n, char *base);
-
+//get_next_line
+char			*get_next_line(int fd);
+int				ft_read_loop(int fd, char *buffer, char **temp_str);
+char			*ft_extract_line(char *buffer, char **temp_str,
+					char **temp_buffer, int bytes_read);
+char			*ft_init_and_copy_line(char **temp_str, char *buffer,
+					size_t temp_size, size_t line_size);
+void			ft_handle_remaining_bytes(char *buffer, char **temp_buffer,
+					int bytes_read, size_t line_size);
+size_t			ft_isnewline(const char *buffer, size_t bytes_read);
+char			*ft_strcombine(const char *dest, const char *src);
+size_t			ft_linesize(const char *buffer);
+char			*ft_cut_new_line(char **all_line);
+char			*ft_read_buffer(char **temp_buffer,
+					t_get_next_line_var	*vars, int fd);
 #endif

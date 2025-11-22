@@ -19,27 +19,32 @@ void	print_prompt()
 	printf("%s - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n", COLOR0);
 }
 
-char	*prompt()
+char	*handle_missing_user(void)
+{
+	return ("TMP-Change");
+}
+
+char	*handle_missing_path(void)
+{
+	return ("TMP-Change");
+}
+
+char	*prompt(void)
 {
 	char	*p;
 	char	*user;
 	char	*curpath;
 
-	user = ft_getenv("$USER");
-		if (!user)
-			return (handle_missing_user());
-	curpath = ft_getenv("$PWD");
-		if (!curpath)
-			return (handle_missing_path());
+	user = getenv("$USER");
+	if (!user)
+		return (handle_missing_user());
+	curpath = getenv("$PWD");
+	if (!curpath)
+		return (handle_missing_path());
 	p = (char *)malloc(sizeof(char) + ft_strlen(user) + ft_strlen(curpath) + 2);
 	p = ft_strjoin(p, user);
 	p = ft_strjoin(p, ":");
 	p = ft_strjoin(p, curpath);
 	p = ft_strjoin(p, "$");
 	return (p);
-}
-
-char	*handle_missing_user()
-{
-	return();
 }

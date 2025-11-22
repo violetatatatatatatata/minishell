@@ -14,15 +14,11 @@
 
 //int	g_status = 0;
 
-int	main(int count, char **args, char **env)
+void	loop(t_shell *data)
 {
-	//t_values	values;
 	char	*line;
 	t_list	*cmd_list;
 
-	if (count != 1 || args[1] != NULL)
-		return (1);
-	//values.env = env;
 	while (1)
 	{
 		line = NULL;
@@ -35,10 +31,20 @@ int	main(int count, char **args, char **env)
 			printf("LEXER ERROR\n");
 			continue ;
 		}
-		cmd_list = ft_parse(line, env);
-		ft_exec_cmd_line(cmd_list, env);
+		cmd_list = ft_parse(line, data);
+		ft_exec_cmd_line(cmd_list, data);
 		free(line);
 	}
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	t_shell	data;
+
+	if (argc != 1 || argv[1] != NULL)
+		return (1);
+	init_shell(argc, argv, env, &data);
+	loop(&data);
 	return (0);
 }
 

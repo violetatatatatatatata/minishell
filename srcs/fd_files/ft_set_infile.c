@@ -35,7 +35,7 @@ static void	ft_get_text(const char *limiter, int *fd_write)
 	limiter_len = ft_strlen(limiter);
 	while (1)
 	{
-		ft_printf("heredoc> ");
+		printf("heredoc> ");
 		line = get_next_line(STDIN_FILENO);
 		printf("LINE: %s\n", line);
 		if (!line)
