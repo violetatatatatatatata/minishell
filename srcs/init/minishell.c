@@ -16,10 +16,8 @@ int	minishell(int argc, char **argv, char **env)
 {
 	t_shell	*shell;
 
-	(void)argc;
-	(void)argv;
 	if (argc != 1 || argv[1] != NULL)
-		return (1);
+		return (EXIT_FAILURE);
 	ft_memset(shell, 0, sizeof(shell));
 	print_prompt();
 	shell->pid = getpid();
@@ -27,7 +25,7 @@ int	minishell(int argc, char **argv, char **env)
 		data->env = init_env(env);
 	else
 		handle_missing_env(data, argv[0]);
-	loop(&shell);
+	loop(shell);
 	return (EXIT_SUCCESS);
 }
 

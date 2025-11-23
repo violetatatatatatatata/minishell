@@ -25,14 +25,29 @@ static char	*get_user_input(void)
 	return (input);
 }
 
+static void	free_cmd(void *content)
+{
+	t_cmd_table	*node;
+
+	node = (t_cmd_table *)content;
+	if (!node)
+		return ;
+	if (node->args)
+		ft_free_split(node->args);
+//	ft_free_token_list(node->token); 
+	free(node);
+}
+
 static int	execute(t_shell *data)
 {
 	t_list	*cmd_list;
 	int		exit_status;
 
 	cmd_list = ft_parse(data->user_input, data);
-	ft_exec_cmd_line(cmd_list, data);
-	exit_status = // alguna funcion que indique el exit status
+	if (!cdm_list)
+		return (g_status)
+	exit_status = ft_exec_cmd_line(cmd_list, data);
+	ft_lstclear(&cdm_list, &free_cmd)
 	return (exit_status);
 }
 
@@ -45,10 +60,7 @@ void	loop(t_shell *data)
 		if (data->user_input[0] != '\0')
 		{
 			add_history(data->user_input);
-			if (ft_lexer(line) == TRUE)
-				g_status = execute(data);
-			else
-				g_status = 1;
+			g_status = execute(data);
 		}
 		terminator(data, FALSE);
 	}

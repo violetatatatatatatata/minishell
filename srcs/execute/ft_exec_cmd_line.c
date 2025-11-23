@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_cmd.c                                      :+:      :+:    :+:   */
+/*   ft_exec_cmd_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/08/07 13:23:03 by aalcaide         ###   ########.fr       */
+/*   Updated: 2025/11/23 17:07:04 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	debug_fd(int fd)
 	printf("\n");
 }
 
-static void	ft_child_body(t_values *vals,
-	int *fd_pipe)
+static void	ft_child_body(t_values *vals, int *fd_pipe)
 {
 	int	fd_out;
 	int	return_val;

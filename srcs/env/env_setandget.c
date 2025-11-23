@@ -21,7 +21,7 @@ t_env	*create_env_variable(char *key, char *value)
 	node = ft_calloc(1, sizeof(t_env));
 	if (node)
 	{
-		if (value == NULL || value == "")
+		if (value == NULL || ft_strcmp(value, "") == 0)
 			visible = FALSE;
 		create_node(node, ft_strdup(key), ft_strdup(value), visible);
 	}
@@ -56,7 +56,7 @@ void	ft_setenv(t_shell *data, char *key, char *value)
 void	already_exists(t_env *cpy, char *val)
 {
 	if (cpy->value)
-		free(current->value);
+		free(cpy->value);
 	cpy->value = ft_strdup(val);
 	cpy->visible = 1;
 }
@@ -66,7 +66,7 @@ char	*ft_getenv(const char *key, t_env *env)
 {
 	while (env)
 	{
-		if (ft_strcmp(env->key) == 0 && env->visible)
+		if (ft_strcmp(env->key, key) == 0 && env->visible)
 			return (env->value);
 		env = env->next;
 	}
