@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 02:06:37 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 02:07:30 by avelandr         ###   ########.fr       */
+/*   Created: 2025/11/23 02:05:18 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 02:05:20 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../Includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int	ft_isspace(int c)
 {
-	if (!init_shell(argc, argv, env))
-		return (EXIT_FAILURE);
-	loop(void);
-	terminator(void);
-	return (EXIT_SUCCESS);
+	if (c == ' ' || c == '\n' || c == '\t' || c == '\v' \
+	|| c == '\f' || c == '\r')
+	{
+		return (1);
+	}
+	return (0);
 }

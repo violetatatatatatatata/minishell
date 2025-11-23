@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   messages.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/23 02:09:16 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 02:09:22 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MESSAGES_H
 # define MESSAGES_H
 
@@ -6,6 +18,7 @@
 // MACROS
 # define	TRUE 1
 # define	FALSE 0
+# define	MAX_LONG "9223372036854775807"
 
 // EXECUTION MESSAGES
 # define PROMPT ""

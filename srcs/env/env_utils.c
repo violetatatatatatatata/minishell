@@ -1,43 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/23 01:09:26 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 01:10:13 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-t_env   *create_env_variable(char *key, char *value)
+// tema doble frees
+void	free_node(t_env *node)
 {
-    t_env   *node;
-
-    node = ft_calloc(1, sizeof(t_env));
-    if (node)
-        create_node(node, ft_strdup(key), ft_strdup(value), 1);
-    return (node);
+	if (!node)
+		return ;
+	if (node->key)
+		free(node->key);
+	if (node->value)
+		free(node->value);
+	free(node);
 }
 
-void ft_setenv(t_shell *data, char *key, char *value)
+void	create_node(t_env *node, char *key, char *value, int state)
 {
-    t_env   *current;
-
-    current = data->env;
-    while (current->next != NULL)
-    {
-        if (ft_strcmp(current->key, key) == 0)
-        {
-            free(current->value);
-            current->value = ft_strdup(value);
-            return ;
-        }
-        current = actual->next;
-    }
-    if (current)
-        current->next = create_env_variable(key, value);
-    else
-        data->env = create_env_variable(key, value);    // lista vacía
+	node->key = key;
+	node->value = value;
+	node->visible = state;
+	node->next = NULL;
 }
 
-char    *ft_getenv(const char *key, t_env *env)
+void	ft_lstclear_env(t_env **lst)
 {
-	while(env)
+	t_env	*current;
+	t_env	*tmp;
+
+	if (!lst || !*lst)
+		return ;
+	current = *lst;
+	while (current)
 	{
-		if(ft_strcmp(env->key) == 0 && env->visible)
-			return (env->value);
-		env = env->next;
+		tmp = current->next;
+		free_node(current);
+		current = tmp;
 	}
-	return (NULL);
+	*lst = NULL;
+}
+
+char	*ft_getkey(char *line, char *eq_pos)
+{
+	return (ft_substr(line, 0, (eq_pos - line)));
+}
+
+char	*ft_getvalue(char *eq_pos)
+{
+	return (ft_strdup(eq_pos + 1));
 }
