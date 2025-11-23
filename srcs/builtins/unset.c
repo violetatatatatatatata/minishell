@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/23 00:59:13 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 00:59:38 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static void	ft_envremove(t_shell *data, char *key)
@@ -7,7 +19,7 @@ static void	ft_envremove(t_shell *data, char *key)
 
 	current = data->env;
 	prev = NULL;
-	while(current)
+	while (current)
 	{
 		if (ft_strncmp(current->key, key) == 0)
 		{
@@ -28,10 +40,10 @@ int	bt_unset(t_shell *data, char **args)
 	int	i;
 
 	i = 1;
-	while(args[i])
+	while (args[i])
 	{
 		ft_envremove(data, args[i]);
 		i++;
 	}
-	return(EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

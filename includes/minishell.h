@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/23 02:10:10 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 02:14:29 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -30,9 +42,6 @@
 # include "../libft/Includes/libft.h"
 # include "colors.h"
 # include "messages.h"
-
-#define TRUE 0
-#define	FALSE 1
 
 // Enums
 typedef enum e_quote_type
@@ -67,18 +76,12 @@ typedef enum e_cmd_type
 
 // Data structures
 
-// tambien se pueden pillar por rutas absolutas en vez de leer del env
-// path se obtiene de getcwd()
-// si el user es nulo, se imprime "minishell:"
-// los comandos solo funcionan si tienen el path absoluto o si son nuestros builtins
-// // el export ha de funcionar creando una lista
-
 typedef struct s_shell
 {
 	t_env	**env;
 	t_list	*user_input;
 	int		pid;
-} t_shell;
+}	t_shell;
 
 typedef struct s_env
 {
@@ -86,14 +89,14 @@ typedef struct s_env
 	char			*value;
 	int				visible;
 	struct s_env	*next;
-} t_env
+}	t_env;
 
 typedef struct s_tokens_values
 {
 	char	*text;
-	t_shell	*val;
 	int		count;
-}				t_tokens_values;
+	t_shell	*val;
+}	t_tokens_values;
 
 typedef struct s_process_vars
 {
@@ -134,7 +137,7 @@ typedef struct s_cmd_table
 {
 	t_token	*token;
 	char	**args;
-}				t_cmd_table;
+}	t_cmd_table;
 
 typedef struct s_values
 {
@@ -147,7 +150,7 @@ typedef struct s_values
 	int		fd_prev;
 	int		fd_in;
 	int		fd_out;
-}				t_values;
+}	t_values;
 
 // permite almacenar el estado de salida del ultimo
 // comando ejecutado y expandir $?
@@ -156,14 +159,48 @@ volatile sigatomic	g_status;
 /*	Definiciones de funciones del proyecto	*/
 
 // is_definition
-int	ft_isblank(int c);
-int	ft_ismeta(int c);
-int	is_controlop(const char *str);
-int	ft_isspace(int c);
-int	is_controlop(const char *str);
-int	is_filename(const char *s);
-int	is_redop(const char *str);
-int	is_token(const char *str);
-int	is_word(const char *s);
+int		ft_isblank(int c);
+int		ft_ismeta(int c);
+int		ft_isspace(int c);
+int		is_controlop(const char *str);
+int		is_filename(const char *s);
+int		is_redop(const char *str);
+int		is_token(const char *str);
+int		is_word(const char *s);
+
+
+int		init_shell(int argc, char **argv, char **env);
+int		args_checker(int argc, char **argv);
+void	reset_prompt(int signo);
+void	set_signals_interactive(void);
+void	set_signals_handlers_exec(void);
+void	loop(void);
+void	print_prompt(void);
+char	*prompt(void);
+char	*handle_missing_user(void);
+char	*handle_missing_path(void);
+int		print_msg(char *function, char *msg, int exit);
+void	free_node(t_env *node);
+void	create_node(t_env *node, char *key, char *value, int state);
+void	ft_lstclear_env(t_env **lst);
+char	*ft_getkey(char *line, char *eq_pos);
+char	*ft_getvalue(char *eq_pos);
+t_env	*create_env_variable(char *key, char *value);
+void	ft_setenv(t_shell *data, char *key, char *value);
+void	already_exists(t_env *cpy, char *val);
+char	*ft_getenv(const char *key, t_env *env);
+int		print_sorted_env(t_env *env);
+t_env	*init_env(char **env);
+void	handle_missing_env(t_shell *data, char *name);
+void	print_args(char **args, int start, int n_flag);
+void	bt_echo(char **args);
+int		bt_env(t_shell *data, char **args);
+void	bt_pwd(t_shell *data);
+int		bt_cd(char **args, t_values *data);
+int		is_numeric(char *str);
+int		bt_exit(t_shell *data, char **args);
+int		bt_export(t_shell *data, char **args)
+int		bt_unset(t_shell *data, char **args);
+void	terminator(t_shell *data, int exit);
 
 #endif

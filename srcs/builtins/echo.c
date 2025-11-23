@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/22 18:59:13 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/22 18:59:45 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static int	is_n_flag(char *arg)
@@ -25,10 +37,10 @@ void	print_args(char **args, int start, int n_flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 }
 
-void bt_echo(char **args)
+void	bt_echo(char **args)
 {
 	int		i;
-	int	n_flag;
+	int		n_flag;
 
 	i = 1;
 	n_flag = FALSE;

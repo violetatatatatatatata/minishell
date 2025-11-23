@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 00:58:53 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static int	is_valid_id(char *str)
@@ -5,13 +17,11 @@ static int	is_valid_id(char *str)
 	int	i;
 
 	i = 0;
-	// al menos el primer caracter es una letra o _
 	if (!ft_isalpha(str[i]) && str[i] != '_')
 		return (FALSE);
 	i++;
 	while (str[i] && str[i] != '=')
 	{
-		// que sean caracter
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (FALSE);
 		i++;

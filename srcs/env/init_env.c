@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_env.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/23 01:00:06 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 01:01:50 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
 static t_env	*env_nodes(char *line)
 {
 	t_env	*new_node;
 	char	*separator;
+	char	*key;
 
 	new_node = (t_env *)malloc(sizeof(t_env));
 	if (!new_node)
@@ -12,7 +25,10 @@ static t_env	*env_nodes(char *line)
 	if (!separator)
 		create_node(new_node, ft_strdup(line), NULL, 0);
 	else
-		create_node(new_node, ft_getkey(line, separator), ft_getvalue(separator), 1);
+	{
+		key = ft_getkey(line, separator);
+		create_node(new_node, key, ft_getvalue(separator), 1);
+	}
 	new_node->next = NULL;
 	if (!new_node->key || (separator != NULL && !new_node->value))
 	{

@@ -1,12 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/22 19:05:46 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/22 19:06:07 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-// imprimir la fokin env
 int	bt_env(t_shell *data, char **args)
 {
 	t_env	*tmp;
 
-	// no se aceptan args en el subject
-	if(args[1])
+	if (args[1])
 		return (print_msg("env", "too many args", 1));
 	tmp = data->env;
 	while (tmp)

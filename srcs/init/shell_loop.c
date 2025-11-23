@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_loop.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/23 01:11:43 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 01:12:33 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 
-// puedo hacer que dependiendo del valor de la variable global, libere TODOS
-// los recursos o tan solo los que han sido usados para el ultimo comando ejecutado
-void	loop()
+// cuando readline detecta ctrl-d devuelve NULL
+void	loop(void)
 {
 	char	*prompt_str;
 
@@ -12,7 +23,6 @@ void	loop()
 		prompt_str = prompt();
 		data->user_input = readline(prompt_str);
 		free(prompt_str);
-		// cuando readline detecta ctrl-d devuelve NULL
 		if (data->user_input == NULL)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
