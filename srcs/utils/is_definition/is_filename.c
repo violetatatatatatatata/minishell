@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   is_filename.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 10:58:02 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 10:58:49 by avelandr         ###   ########.fr       */
+/*   Created: 2025/11/23 02:05:33 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 02:05:34 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../Includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int	is_filename(const char *s)
 {
-	return (minishell(argc, argv, env));
+	if (s == NULL || *s == '\0')
+		return (1);
+	while (*s)
+	{
+		if (*s == '/' || *s == '\0')
+			return (1);
+		s++;
+	}
+	return (0);
 }

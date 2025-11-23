@@ -12,21 +12,34 @@
 
 #include "minishell.h"
 
-void	ft_free_tokens(char **tokens)
+void	ft_free_triple(char ***arr)
 {
 	int	i;
 
-	if (!tokens ||!*tokens)
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+		ft_free_double(arr[i++]);
+	free(arr);
+	arr = NULL;
+}
+
+void	ft_free_double(char **arr)
+{
+	int	i;
+
+	if (!arr ||!*arr)
 		return ;
 	i = 0;
-	while (tokens[i])
+	while (arr[i])
 	{
-		free(tokens[i]);
-		tokens[i] = NULL;
+		free(arr[i]);
+		arr[i] = NULL;
 		i++;
 	}
-	free(tokens);
-	tokens = NULL;
+	free(arr);
+	arr = NULL;
 }
 
 void	ft_free_cmd_list(char ***list)
@@ -53,6 +66,4 @@ void	ft_free_vals(t_values *vals)
 {
 	if (vals->pids)
 		free(vals->pids);
-	ft_free_tokens(vals->tokens);
-	ft_free_cmd_list(vals->tokens_list);
 }

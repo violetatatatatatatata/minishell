@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   is_redop.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 10:58:02 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 10:58:49 by avelandr         ###   ########.fr       */
+/*   Created: 2025/11/23 02:05:41 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 02:05:42 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../Includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+int	is_redop(const char *str)
 {
-	return (minishell(argc, argv, env));
+	if (ft_strcmp(s, ">") == 0 || ft_strcmp(s, ">>") == 0
+		|| ft_strcmp(s, "<") == 0 || ft_strcmp(s, "<<") == 0
+		|| ft_strcmp(s, "<>") == 0 || ft_strcmp(s, "&>") == 0
+		|| ft_strcmp(s, "2>&1") == 0)
+		return (1);
+	return (0);
 }

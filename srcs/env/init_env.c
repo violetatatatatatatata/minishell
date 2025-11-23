@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,36 +6,12 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:00:06 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 01:01:50 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/23 11:03:45 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-=======
-#include <minishell.h>
-
-// tema doble frees
-void	free_node(t_env *node)
-{
-	if (!node)
-		return ;
-	if (node->key)
-		free(node->key);
-	if (node->value)
-		free(node->value);
-	free(node);
-}
-
-void	create_node(t_env *node, char *key, char *value, int state)
-{
-	node->key = key;
-	node->value = value;
-	node->visible = state;
-	node->next = NULL;
-}
-
->>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 static t_env	*env_nodes(char *line)
 {
 	t_env	*new_node;
@@ -51,13 +26,8 @@ static t_env	*env_nodes(char *line)
 		create_node(new_node, ft_strdup(line), NULL, 0);
 	else
 	{
-<<<<<<< HEAD
 		key = ft_getkey(line, separator);
 		create_node(new_node, key, ft_getvalue(separator), 1);
-=======
-		key = ft_substr(line, 0, (ft_strlen(line) - ft_strlen(separator)));
-		create_node(new_node, key, ft_strdup(separator + 1), 1);
->>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 	}
 	new_node->next = NULL;
 	if (!new_node->key || (separator != NULL && !new_node->value))
