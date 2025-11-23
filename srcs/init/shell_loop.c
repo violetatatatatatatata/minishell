@@ -27,6 +27,9 @@ static char	*get_user_input(void)
 
 void	loop(t_shell *data)
 {
+	t_values	values;
+	
+	t_values = data->env;
 	data->user_input = get_user_input();
 	while (data->user_input != NULL)
 	{
@@ -34,12 +37,14 @@ void	loop(t_shell *data)
 		if (data->user_input[0] != '\0')
 		{
 			add_history(data->user_input);
-			if (lexparsexpander(data) == TRUE)
+			values.token = ft_tokenize(line, &values.num_cmds, values.env);
+			if (values.tokens)
 				g_status = execute(data);
 			else
 				g_status = 1;
 		}
+		values.pids = malloc(sizeof(pid_t) * values.num_cmds);
+		ft_parse(&values);
 		terminator(data, FALSE);
-		data->user_input = get_user_input();
 	}
 }

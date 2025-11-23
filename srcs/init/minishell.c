@@ -14,7 +14,7 @@
 
 int	minishell(int argc, char **argv, char **env)
 {
-	t_shell	*shell;
+	t_shell		*shell;
 
 	(void)argc;
 	(void)argv;
