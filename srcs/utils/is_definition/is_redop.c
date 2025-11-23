@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/minishell.h"
+#include <minishell.h>
 
-int	is_redop(const char *str)
+int	is_redop(char *s)
 {
 	if (ft_strcmp(s, ">") == 0 || ft_strcmp(s, ">>") == 0
 		|| ft_strcmp(s, "<") == 0 || ft_strcmp(s, "<<") == 0

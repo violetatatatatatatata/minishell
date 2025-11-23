@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_word.c                                          :+:      :+:    :+:   */
+/*   ft_tokenize_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 02:06:15 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 02:06:17 by avelandr         ###   ########.fr       */
+/*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
+/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../../../includes/minishell.h"
 
-int	is_word(char *s)
+int	ft_is_redirection(char *s)
 {
-	while (*s)
-	{
-		if (*s != ' ' || *s != '\t' || !ft_ismeta(*s))
-			return (0);
-		s++;
-	}
-	return (1);
+	return (!ft_strncmp(s, ">>", 2) || !ft_strncmp(s, ">", 1)
+		|| !ft_strncmp(s, "<<", 2) || !ft_strncmp(s, "<", 1));
 }

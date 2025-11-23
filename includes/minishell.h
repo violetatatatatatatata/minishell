@@ -86,7 +86,7 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	t_env	**env;
+	t_env	*env;
 	t_list	*user_input;
 	int		pid;
 }	t_shell;
@@ -143,6 +143,7 @@ typedef struct s_values
 {
 	char	**args;
 	t_token	*token;
+	t_shell	*val_env;
 	pid_t	*pids;
 	int		index;
 	int		cmds_size;
@@ -180,19 +181,16 @@ int		bt_exit(t_shell *data, char **args);
 int		bt_export(t_shell *data, char **args);
 void	bt_pwd(t_shell *data);
 void	free_data();
+void	ft_free_double(char **arr);
 void	ft_free_triple(char ***arr);
 void	ft_free_double(char **arr);
 void	ft_free_cmd_list(char ***list);
 void	ft_free_vals(t_values *vals);
 void	terminator(t_shell *data, int exit);
 void	ft_here_doc(int *fd_in, const char *limiter);
-void	ft_here_doc(int *fd_in, const char *limiter);
-int		ft_open_infile(char ***args);
 int		ft_open_infile(t_token *token);
-int		ft_open_outfile(char ***args);
 int		ft_open_outfile(t_token *token);
 void	ft_set_infile(int *fd_write, const char *limiter);
-void	ft_free_split(char **split);
 int		ft_exec_args(char **args, t_shell *data);
 void	debug_fd(int fd);
 int		ft_exec_cmd_line(t_list *cmd_list, t_shell *data);
@@ -223,18 +221,20 @@ void	reset_prompt(int signo);
 void	set_signals_interactive(void);
 void	set_signals_handlers_exec(void);
 int		print_sorted_env(t_env *env);
+int		ft_is_redirection(char *s);
 int		ft_isblank(int c);
 int		ft_ismeta(int c);
 int		ft_isspace(int c);
-int		is_controlop(const char *str);
+int		is_controlop(char *s);
 int		is_filename(const char *s);
-int		is_redop(const char *str);
-int		is_token(const char *str);
-int		is_word(const char *s);
+int		is_redop(char *s);
+int		is_token(char *s);
+int		is_word(char *s);
 int		print_msg(char *function, char *msg, int exit);
 void	print_prompt(void);
 char	*prompt(void);
 char	*handle_missing_user(void);
 char	*handle_missing_path(void);
+void	ft_free_split(char **split);
 
 #endif

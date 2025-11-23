@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/minishell.h"
+#include <minishell.h>
 
 int	is_filename(const char *s)
 {

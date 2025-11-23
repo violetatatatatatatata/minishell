@@ -10,47 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-<<<<<<< HEAD
-#include "../minishell.h"
-=======
-#include "../includes/minishell.h"
->>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
-
-/*static void	ft_child_content(int *fd_pipe, const char *limiter)
-{
-	close(fd_pipe[0]);
-	printf("Limiter: %s\n", limiter);
-	ft_set_infile(&fd_pipe[1], limiter);
-	close(fd_pipe[1]);
-	exit(EXIT_SUCCESS);
-}
-
-void	ft_here_doc(int *fd_in,
-	const char *limiter)
-{
-	int		fd_pipe[2];
-	pid_t	child;
-
-	if (pipe(fd_pipe) == -1)
-	{
-		perror("pipe");
-		exit(EXIT_FAILURE);
-	}
-	child = fork();
-	if (child == -1)
-	{
-		perror("Couldn't create child");
-		exit(EXIT_FAILURE);
-	}
-	if (child == 0)
-		ft_child_content(fd_pipe, limiter);
-	else
-	{
-		close(fd_pipe[1]);
-		*fd_in = fd_pipe[0];
-		waitpid(child, NULL, 0);
-	}
-}*/
+#include "../../includes/minishell.h"
 
 void	ft_here_doc(int *fd_in,
 	const char *limiter)

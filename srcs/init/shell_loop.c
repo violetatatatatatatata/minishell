@@ -10,7 +10,7 @@
 /*																			  */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../../includes/minishell.h"
 
 // cuando readline detecta ctrl-d devuelve NULL
 static char	*get_user_input(void)
@@ -34,7 +34,7 @@ static void	free_cmd(void *content)
 		return ;
 	if (node->args)
 		ft_free_split(node->args);
-//	ft_free_token_list(node->token); 
+//	ft_free_token_list(node->token);
 	free(node);
 }
 
@@ -43,11 +43,12 @@ static int	execute(t_shell *data)
 	t_list	*cmd_list;
 	int		exit_status;
 
-	cmd_list = ft_parse(data->user_input, data);
-	if (!cdm_list)
-		return (g_status)
+	cmd_list = NULL;
+	cmd_list = ft_parse((char *)data->user_input->content, data);
+	if (!cmd_list)
+		return (g_status);
 	exit_status = ft_exec_cmd_line(cmd_list, data);
-	ft_lstclear(&cdm_list, &free_cmd)
+	ft_lstclear(&cmd_list, &free_cmd);
 	return (exit_status);
 }
 
@@ -57,12 +58,11 @@ void	loop(t_shell *data)
 	while (data->user_input != NULL)
 	{
 		set_signals_handlers_exec();
-		if (data->user_input[0] != '\0')
+		if (((char *)data->user_input->content)[0] != '\0')
 		{
-			add_history(data->user_input);
+			add_history((const char *)data->user_input->content);
 			g_status = execute(data);
 		}
 		terminator(data, FALSE);
 	}
 }
-

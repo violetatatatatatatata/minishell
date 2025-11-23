@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /*static void	ft_copy_before(char **tmp, char **src, int current_token)
 {
@@ -131,21 +131,6 @@ void	ft_first_expansion(char ****dolars_ex,
 	ft_free_double(word_split);
 	*dolars_ex = tmp;
 }*/
-
-static void	ft_free_split(char **split)
-{
-	int	i;
-
-	if (!split)
-		return ;
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
 
 static void	ft_join_first_token(char *prev_content, char **word_split,
 		t_token **token)

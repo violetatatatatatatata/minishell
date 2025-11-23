@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_word.c                                          :+:      :+:    :+:   */
+/*   ft_exec_args.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 02:06:15 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 02:06:17 by avelandr         ###   ########.fr       */
+/*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
+/*   Updated: 2025/06/02 10:55:31 by aalcaide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../../includes/minishell.h"
 
-int	is_word(char *s)
+void	ft_free_split(char **split)
 {
-	while (*s)
+	int	i;
+
+	if (!split || !*split)
+		return ;
+	i = 0;
+	while (split[i])
 	{
-		if (*s != ' ' || *s != '\t' || !ft_ismeta(*s))
-			return (0);
-		s++;
+		free(split[i]);
+		i++;
 	}
-	return (1);
+	free(split);
 }

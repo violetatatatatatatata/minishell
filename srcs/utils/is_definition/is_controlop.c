@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/minishell.h"
+#include <minishell.h>
 
-int	is_controlop(const char *str)
+int	is_controlop(char *s)
 {
 	if (ft_strcmp(s, "||") == 0 || ft_strcmp(s, "&&") == 0
 		|| ft_strcmp(s, "&") == 0 || ft_strcmp(s, ";") == 0

@@ -10,22 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-void	ft_free_split(char **split)
-{
-	int	i;
-
-	if (!split || !*split)
-		return ;
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-}
+#include "../../includes/minishell.h"
 
 /*static char	*ft_remove_outer_quotes(char *str)
 {

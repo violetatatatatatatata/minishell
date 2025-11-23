@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	ft_finalize_token_expansion(t_token *token,
 		char *content, int sub_start, int is_expanded)

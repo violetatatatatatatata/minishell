@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../../includes/minishell.h"
 
 // un ft_lstsize pero pa t_env vamo
 static int	count_env_vars(t_env *env)
@@ -26,7 +26,7 @@ static int	count_env_vars(t_env *env)
 	return (n_vars);
 }
 
-static void	sort_env_array(t_env **list, int size)
+static void	sort_env_array(t_env *list, int size)
 {
 	int		i;
 	int		j;
@@ -50,6 +50,40 @@ static void	sort_env_array(t_env **list, int size)
 	}
 }
 
+static void	swap_env_nodes(t_env *a, t_env *b)
+{
+	t_env	tmp;
+
+	tmp.key = a->key;
+	tmp.value = a->value;
+	tmp.visible = a->visible;
+	a->key = b->key;
+	a->value = b->value;
+	a->visible = b->visible;
+	b->key = tmp.key;
+	b->value = tmp.value;
+	b->visible = tmp.visible;
+}
+
+static int	sort_pass(t_env *list, t_env *last)
+{
+	t_env	*ptr;
+	int		swapped;
+
+	swapped = 0;
+	ptr = list;
+	while (ptr->next != last)
+	{
+		if (ft_strcmp(ptr->key, ptr->next->key) > 0)
+		{
+			swap_env_nodes(ptr, ptr->next);
+			swapped = 1;
+		}
+		ptr = ptr->next;
+	}
+	return (swapped);
+}
+
 static void	dupe_env(t_env *env, t_env *cpy_env, int size)
 {
 	int	i;
@@ -57,11 +91,11 @@ static void	dupe_env(t_env *env, t_env *cpy_env, int size)
 	i = 0;
 	while (env && i < size)
 	{
-		cpy_env[i] = env;
+		cpy_env = env;
 		env = env->next;
 		i++;
 	}
-	cpy_env[i] = NULL;
+	cpy_env = NULL;
 	sort_env_array(cpy_env, size);
 }
 
