@@ -1,0 +1,69 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_free_memory.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
+/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+void	ft_free_triple(char ***arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+		ft_free_double(arr[i++]);
+	free(arr);
+	arr = NULL;
+}
+
+void	ft_free_double(char **arr)
+{
+	int	i;
+
+	if (!arr ||!*arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+	free(arr);
+	arr = NULL;
+}
+
+void	ft_free_cmd_list(char ***list)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (list[i])
+	{
+		while (list[i][j])
+		{
+			free(list[i][j]);
+			j++;
+		}
+		free(list[i]);
+		i++;
+	}
+	free(list);
+}
+
+void	ft_free_vals(t_values *vals)
+{
+	if (vals->pids)
+		free(vals->pids);
+}

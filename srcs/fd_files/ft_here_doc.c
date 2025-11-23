@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+<<<<<<< HEAD
 #include "../minishell.h"
+=======
+#include "../includes/minishell.h"
+>>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 
 /*static void	ft_child_content(int *fd_pipe, const char *limiter)
 {

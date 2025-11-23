@@ -3,7 +3,7 @@ NAME = minishell
 CC = cc
 
 # Compiler flags
-CFLAGS = -Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra
 BFLAGS = -g -fsanitize=address
 RDFLAG = -lreadline
 
@@ -29,7 +29,7 @@ all: $(NAME)
 	echo "Minishell done."
 
 $(NAME): $(OBJ_FILES) $(LIB_DIR)/$(LIBFT_DIR)$(CLIB)
-	$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft
+	$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft $(RDFLAG)
 
 $(LIB_DIR)/$(LIBFT_DIR)$(CLIB):
 	@make -C $(LIBFT_DIR)
@@ -56,15 +56,15 @@ mem:
 clean:
 	@rm -rf $(OBJ_DIR)
 	@rm -rf $(LIB_DIR)
-	@rm -rf $(DEPS_DIR) 
-	@make fclean -C $(LIBFT_DIR) 
+	@rm -rf $(DEPS_DIR)
+	@make fclean -C $(LIBFT_DIR)
 	echo "Minishell cleaned."
 
 fclean: clean
-	@rm -f $(NAME) 
+	@rm -f $(NAME)
 	echo "Everything erased."
 
 
-re: fclean all 
+re: fclean all
 
 .PHONY: all clean fclean re

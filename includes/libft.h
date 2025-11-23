@@ -25,6 +25,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <stdarg.h>
 //structs and typedefs
 //typedef unsigned long	size_t;
 
@@ -81,33 +82,14 @@ int				ft_strcmp(char *s1, char *s2);
 int				ft_lstsize(t_list *lst);
 t_list			*ft_lstnew(void *content);
 void			ft_lstdelone(t_list *lst, void (*del)(void *));
-void			ft_lstadd_front(t_list **lst, t_list *new);
+void			ft_lstadd_front(t_list **lst, t_list *new_list);
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstalast(t_list *lst);
-void			ft_lstadd_back(t_list **lst, t_list *new);
+void			ft_lstadd_back(t_list **lst, t_list *new_list);
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 t_list			\
 *ft_lstmap(t_list *lst, void *(*f)(void *),	void (*del)(void *));
-//printf
-void			checker(int *ret, char check, va_list opc);
-int				realprintf(char const *p, va_list opc);
-int				ft_printf(char const *print, ...);
-unsigned int	strilen(char *s);
-int				printchar(char a);
-int				printstring(char const *s);
-int				printnum(long n, char *base);
-int				printunum(unsigned int n, char *base);
-int				printpoint(unsigned long long n, char *base);
-//printfd
-void			checkerfd(int fd, int *ret, char check, va_list opc);
-int				realprintfd(int fd, char const *p, va_list opc);
-int				ft_printfd(int fd, char const *print, ...);
-int				printcharfd(int fd, char a);
-int				printstringfd(int fd, char const *s);
-int				printnumfd(int fd, long n, char *base);
-int				printunumfd(int fd, unsigned int n, char *base);
-int				printpointfd(int fd, unsigned long long n, char *base);
 //gnl
 char			*ft_free_strjoin(char *save, char *tmp);
 char			*crealinea(char *s);
@@ -120,5 +102,7 @@ char			*getenvar(char *name, char **env);
 //fractol
 double			atodbl(const char *n);
 //psw
+//get_next_line
+char			*get_next_line(int fd);
 
 #endif

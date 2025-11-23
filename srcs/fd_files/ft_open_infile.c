@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+<<<<<<< HEAD
 #include "../minishell.h"
 
 static int	ft_search_open_file(char **tokens, int i)
@@ -17,10 +18,20 @@ static int	ft_search_open_file(char **tokens, int i)
 	if (ft_strncmp(tokens[i], "<<", 3) == 0)
 		return (1);
 	else if (ft_strncmp(tokens[i], "<", 2) == 0)
+=======
+#include "../includes/minishell.h"
+
+static int	ft_search_open_file(t_redir_type type)
+{
+	if (type == HEREDOC)
+		return (1);
+	else if (type == INPUT)
+>>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 		return (2);
 	return (0);
 }
 
+<<<<<<< HEAD
 static int	ft_open_fdin(char **args, int i)
 {
 	int		fd_in;
@@ -29,23 +40,42 @@ static int	ft_open_fdin(char **args, int i)
 	if (fd_in < 0)
 	{
 		perror(args[i + 1]);
+=======
+static int	ft_open_fdin(char *str)
+{
+	int		fd_in;
+
+	fd_in = open(str, O_RDONLY);
+	if (fd_in < 0)
+	{
+		perror(str);
+>>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 		fd_in = open("/dev/null", O_RDONLY);
 	}
 	return (fd_in);
 }
 
+<<<<<<< HEAD
 static int	ft_handle_heredoc(char **args, int i)
+=======
+static int	ft_handle_heredoc(char *str_lim)
+>>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 {
 	char	*limiter;
 	int		fd_in;
 
 	fd_in = -1;
+<<<<<<< HEAD
 	limiter = ft_strdup(args[i + 1]);
+=======
+	limiter = ft_strdup(str_lim);
+>>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 	ft_here_doc(&fd_in, limiter);
 	free(limiter);
 	return (fd_in);
 }
 
+<<<<<<< HEAD
 static void	ft_parse_args(char ***args)
 {
 	int		args_size;
@@ -108,5 +138,42 @@ int	ft_open_infile(char ***args)
 		i++;
 	}
 	ft_parse_args(args);
+=======
+static void	ft_open_infile_type(t_token *token, int *fd_in)
+{
+	int	result;
+
+	result = 0;
+	result = ft_search_open_file(token->redir->redir_type);
+	if (result == 1)
+	{
+		if (*fd_in > 2)
+			close(*fd_in);
+		*fd_in = ft_handle_heredoc(token->redir->redir_content->content);
+	}
+	else if (result == 2)
+	{
+		if (*fd_in > 2)
+			close(*fd_in);
+		*fd_in = ft_open_fdin(token->redir->redir_content->content);
+	}
+}
+
+int	ft_open_infile(t_token *token)
+{
+	int	fd_in;
+
+	fd_in = STDIN_FILENO;
+	while (token)
+	{
+		if (token->type == WORD)
+		{
+			token = token->right_side;
+			continue ;
+		}
+		ft_open_infile_type(token, &fd_in);
+		token = token->right_side;
+	}
+>>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 	return (fd_in);
 }

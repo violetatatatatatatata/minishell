@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+<<<<<<< HEAD
 #include "../minishell.h"
+=======
+#include "../includes/minishell.h"
+>>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 
 static int	is_exact_match(const char *line,
 	const char *limiter, size_t limiter_len)
@@ -35,7 +39,11 @@ static void	ft_get_text(const char *limiter, int *fd_write)
 	limiter_len = ft_strlen(limiter);
 	while (1)
 	{
+<<<<<<< HEAD
 		ft_printf("heredoc> ");
+=======
+		printf("heredoc> ");
+>>>>>>> 4e010f65a06e4435fcfc68b687145507eb73604f
 		line = get_next_line(STDIN_FILENO);
 		printf("LINE: %s\n", line);
 		if (!line)
