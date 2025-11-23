@@ -72,24 +72,5 @@ void			ft_lstadd_back(t_list **lst, t_list *new);
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 t_list			\
 *ft_lstmap(t_list *lst, void *(*f)(void *),	void (*del)(void *));
-//printf
-void			checker(int *ret, char check, va_list opc);
-int				realprintf(char const *p, va_list opc);
-int				ft_printf(char const *print, ...);
-unsigned int	strilen(char *s);
-int				printchar(char a);
-int				printstring(char const *s);
-int				printnum(long n, char *base);
-int				printunum(unsigned int n, char *base);
-int				printpoint(unsigned long long n, char *base);
-//printfd
-void			checkerfd(int fd, int *ret, char check, va_list opc);
-int				realprintfd(int fd, char const *p, va_list opc);
-int				ft_printfd(int fd, char const *print, ...);
-int				printcharfd(int fd, char a);
-int				printstringfd(int fd, char const *s);
-int				printnumfd(int fd, long n, char *base);
-int				printunumfd(int fd, unsigned int n, char *base);
-int				printpointfd(int fd, unsigned long long n, char *base);
 
 #endif

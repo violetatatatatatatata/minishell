@@ -19,7 +19,7 @@ DEPS_DIR	= deps
 
 # Source files
 # CAMBIAR EL WILDCARD AL FINAL DEL PROYECTO!!!
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
+SRC_FILES = $(shell find $(SRC_DIR) -name "*.c")
 OBJ_FILES = $(SRC_FILES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEP_FILES = $(SRC_FILES:$(SRC_DIR)/%.c=$(DEPS_DIR)/%.d)
 CLIB = .a
@@ -41,8 +41,8 @@ $(INC_DIR):
 	@cp -a $(LIBFT_DIR)/$(INC_DIR)/*.h $(INC_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
-	@mkdir -p $(OBJ_DIR) 
-	@mkdir -p $(DEPS_DIR)
+	@mkdir -p $(dir $@)
+	@mkdir -p $(dir $(DEPS_DIR)/$*.d)
 	$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(DEPS_DIR)/$*.d -I $(INC_DIR)
 
 -include $(DEP_FILES)
