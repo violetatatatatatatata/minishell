@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:10:10 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 02:14:29 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/23 02:32:50 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,6 @@ typedef enum e_cmd_type
 
 // Data structures
 
-typedef struct s_shell
-{
-	t_env	**env;
-	t_list	*user_input;
-	int		pid;
-}	t_shell;
-
 typedef struct s_env
 {
 	char			*key;
@@ -90,6 +83,13 @@ typedef struct s_env
 	int				visible;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_shell
+{
+	t_env	**env;
+	t_list	*user_input;
+	int		pid;
+}	t_shell;
 
 typedef struct s_tokens_values
 {
@@ -154,7 +154,7 @@ typedef struct s_values
 
 // permite almacenar el estado de salida del ultimo
 // comando ejecutado y expandir $?
-volatile sigatomic	g_status;
+volatile sig_atomic_t	g_status;
 
 /*	Definiciones de funciones del proyecto	*/
 
@@ -199,7 +199,7 @@ void	bt_pwd(t_shell *data);
 int		bt_cd(char **args, t_values *data);
 int		is_numeric(char *str);
 int		bt_exit(t_shell *data, char **args);
-int		bt_export(t_shell *data, char **args)
+int		bt_export(t_shell *data, char **args);
 int		bt_unset(t_shell *data, char **args);
 void	terminator(t_shell *data, int exit);
 

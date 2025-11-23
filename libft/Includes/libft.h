@@ -5,6 +5,7 @@
 #  define BUFFER_SIZE 42
 # endif
 
+# include <stdarg.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>

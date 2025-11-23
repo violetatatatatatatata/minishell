@@ -6,14 +6,12 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:09:16 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 02:09:22 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/23 02:31:18 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MESSAGES_H
 # define MESSAGES_H
-
-# define ""
 
 // MACROS
 # define	TRUE 1
