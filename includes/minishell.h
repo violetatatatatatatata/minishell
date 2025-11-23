@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:10:10 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 02:32:50 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/23 04:15:49 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_env
 typedef struct s_shell
 {
 	t_env	**env;
-	t_list	*user_input;
+	char	*user_input;
 	int		pid;
 }	t_shell;
 
@@ -174,7 +174,7 @@ int		args_checker(int argc, char **argv);
 void	reset_prompt(int signo);
 void	set_signals_interactive(void);
 void	set_signals_handlers_exec(void);
-void	loop(void);
+void	loop(t_shell *data);
 void	print_prompt(void);
 char	*prompt(void);
 char	*handle_missing_user(void);

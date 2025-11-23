@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*   By: avelandr <avelandr@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 02:06:37 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 03:11:08 by avelandr         ###   ########.fr       */
+/*   Created: 2025/11/23 04:06:12 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/23 04:08:07 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,5 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_shell	*shell;
-
-	shell = init_shell(argc, argv, env)
-	loop(shell);
-	terminator(shell);
-	return (EXIT_SUCCESS);
+	return (minishell(argc, argv, env));
 }
