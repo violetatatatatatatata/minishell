@@ -18,8 +18,8 @@ void	reset_prompt(int signo)
 	(void)signo;
 	write (1, "\n", 1);
 	rl_on_new_line();
-	rl_replace_line("");
-	rl_display();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:06:37 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 02:34:50 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/23 03:11:08 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	if (!init_shell(argc, argv, env))
-		return (EXIT_FAILURE);
-	loop();
+	t_shell	*shell;
+
+	shell = init_shell(argc, argv, env)
+	loop(shell);
+	terminator(shell);
 	return (EXIT_SUCCESS);
 }
