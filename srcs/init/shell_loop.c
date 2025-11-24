@@ -10,7 +10,7 @@
 /*																			  */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 // cuando readline detecta ctrl-d devuelve NULL
 static char	*get_user_input(void)
@@ -34,7 +34,7 @@ static void	free_cmd(void *content)
 		return ;
 	if (node->args)
 		ft_free_split(node->args);
-//	ft_free_token_list(node->token);
+	ft_free_token_list(node->token);
 	free(node);
 }
 

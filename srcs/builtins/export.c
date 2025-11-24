@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 00:58:53 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:37:32 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,31 @@ static void	handle_export(t_shell *data, char *args)
 	ft_setenv(data, key, value);
 	free(key);
 	free(value);
+}
+
+int	print_sorted_env(t_env *env)
+{
+	int		i;
+	int		size;
+
+	size = count_env_vars(env);
+	cpy_env = (t_env **)malloc(sizeof(t_env *) * (size + 1));
+	if (!cpy_env)
+		return (EXIT_FAILURE);
+	cpy_env = dupe_env(env, size);
+	i = -1;
+	while (++i < size)
+	{
+		if (cpy_env[i]->visible)
+		{
+			printf("declare -x %s", cpy_env[i]->key);
+			if (cpy_env[i]->value)
+				printf("=\"%s\"", cpy_env[i]->value);
+			printf("\n");
+		}
+	}
+	free(cpy_env);
+	return (EXIT_SUCCESS);
 }
 
 int	bt_export(t_shell *data, char **args)

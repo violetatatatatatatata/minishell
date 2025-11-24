@@ -6,14 +6,14 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:15:44 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 01:15:46 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/24 16:37:27 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 // un ft_lstsize pero pa t_env vamo
-static int	count_env_vars(t_env *env)
+int	count_env_vars(t_env *env)
 {
 	int	n_vars;
 
@@ -26,7 +26,7 @@ static int	count_env_vars(t_env *env)
 	return (n_vars);
 }
 
-static void	sort_env_array(t_env *list, int size)
+static void	sort_env_array(t_env **list, int size)
 {
 	int		i;
 	int		j;
@@ -84,43 +84,29 @@ static int	sort_pass(t_env *list, t_env *last)
 	return (swapped);
 }
 
-static void	dupe_env(t_env *env, t_env *cpy_env, int size)
+t_env	*dupe_env(t_env *env)
 {
-	int	i;
+	t_env	*new_head;
+	t_env	*curr;
+	t_env	*new_node;
 
-	i = 0;
-	while (env && i < size)
+	while (env)
 	{
-		cpy_env = env;
-		env = env->next;
-		i++;
-	}
-	cpy_env = NULL;
-	sort_env_array(cpy_env, size);
-}
-
-int	print_sorted_env(t_env *env)
-{
-	int		i;
-	int		size;
-	t_env	**cpy_env;
-
-	size = count_env_vars(env);
-	cpy_env = (t_env **)malloc(sizeof(t_env *) * (size + 1));
-	if (!cpy_env)
-		return (EXIT_FAILURE);
-	dupe_env(env, cpy_env, size)
-	i = -1;
-	while (++i < size)
-	{
-		if (cpy_env[i]->visible)
+		new_node = create_env_variable(env->key, env->value);
+		if (!new_node)
+			return (NULL);
+		new_node->visible = env->visible;
+		if (!new_head)
 		{
-			printf("declare -x %s", cpy_env[i]->key);
-			if (cpy_env[i]->value)
-				printf("=\"%s\"", cpy_env[i]->value);
-			printf("\n");
+			new_head = new_node;
+			curr = new_node;
 		}
+		else
+		{
+			curr->next = new_node;
+			curr = new_node;
+		}
+		env = env->next;
 	}
-	free(cpy_env);
-	return (EXIT_SUCCESS);
+	return (new_head);
 }
