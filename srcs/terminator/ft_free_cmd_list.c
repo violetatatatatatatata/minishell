@@ -12,58 +12,29 @@
 
 #include "../../includes/minishell.h"
 
-void	ft_free_triple(char ***arr)
+static void	ft_free_token(t_token *token)
 {
-	int	i;
+	t_token	*tmp_token;
 
-	i = 0;
-	if (!arr)
-		return ;
-	while (arr[i])
-		ft_free_double(arr[i++]);
-	free(arr);
-	arr = NULL;
-}
-
-void	ft_free_double(char **arr)
-{
-	int	i;
-
-	if (!arr ||!*arr)
-		return ;
-	i = 0;
-	while (arr[i])
+	while (token)
 	{
-		free(arr[i]);
-		arr[i] = NULL;
-		i++;
-	}
-	free(arr);
-	arr = NULL;
-}
-
-/*void	ft_free_cmd_list(char ***list)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (list[i])
-	{
-		while (list[i][j])
+		free(token->content);
+		if (token->type != WORD && token->redir)
 		{
-			free(list[i][j]);
-			j++;
+			ft_free_token(token->redir->redir_content);
+			free(token->redir);
 		}
-		free(list[i]);
-		i++;
+		tmp_token = token;
+		token = token->right_side;
+		free(tmp_token);
 	}
-	free(list);
-}*/
+}
 
-void	ft_free_vals(t_values *vals)
+void	ft_free_cmd_list(t_cmd_table *table)
 {
-	if (vals->pids)
-		free(vals->pids);
+	t_token	*token;
+
+	token = table->token;
+	ft_free_token(token);
+	free(table);
 }

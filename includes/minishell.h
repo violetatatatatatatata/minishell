@@ -87,7 +87,7 @@ typedef struct s_env
 typedef struct s_shell
 {
 	t_env	*env;
-	t_list	*user_input;
+	char	*user_input;
 	int		pid;
 }	t_shell;
 
@@ -155,14 +155,14 @@ typedef struct s_values
 
 // permite almacenar el estado de salida del ultimo
 // comando ejecutado y expandir $?
-volatile sig_atomic_t	g_status;
+extern volatile sig_atomic_t	g_status;
 
 /*	Definiciones de funciones del proyecto	*/
 
 t_env	*create_env_variable(char *key, char *value);
 void	ft_setenv(t_shell *data, char *key, char *value);
 void	already_exists(t_env *cpy, char *val);
-char	*ft_getenv(const char *key, t_env *env);
+char	*ft_getenv(char *key, t_env *env);
 char	**env_to_array(t_env *head);
 void	free_node(t_env *node);
 void	create_node(t_env *node, char *key, char *value, int state);
@@ -184,7 +184,7 @@ void	free_data();
 void	ft_free_double(char **arr);
 void	ft_free_triple(char ***arr);
 void	ft_free_double(char **arr);
-void	ft_free_cmd_list(char ***list);
+void	ft_free_cmd_list(t_cmd_table *table);
 void	ft_free_vals(t_values *vals);
 void	terminator(t_shell *data, int exit);
 void	ft_here_doc(int *fd_in, const char *limiter);
@@ -220,7 +220,7 @@ void	loop(t_shell *data);
 void	reset_prompt(int signo);
 void	set_signals_interactive(void);
 void	set_signals_handlers_exec(void);
-int		print_sorted_env(t_env *env);
+long	print_sorted_env(t_env *env);
 int		ft_is_redirection(char *s);
 int		ft_isblank(int c);
 int		ft_ismeta(int c);
@@ -232,9 +232,13 @@ int		is_token(char *s);
 int		is_word(char *s);
 int		print_msg(char *function, char *msg, int exit);
 void	print_prompt(void);
-char	*prompt(void);
+char	*prompt(t_shell *data);
 char	*handle_missing_user(void);
 char	*handle_missing_path(void);
 void	ft_free_split(char **split);
+int		ft_double_arr_size(char **arr);
+t_env	*dupe_env(t_env *env);
+int		ft_is_pipe(char *s);
+int		sort_pass(t_env *list);
 
 #endif

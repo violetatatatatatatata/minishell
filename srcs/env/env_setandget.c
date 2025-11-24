@@ -62,7 +62,7 @@ void	already_exists(t_env *cpy, char *val)
 }
 
 		// ojo pelao con el export
-char	*ft_getenv(const char *key, t_env *env)
+char	*ft_getenv(char *key, t_env *env)
 {
 	while (env)
 	{

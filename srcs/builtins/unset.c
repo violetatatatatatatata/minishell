@@ -12,6 +12,7 @@
 
 #include <minishell.h>
 
+// He puesto lin 25 ft_strncmp sizeof(key) no se si dara problemas o esta bien
 static void	ft_envremove(t_shell *data, char *key)
 {
 	t_env	*current;
@@ -21,7 +22,7 @@ static void	ft_envremove(t_shell *data, char *key)
 	prev = NULL;
 	while (current)
 	{
-		if (ft_strncmp(current->key, key) == 0)
+		if (ft_strncmp(current->key, key, sizeof(key)) == 0)
 		{
 			if (prev)
 				prev->next = current->next;

@@ -18,6 +18,7 @@ int	minishell(int argc, char **argv, char **env)
 
 	if (argc != 1 || argv[1] != NULL)
 		return (EXIT_FAILURE);
+	shell = NULL;
 	ft_memset(shell, 0, sizeof(t_shell));
 	print_prompt();
 	shell->pid = getpid();

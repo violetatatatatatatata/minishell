@@ -17,6 +17,7 @@
 # define	TRUE 1
 # define	FALSE 0
 # define	MAX_LONG "9223372036854775807"
+# define	PATH_MAX 4096
 
 // EXECUTION MESSAGES
 

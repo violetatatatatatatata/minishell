@@ -18,31 +18,32 @@ static int	change_dir(t_values *data, char *dir)
 	char	cwd[PATH_MAX];
 
 	if (!chdir(dir))
-		return (print_msg(("cd", DIR_FAILED, EXIT_FAILURE)));
+		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
 	curpath = getcwd(cwd, PATH_MAX);
 	if (!curpath)
-		return (print_msg(("cd", DIR_FAILED, EXIT_FAILURE)));
-	ft_setenv(data, "PATH", dir);
-	return (EXIT_SUCESS);
+		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
+	ft_setenv(data->val_env, "PATH", dir);
+	return (EXIT_SUCCESS);
 }
 
 int	bt_cd(char **args, t_values *data)
 {
 	char	*path;
 
-	if (!args || !args[1] || ft_isspace(args[1][0]) || /
-		args[1][0] == '\0' || ft_strncmp(args[1], "--", 3) == 0)
+	path = NULL;
+	if (!args || !args[1] || ft_isspace(args[1][0])
+		|| args[1][0] == '\0' || ft_strncmp(args[1], "--", 3) == 0)
 	{
-		path = ft_getenv("HOME", data->env);
+		path = ft_getenv("HOME", data->val_env->env);
 		if (!path || *path == '\0' || ft_isspace(*path))
-			return (print_msg(("cd", HOME_FAILED, EXIT_FAILURE)));
-		return (!chdir(data, path));
+			return (print_msg("cd", HOME_FAILED, EXIT_FAILURE));
+		return (!chdir(path));
 	}
 	if (args[2])
-		return (print_msg(("cd", DIR_FAILED, EXIT_FAILURE)));
+		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
 	if (ft_strncmp(args[1], "-", 2) == 0)
 	{
-		path = ft_getenv("OLDPWD", data->env);
+		path = ft_getenv("OLDPWD", data->val_env->env);
 		if (!path)
 			return (print_msg("cd", "OLDPWD not set", EXIT_FAILURE));
 		return (!change_dir(data, path));

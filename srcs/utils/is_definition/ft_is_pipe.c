@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_is_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 10:58:02 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 10:58:49 by avelandr         ###   ########.fr       */
+/*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
+/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-volatile sig_atomic_t	g_status = 0;
-
-int	main(int argc, char **argv, char **env)
+int	ft_is_pipe(char *s)
 {
-	return (minishell(argc, argv, env));
+	return (!ft_strncmp(s, "|", 1));
 }

@@ -13,7 +13,8 @@
 #include "../../includes/minishell.h"
 
 // un ft_lstsize pero pa t_env vamo
-static int	count_env_vars(t_env *env)
+// NO se usa por ahora
+/*static int	count_env_vars(t_env *env)
 {
 	int	n_vars;
 
@@ -24,31 +25,7 @@ static int	count_env_vars(t_env *env)
 		env = env->next;
 	}
 	return (n_vars);
-}
-
-static void	sort_env_array(t_env *list, int size)
-{
-	int		i;
-	int		j;
-	t_env	*temp;
-
-	i = 0;
-	while (i < size - 1)
-	{
-		j = 0;
-		while (j < size - i - 1)
-		{
-			if (ft_strcmp(list[j]->key, list[j + 1]->key) > 0)
-			{
-				temp = list[j];
-				list[j] = list[j + 1];
-				list[j + 1] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
+}*/
 
 static void	swap_env_nodes(t_env *a, t_env *b)
 {
@@ -65,14 +42,14 @@ static void	swap_env_nodes(t_env *a, t_env *b)
 	b->visible = tmp.visible;
 }
 
-static int	sort_pass(t_env *list, t_env *last)
+int	sort_pass(t_env *list)
 {
 	t_env	*ptr;
 	int		swapped;
 
 	swapped = 0;
 	ptr = list;
-	while (ptr->next != last)
+	while (ptr->next != NULL)
 	{
 		if (ft_strcmp(ptr->key, ptr->next->key) > 0)
 		{
@@ -84,43 +61,29 @@ static int	sort_pass(t_env *list, t_env *last)
 	return (swapped);
 }
 
-static void	dupe_env(t_env *env, t_env *cpy_env, int size)
+t_env	*dupe_env(t_env *env)
 {
-	int	i;
+	t_env	*new_head;
+	t_env	*curr;
+	t_env	*new_node;
 
-	i = 0;
-	while (env && i < size)
+	while (env)
 	{
-		cpy_env = env;
-		env = env->next;
-		i++;
-	}
-	cpy_env = NULL;
-	sort_env_array(cpy_env, size);
-}
-
-int	print_sorted_env(t_env *env)
-{
-	int		i;
-	int		size;
-	t_env	**cpy_env;
-
-	size = count_env_vars(env);
-	cpy_env = (t_env **)malloc(sizeof(t_env *) * (size + 1));
-	if (!cpy_env)
-		return (EXIT_FAILURE);
-	dupe_env(env, cpy_env, size)
-	i = -1;
-	while (++i < size)
-	{
-		if (cpy_env[i]->visible)
+		new_node = create_env_variable(env->key, env->value);
+		if (!new_node)
+			return (NULL);
+		new_node->visible = env->visible;
+		if (!new_head)
 		{
-			printf("declare -x %s", cpy_env[i]->key);
-			if (cpy_env[i]->value)
-				printf("=\"%s\"", cpy_env[i]->value);
-			printf("\n");
+			new_head = new_node;
+			curr = new_node;
 		}
+		else
+		{
+			curr->next = new_node;
+			curr = new_node;
+		}
+		env = env->next;
 	}
-	free(cpy_env);
-	return (EXIT_SUCCESS);
+	return (new_head);
 }

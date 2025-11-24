@@ -35,12 +35,33 @@ static void	handle_export(t_shell *data, char *args)
 	char	*value;
 	char	*pos;
 
-	pos = ft_strchr(arg, '=');
-	key = ft_getkey(arg, pos);
-	value = ft_getvalue(arg, pos);
+	pos = ft_strchr(args, '=');
+	key = ft_getkey(args, pos);
+	value = ft_getvalue(args);
 	ft_setenv(data, key, value);
 	free(key);
 	free(value);
+}
+
+// HAY que hacer los frees del cpy_env y del contenido !!!!!!!!!!!
+long	print_sorted_env(t_env *env)
+{
+	t_env	*cpy_env;
+
+	cpy_env = dupe_env(env);
+	sort_pass(cpy_env);
+	while (cpy_env)
+	{
+		if (cpy_env->visible)
+		{
+			printf("declare -x %s", cpy_env->key);
+			if (cpy_env->value)
+				printf("=\"%s\"", cpy_env->value);
+			printf("\n");
+		}
+		cpy_env = cpy_env->next;
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	bt_export(t_shell *data, char **args)
@@ -59,7 +80,7 @@ int	bt_export(t_shell *data, char **args)
 			return (print_msg("export", "not a valid identifier", 1));
 			exit_status = EXIT_FAILURE;
 		}
-		else if (ft_strchr(args[i], "=") != NULL)
+		else if (ft_strchr(args[i], '=') != NULL)
 			handle_export(data, args[i]);
 		else
 		{
