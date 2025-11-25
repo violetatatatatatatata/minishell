@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:45:21 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 02:04:41 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:56:16 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,3 @@ char	*handle_missing_user(void)
 {
 	return ("minishell: ");
 }
-
-/*char	*handle_missing_path(void)
-{
-	return (getcwd());
-}*/

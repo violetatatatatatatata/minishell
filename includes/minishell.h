@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:10:10 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/25 16:11:57 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:02:00 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ typedef struct s_values
 
 // permite almacenar el estado de salida del ultimo
 // comando ejecutado y expandir $?
-volatile sig_atomic_t	g_status;
+extern volatile sig_atomic_t	g_status;
 
 /*	Definiciones de funciones del proyecto	*/
 char **env_to_array(t_env *head);
@@ -171,31 +171,30 @@ void ft_setenv(t_shell *data, char *key, char *value);
 void already_exists(t_env *cpy, char *val);
 char *ft_getenv(char *key, t_env *env);
 int bt_unset(t_shell *data, char **args);
-int print_sorted_env(t_env *env);
 int bt_export(t_shell *data, char **args);
 int is_numeric(char *str);
 int bt_exit(t_shell *data, char **args);
-int bt_cd(char **args, t_shell *data);
 void print_args(char **args, int start, int n_flag);
 void bt_echo(char **args);
 int bt_env(t_shell *data, char **args);
 void bt_pwd(t_shell *data);
+int bt_cd(char **args, t_shell *data);
 void free_data();
-void terminator(t_shell *data, int exit);
+void ft_free_split(char **split);
+void ft_free_cmd_list(t_cmd_table *table);
 void ft_free_triple(char ***arr);
 void ft_free_double(char **arr);
-void ft_free_cmd_list(char ***list);
 void ft_free_vals(t_values *vals);
-void ft_free_split(char **split);
+void terminator(t_shell *data, int exit_status);
 void ft_here_doc(int *fd_in, const char *limiter);
 int ft_open_infile(t_token *token);
 int ft_open_outfile(t_token *token);
 void ft_set_infile(int *fd_write, const char *limiter);
-int minishell(int argc, char **argv, char **env);
-void loop(t_shell *data);
 void reset_prompt(int signo);
 void set_signals_interactive(void);
 void set_signals_handlers_exec(void);
+int minishell(int argc, char **argv, char **env);
+void loop(t_shell *data);
 int ft_is_redirection(char *s);
 int ft_isblank(int c);
 int ft_ismeta(int c);
@@ -205,13 +204,13 @@ int is_filename(const char *s);
 int is_redop(char *s);
 int is_token(char *s);
 int is_word(char *s);
+int ft_is_pipe(char *s);
 int print_msg(char *function, char *msg, int exit);
+int ft_double_arr_size(char **arr);
 void print_prompt(void);
-char *prompt(void);
+char *prompt(t_shell *data);
 char *handle_missing_user(void);
-char *handle_missing_path(void);
-int count_env_vars(t_env *env);
-t_env *dupe_env(t_env *env);
+int print_sorted_env(t_env *env);
 int ft_exec_args(char **args, t_shell *data);
 void debug_fd(int fd);
 int ft_exec_cmd_line(t_list *cmd_list, t_shell *data);
