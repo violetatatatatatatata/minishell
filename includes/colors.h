@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:08:34 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 16:24:16 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:53:07 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 # define CYAN    "\x1b[36m"
 # define WHITE   "\x1B[37m"
 
-# define COLOR0 "\x1B[38;2;209;247;255m"
-# define COLOR1 "\x1B[38;2;19;62;124m"
-# define COLOR2 "\x1B[38;2;154;159;23m"
-# define COLOR3 "\x1B[38;2;254;232;1m"
-# define COLOR4 "\x1B[38;2;84;193;230m"
-# define COLOR5 "\x1B[38;2;57;196;230m"
-# define COLOR6 "\x1B[38;2;234;0;217m"
-# define COLOR7 "\x1B[38;2;113;28;145m"
+# define COLOR0 "\x1B[38;2;62;182;233m"
+# define COLOR1 "\x1B[38;2;83;206;247m"
+# define COLOR2 "\x1B[38;2;53;194;177m"
+# define COLOR3 "\x1B[38;2;228;183;94m"
+# define COLOR4 "\x1B[38;2;120;183;112m"
+# define COLOR5 "\x1B[38;2;211;118;110m"
+# define COLOR6 "\x1B[38;2;255;150;109m"
+# define COLOR7 "\x1B[38;2;156;64;64m"
 # define RESET "\x1b[m"
 
 // Para modificar el RGB
