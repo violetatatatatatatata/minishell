@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:10:10 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/25 19:02:00 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:19:56 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,6 @@ int print_msg(char *function, char *msg, int exit);
 int ft_double_arr_size(char **arr);
 void print_prompt(void);
 char *prompt(t_shell *data);
-char *handle_missing_user(void);
 int print_sorted_env(t_env *env);
 int ft_exec_args(char **args, t_shell *data);
 void debug_fd(int fd);

@@ -6,7 +6,7 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:17:40 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static void	ft_set_args(t_list *cmd_tables)
 		i = 0;
 		while (i < size)
 		{
-			printf("CHECK %s, TYPE %i\n", current_token->content, current_token->type);
+			printf("CHECK %s, ", current_token->content);
+			printf("TYPE %i\n", current_token->type);
 			if (!current_token->content || current_token->type == REDIR)
 			{
 				current_token = current_token->right_side;

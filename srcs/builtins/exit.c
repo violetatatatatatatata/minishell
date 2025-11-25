@@ -51,11 +51,11 @@ int	is_numeric(char *str)
 	return (TRUE);
 }
 
+// modificar atoi para que funcione con longs
 int	bt_exit(t_shell *data, char **args)
 {
 	int	exit_code;
 
-	// ft_putendl_fd("exit", STDERR_FILENO);
 	if (!args[1])
 	{
 		exit_code = g_status;
@@ -68,7 +68,6 @@ int	bt_exit(t_shell *data, char **args)
 	}
 	if (args[2])
 		print_msg("exit", "too many arguments", EXIT_FAILURE);
-	// modificar atoi para que funcione con longs
 	exit_code = ft_atoi(args[1]);
 	terminator(data, exit_code);
 	return (EXIT_SUCCESS);

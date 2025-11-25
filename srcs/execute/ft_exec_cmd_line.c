@@ -6,12 +6,13 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/11/23 17:07:04 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:14:50 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
+// Mover cursor al inicio (solo si es un file normal)
 void	debug_fd(int fd)
 {
 	char	buffer[1024];
@@ -22,7 +23,6 @@ void	debug_fd(int fd)
 		printf("fd inválido\n");
 		return ;
 	}
-	// Mover cursor al inicio (solo si es un file normal)
 	lseek(fd, 0, SEEK_SET);
 	n = read(fd, buffer, sizeof(buffer) - 1);
 	while (n > 0)

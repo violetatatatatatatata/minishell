@@ -10,11 +10,11 @@
 /*																			  */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
+// g_status = 130 (128 + 2) deberia ser relevante para las expansiones de $?
 void	reset_prompt(int signo)
 {
-	// g_status = 130 (128 + 2) deberia ser relevante para las expansiones de $?
 	(void)signo;
 	write (1, "\n", 1);
 	rl_on_new_line();
