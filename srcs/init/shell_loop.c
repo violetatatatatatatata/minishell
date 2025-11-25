@@ -76,5 +76,6 @@ void	loop(t_shell *data)
 			g_status = execute(data);
 		}
 		terminator(data, FALSE);
+		data->user_input = get_user_input(data);
 	}
 }

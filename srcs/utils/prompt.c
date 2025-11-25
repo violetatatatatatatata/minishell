@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:45:21 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/25 19:20:17 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:40:22 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,33 @@ void	print_prompt(void)
 	printf("%s  - - - - - - - - - - - - - - - - - - - - -  - -\n", COLOR0);
 }
 
-static char	*handle_missing_user(void)
+static char	*ft_strjoin_free(char *s1, char *s2)
 {
-	return ("minishell: ");
+	char	*new_str;
+
+	if (!s1 || !s2)
+		return (NULL);
+	new_str = ft_strjoin(s1, s2);
+	free(s1);
+	return (new_str);
 }
 
 char	*prompt(t_shell *data)
 {
-	char	*p;
+	char	buff[PATH_MAX];
 	char	*user;
-	char	*curpath;
+	char	*cwd;
+	char	*p;
 
-	user = ft_getenv("$USER", data->env);
+	user = ft_getenv("USER", data->env);
 	if (!user)
-		user = handle_missing_user();
-	curpath = ft_getenv("$PWD", data->env);
-	p = (char *)malloc(sizeof(char) + ft_strlen(user) + ft_strlen(curpath) + 2);
-	p = ft_strjoin(p, user);
-	p = ft_strjoin(p, ":");
-	p = ft_strjoin(p, curpath);
-	p = ft_strjoin(p, "$");
+		user = "minishell";
+	cwd = ft_getenv("PWD", data->env);
+	if (!cwd)
+		cwd = getcwd(buff, PATH_MAX);
+	p = ft_strdup(user);
+	p = ft_strjoin_free(p, ":");
+	p = ft_strjoin_free(p, cwd);
+	p = ft_strjoin_free(p, "$ ");
 	return (p);
 }

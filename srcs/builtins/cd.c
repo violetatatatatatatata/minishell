@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 19:00:11 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/25 16:12:34 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/25 19:37:09 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	change_dir(t_shell *data, char *dir)
 	curpath = getcwd(cwd, PATH_MAX);
 	if (!curpath)
 		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
-	ft_setenv(data, "PATH", dir);
+	ft_setenv(data, "PWD", dir);
 	return (EXIT_SUCCESS);
 }
 

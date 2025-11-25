@@ -12,20 +12,18 @@
 
 #include <minishell.h>
 
-int	minishell(int argc, char **argv, char **env)
+int minishell(int argc, char **argv, char **env)
 {
-	t_shell	*shell;
-
-	shell = NULL;
-	if (argc != 1 || argv[1] != NULL)
-		return (EXIT_FAILURE);
-	ft_memset(shell, 0, sizeof(t_shell));
-	print_prompt();
-	shell->pid = getpid();
-	if (env)
-		shell->env = init_env(env);
-	else
-		handle_missing_env(shell, argv[0]);
-	loop(shell);
-	return (EXIT_SUCCESS);
+    t_shell shell;
+    if (argc != 1 || argv[1] != NULL)
+        return (EXIT_FAILURE);
+    ft_memset(&shell, 0, sizeof(t_shell));
+    print_prompt();
+    shell.pid = getpid();
+    if (env)
+        shell.env = init_env(env);
+    else
+        handle_missing_env(&shell, argv[0]);
+    loop(&shell);
+    return (EXIT_SUCCESS);
 }
