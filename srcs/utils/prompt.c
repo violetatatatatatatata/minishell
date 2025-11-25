@@ -31,18 +31,18 @@ void	print_prompt(void)
 	printf("%s  - - - - - - - - - - - - - - - - - - - - -  - -\n", COLOR0);
 }
 
-char	*prompt(void)
+char	*prompt(t_shell *data)
 {
 	char	*p;
 	char	*user;
 	char	*curpath;
 
-	user = ft_getenv("$USER");
+	user = ft_getenv("$USER", data->env);
 	if (!user)
 		user = handle_missing_user();
-	curpath = ft_getenv("$PWD");
-	if (!curpath)
-		curpath = handle_missing_path();
+	curpath = ft_getenv("$PWD", data->env);
+	/*if (!curpath)
+		curpath = handle_missing_path();*/
 	p = (char *)malloc(sizeof(char) + ft_strlen(user) + ft_strlen(curpath) + 2);
 	p = ft_strjoin(p, user);
 	p = ft_strjoin(p, ":");
@@ -56,7 +56,7 @@ char	*handle_missing_user(void)
 	return ("minishell: ");
 }
 
-char	*handle_missing_path(void)
+/*char	*handle_missing_path(void)
 {
 	return (getcwd());
-}
+}*/
