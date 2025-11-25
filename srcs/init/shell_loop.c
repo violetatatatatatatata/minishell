@@ -34,7 +34,7 @@ static void	free_cmd(void *content)
 		return ;
 	if (node->args)
 		ft_free_split(node->args);
-	ft_free_token_list(node->token);
+	ft_free_cmd_list(node->token);
 	free(node);
 }
 
