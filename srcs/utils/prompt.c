@@ -36,18 +36,24 @@ char	*prompt(t_shell *data)
 	char	*p;
 	char	*user;
 	char	*curpath;
+	char	*tmp_str;
 
-	user = ft_getenv("$USER", data->env);
+	user = ft_getenv("USER", data->env);
 	if (!user)
 		user = handle_missing_user();
-	curpath = ft_getenv("$PWD", data->env);
+	curpath = ft_getenv("PWD", data->env);
 	/*if (!curpath)
 		curpath = handle_missing_path();*/
-	p = (char *)malloc(sizeof(char) + ft_strlen(user) + ft_strlen(curpath) + 2);
-	p = ft_strjoin(p, user);
-	p = ft_strjoin(p, ":");
-	p = ft_strjoin(p, curpath);
-	p = ft_strjoin(p, "$");
+	p = malloc(1);
+	p[0] = '\0';
+	tmp_str = ft_strjoin(p, user);
+	free(p);
+	p = ft_strjoin(tmp_str, ":");
+	free(tmp_str);
+	tmp_str = ft_strjoin(p, curpath);
+	free(p);
+	p = ft_strjoin(tmp_str, "$");
+	free(tmp_str);
 	return (p);
 }
 
