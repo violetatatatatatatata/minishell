@@ -66,9 +66,12 @@ static char	*get_user_input(t_shell *data)
 
 void	loop(t_shell *data)
 {
-	data->user_input = get_user_input(data);
-	while (data->user_input != NULL)
+	int	i;
+
+	i = 0;
+	while (i < 3) // DEBUG para poder salir mientra no funcione el built-in
 	{
+		data->user_input = get_user_input(data);
 		set_signals_handlers_exec();
 		if (data->user_input != NULL)
 		{
@@ -76,6 +79,6 @@ void	loop(t_shell *data)
 			g_status = execute(data);
 		}
 		terminator(data, FALSE);
-		data->user_input = get_user_input(data);
+		i++;
 	}
 }
