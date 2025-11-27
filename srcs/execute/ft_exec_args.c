@@ -56,15 +56,19 @@ static int	ft_prepare_exec(char **args, t_shell *data, char **cmd_path)
 	return (EXIT_SUCCESS);
 }
 
-int	ft_exec_args(char **args, t_shell *data)
+int	ft_exec_args(t_values *vals, t_shell *data)
 {
 	char	*cmd_path;
 	int		return_val;
 
-	return_val = ft_prepare_exec(args, data, &cmd_path);
+	if (ft_is_buitlin(vals->args[0]))
+	{
+		return (ft_exec_builtin(vals, data));
+	}
+	return_val = ft_prepare_exec(vals->args, data, &cmd_path);
 	if (return_val > EXIT_SUCCESS)
 		return (return_val);
-	execve(cmd_path, args, env_to_array(data->env));
+	execve(cmd_path, vals->args, env_to_array(data->env));
 	perror("execve");
 	free(cmd_path);
 	return (EXIT_FAILURE);

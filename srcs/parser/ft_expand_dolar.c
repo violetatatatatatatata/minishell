@@ -42,7 +42,7 @@ static void	ft_process_char(t_process_vars *v, t_expand_data *data,
 	printf("-----CURRENT QUOTES %i\n", v->current_quote);
 	if (content[v->i] == '$' && content[v->i + 1]
 		&& (ft_isalnum(content[v->i + 1]) || content[v->i + 1] == '_'
-			|| content[v->i + 1] == '{'))
+			|| content[v->i + 1] == '{' || content[v->i + 1] == '?'))
 	{
 		v->is_expanded = 1;
 		data->content = content;
@@ -72,7 +72,7 @@ static void	ft_process_content(char *content, t_token *token, t_shell *dat_env)
 	ft_finalize_token_expansion(token, content, v.sub_start, v.is_expanded);
 }
 
-static void	ft_expand_token_list(t_token *token, t_shell *data)
+void	ft_expand_token_list(t_token *token, t_shell *data)
 {
 	char	*content;
 

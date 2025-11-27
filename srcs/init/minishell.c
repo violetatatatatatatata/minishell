@@ -14,19 +14,17 @@
 
 int	minishell(int argc, char **argv, char **env)
 {
-	t_shell	*shell;
+	t_shell	shell;
 
 	if (argc != 1 || argv[1] != NULL)
 		return (EXIT_FAILURE);
-	shell = NULL;
-	shell = malloc(sizeof(t_shell));
 	print_prompt();
-	shell->pid = getpid();
+	shell.pid = getpid();
 	if (env)
-		shell->env = init_env(env);
+		shell.env = init_env(env);
 	else
-		handle_missing_env(shell, argv[0]);
-	loop(shell);
-	terminator(shell, TRUE);
+		handle_missing_env(&shell, argv[0]);
+	loop(&shell);
+	terminator(&shell, TRUE);
 	return (EXIT_SUCCESS);
 }

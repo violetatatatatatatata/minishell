@@ -54,7 +54,7 @@ static char	*ft_strip_quotes(const char *src)
 	return (dst);
 }
 
-static void	ft_process_token_list(t_token *token)
+void	ft_process_token_list(t_token *token)
 {
 	char	*new_str;
 

@@ -67,6 +67,8 @@ t_env	*dupe_env(t_env *env)
 	t_env	*curr;
 	t_env	*new_node;
 
+	new_head = NULL;
+	curr = NULL;
 	while (env)
 	{
 		new_node = create_env_variable(env->key, env->value);

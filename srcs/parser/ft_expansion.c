@@ -12,6 +12,30 @@
 
 #include "../../includes/minishell.h"
 
+static void	ft_dolar_expansion(t_expand_data *data)
+{
+	int		sub_end;
+	int		tmp_start;
+	char	*prev_str;
+
+	sub_end = *data->index;
+	tmp_start = (*data->sub_start);
+	if (*data->sub_start > 0)
+	{
+		tmp_start = (*data->sub_start) - 1;
+		sub_end++;
+	}
+	prev_str = ft_substr(data->content, tmp_start,
+			sub_end - *data->sub_start - 1);
+	printf("--- SubStart: %i, Len: %i\n", tmp_start, sub_end - *data->sub_start - 1);
+	printf("Expand simple, Prev_str: %s\n", prev_str);
+	ft_insert_exit_value(data, g_status, prev_str);
+	*data->sub_start = *data->index + 2;
+	free(prev_str);
+	(*data->index)--;
+	printf("Current index: %i\n", (*data->index));
+}
+
 static void	ft_expand_braced_var(t_expand_data *data)
 {
 	int		start;
@@ -77,7 +101,9 @@ void	ft_expansion(t_expand_data *data)
 	sub_end = (*data->index)++;
 	if (sub_end > 0 && *data->sub_start != 0)
 		sub_end--;
-	if (data->content[*data->index] == '{')
+	if (data->content[*data->index] == '?')
+		ft_dolar_expansion(data);
+	else if (data->content[*data->index] == '{')
 		ft_expand_braced_var(data);
 	else if (ft_isalpha(data->content[*data->index])
 		|| data->content[*data->index] == '_')

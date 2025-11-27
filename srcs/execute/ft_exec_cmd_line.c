@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	debug_fd(int fd)
+void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
 {
 	char	buffer[1024];
 	ssize_t	n;
@@ -41,19 +41,21 @@ static void	ft_child_body(t_values *vals, int *fd_pipe)
 
 	free(vals->pids);
 	vals->pids = NULL;
-	close(fd_pipe[0]);
-	dup2(vals->fd_in, STDIN_FILENO);
-	if (vals->fd_prev > 2 && vals->fd_prev != vals->fd_in)
-		close(vals->fd_prev);
+	if (vals->fd_in != STDIN_FILENO)
+		dup2(vals->fd_in, STDIN_FILENO);
 	fd_out = ft_open_outfile(vals->token);
-	if (fd_out == 1)
-		dup2(fd_pipe[1], STDOUT_FILENO);
-	else
-		dup2(fd_out, STDOUT_FILENO);
-	close(fd_pipe[1]);
 	if (fd_out > 2)
+	{
+		dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
-	return_val = ft_exec_args(vals->args, vals->val_env);
+	}
+	else
+		dup2(fd_pipe[1], STDOUT_FILENO);
+	close(fd_pipe[0]);
+	close(fd_pipe[1]);
+	if (vals->fd_in > 2)
+		close(vals->fd_in);
+	return_val = ft_exec_args(vals, vals->val_env);
 	ft_free_vals(vals);
 	exit(return_val);
 }
@@ -95,7 +97,7 @@ static void	ft_last_cmd(t_values *vals)
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
 		}
-		return_val = ft_exec_args(vals->args, vals->val_env);
+		return_val = ft_exec_args(vals, vals->val_env);
 		ft_free_vals(vals);
 		exit(return_val);
 	}
@@ -145,7 +147,16 @@ int	ft_exec_cmd_line(t_list *cmd_list, t_shell *data)
 	vals.fd_prev = -1;
 	vals.index = 0;
 	vals.cmds_size = ft_lstsize(cmd_list);
+	vals.cmd_list = cmd_list;
 	printf("CMDS SIZE: %i\n", vals.cmds_size);
+	table = (t_cmd_table *)cmd_list->content;
+	if (vals.cmds_size == 1 && ft_is_buitlin(table->token->content))
+	{
+		printf("SOLO BUILT-IN\n");
+		vals.token = table->token;
+		vals.args = table->args;
+		return (ft_exec_builtin(&vals, data));
+	}
 	vals.pids = malloc(sizeof(pid_t) * vals.cmds_size);
 	while (cmd_list)
 	{

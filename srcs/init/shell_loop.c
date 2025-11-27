@@ -25,18 +25,6 @@ static char	*get_user_input(t_shell *data)
 	return (input);
 }
 
-static void	free_cmd(void *content)
-{
-	t_cmd_table	*node;
-
-	node = (t_cmd_table *)content;
-	if (!node)
-		return ;
-	if (node->args)
-		ft_free_split(node->args);
-	ft_free_cmd_list(node);
-}
-
 static int	execute(t_shell *data)
 {
 	t_list	*cmd_list;
@@ -47,7 +35,9 @@ static int	execute(t_shell *data)
 	if (!cmd_list)
 		return (g_status);
 	exit_status = ft_exec_cmd_line(cmd_list, data);
-	ft_lstclear(&cmd_list, &free_cmd);
+	if (cmd_list)
+		ft_lstclear(&cmd_list, &free_cmd);
+	cmd_list = NULL;
 	return (exit_status);
 }
 
@@ -56,7 +46,7 @@ void	loop(t_shell *data)
 	int	i;
 
 	i = 0;
-	while (i < 3) // DEBUG para poder salir mientra no funcione el built-in
+	while (i < 5) // DEBUG para poder salir mientra no funcione el built-in
 	{
 		data->user_input = get_user_input(data);
 		set_signals_handlers_exec();
