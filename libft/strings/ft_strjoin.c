@@ -2,28 +2,18 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	l;
-	char	*res;
-	size_t	i;
-	size_t	it;
+	int		size;
+	char	*str;
 
-	l = ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1;
-	res = (char *)malloc(sizeof(char) * l);
-	if (!res || !s1 || !s2)
+	if (!s1)
+		s1 = "";
+	if (!s2)
+		s2 = "";
+	size = ft_strlen(s1) + ft_strlen(s2) + 1;
+	str = (char *)ft_calloc(size, sizeof(char));
+	if (!str)
 		return (NULL);
-	i = 0;
-	while (i < ft_strlen((char *)s1))
-	{
-		res[i] = (char)(s1[i]);
-		i++;
-	}
-	it = 0;
-	while (it < ft_strlen((char *)s2))
-	{
-		res[i] = (char)(s2[it]);
-		it++;
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
+	ft_strlcpy(str, s1, size);
+	ft_strlcat(str, s2, size);
+	return (str);
 }

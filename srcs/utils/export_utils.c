@@ -54,11 +54,17 @@ static t_env	**list_to_array(t_env *env, int size)
 	t_env	**tab;
 	int		i;
 
+<<<<<<< HEAD
 	tab = malloc(sizeof(t_env *) * (size + 1));
 	if (!tab)
 		return (NULL);
 	i = 0;
 	while (env && i < size)
+=======
+	new_head = NULL;
+	curr = NULL;
+	while (env)
+>>>>>>> origin/feature/Exec_Built-ins
 	{
 		tab[i] = env;
 		env = env->next;

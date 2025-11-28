@@ -51,15 +51,16 @@ int	is_numeric(char *str)
 	return (TRUE);
 }
 
-// modificar atoi para que funcione con longs
-int	bt_exit(t_shell *data, char **args)
+int	bt_exit(t_shell *data, char **args, t_list *table_lst)
+>>>>>>> origin/feature/Exec_Built-ins
 {
 	int	exit_code;
 
 	if (!args[1])
 	{
 		exit_code = g_status;
-		terminator(data, exit_code);
+		ft_lstclear(&table_lst, free_cmd);
+		terminator(data, TRUE);
 	}
 	if (!check_long_overflow(args[1]) || !is_numeric(args[1]))
 	{

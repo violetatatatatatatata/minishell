@@ -52,7 +52,7 @@ static char	*ft_get_env_value(t_expand_data *data, char **name)
 	return (env_var);
 }
 
-static void	ft_insert_env_value(t_expand_data *data,
+void	ft_insert_env_value(t_expand_data *data,
 	char *env_var, char *prev_str)
 {
 	if (!env_var)

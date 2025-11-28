@@ -2,13 +2,10 @@
 
 unsigned long	ft_strlen(const char *str)
 {
-	unsigned long	count;
+	char	*s;
 
-	count = 0;
-	while (*str)
-	{
-		count++;
-		str++;
-	}
-	return (count);
+	s = (char *)str;
+	while (*s)
+		s++;
+	return (s - str);
 }

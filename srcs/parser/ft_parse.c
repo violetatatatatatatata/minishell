@@ -92,6 +92,9 @@ t_list	*ft_parse(char *prompt, t_shell *data)
 	ft_print_debug(cmd_list);
 	cmd_list = ft_build_cmd_table(cmd_list);
 	ft_print_cmd_table(cmd_list);
+	printf("--------- EXPAND REDIRECTIONS ---------\n");
+	ft_expand_red(cmd_list, data);
+	ft_print_cmd_table(cmd_list);
 	printf("----- END PARSE ------\n");
 	return (cmd_list);
 }
