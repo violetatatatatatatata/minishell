@@ -69,7 +69,7 @@ void	loop(t_shell *data)
 	int	i;
 
 	i = 0;
-	while (i < 3) // DEBUG para poder salir mientra no funcione el built-in
+	while (data->user_input != NULL) // DEBUG para poder salir mientra no funcione el built-in
 	{
 		data->user_input = get_user_input(data);
 		set_signals_handlers_exec();

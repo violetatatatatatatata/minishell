@@ -25,6 +25,6 @@ int	minishell(int argc, char **argv, char **env)
 	else
 		handle_missing_env(&shell, argv[0]);
 	loop(&shell);
-	terminator(&shell, TRUE);
+	// terminator(&shell, TRUE);
 	return (EXIT_SUCCESS);
 }
