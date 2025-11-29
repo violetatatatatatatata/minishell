@@ -6,18 +6,13 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/11/25 19:14:50 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/28 12:47:05 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-<<<<<<< HEAD
-// Mover cursor al inicio (solo si es un file normal)
-void	debug_fd(int fd)
-=======
 void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
->>>>>>> origin/feature/Exec_Built-ins
 {
 	char	buffer[1024];
 	ssize_t	n;

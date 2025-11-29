@@ -6,27 +6,27 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 19:00:11 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/25 19:37:09 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/28 13:04:10 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	change_dir(t_shell *data, char *dir)
+static int	change_dir(t_values *data, char *dir)
 {
 	char	*curpath;
 	char	cwd[PATH_MAX];
 
-	if (chdir(dir) != 0)
+	if (!chdir(dir))
 		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
 	curpath = getcwd(cwd, PATH_MAX);
 	if (!curpath)
 		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
-	ft_setenv(data, "PWD", dir);
+	ft_setenv(data->val_env, "PATH", dir);
 	return (EXIT_SUCCESS);
 }
 
-int	bt_cd(char **args, t_shell *data)
+int	bt_cd(char **args, t_values *data)
 {
 	char	*path;
 
@@ -34,16 +34,16 @@ int	bt_cd(char **args, t_shell *data)
 	if (!args || !args[1] || ft_isspace(args[1][0])
 		|| args[1][0] == '\0' || ft_strncmp(args[1], "--", 3) == 0)
 	{
-		path = ft_getenv("HOME", data->env);
+		path = ft_getenv("HOME", data->val_env->env);
 		if (!path || *path == '\0' || ft_isspace(*path))
 			return (print_msg("cd", HOME_FAILED, EXIT_FAILURE));
-		return (!change_dir(data, path));
+		return (!chdir(path));
 	}
 	if (args[2])
 		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
 	if (ft_strncmp(args[1], "-", 2) == 0)
 	{
-		path = ft_getenv("OLDPWD", data->env);
+		path = ft_getenv("OLDPWD", data->val_env->env);
 		if (!path)
 			return (print_msg("cd", "OLDPWD not set", EXIT_FAILURE));
 		return (!change_dir(data, path));

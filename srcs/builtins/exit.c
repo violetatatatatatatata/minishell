@@ -52,7 +52,6 @@ int	is_numeric(char *str)
 }
 
 int	bt_exit(t_shell *data, char **args, t_list *table_lst)
->>>>>>> origin/feature/Exec_Built-ins
 {
 	int	exit_code;
 

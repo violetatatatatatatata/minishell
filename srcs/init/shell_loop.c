@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
-
+/*
 static void	free_tokens(t_token *token)
 {
 	if (!token)
@@ -24,8 +24,9 @@ static void	free_tokens(t_token *token)
 		free_tokens(token->right_side);
 	free(token);
 }
-
-static void	free_cmd(void *content)
+*/
+/*
+void	free_cmd(void *content)
 {
 	t_cmd_table	*node;
 
@@ -38,7 +39,7 @@ static void	free_cmd(void *content)
 		free_tokens(node->token);
 	free(node);
 }
-
+*/
 static int	execute(t_shell *data)
 {
 	t_list	*cmd_list;

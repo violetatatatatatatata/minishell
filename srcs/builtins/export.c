@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::   */
-/*	 export.c											:+:		 :+:	:+:   */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: avelandr <avelandr@student.42barcelon		+#+  +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2025/11/25 15:57:08 by avelandr		   #+#	  #+#			  */
-/*	 Updated: 2025/11/25 15:57:08 by avelandr		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/28 12:59:39 by avelandr         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
@@ -17,55 +17,77 @@ static int	is_valid_id(char *str)
 	int	i;
 
 	i = 0;
-	if (!str[i] || (!ft_isalpha(str[i]) && str[i] != '_'))
-		return (EXIT_FAILURE);
+	if (!ft_isalpha(str[i]) && str[i] != '_')
+		return (FALSE);
 	i++;
 	while (str[i] && str[i] != '=')
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (EXIT_FAILURE);
+			return (FALSE);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (TRUE);
 }
 
-static void	export_var(t_shell *data, char *arg)
+static void	handle_export(t_shell *data, char *args)
 {
-	char	*eq_pos;
+	char	*key;
+	char	*value;
+	char	*pos;
 
-	eq_pos = ft_strchr(arg, '=');
-	if (eq_pos)
+	pos = ft_strchr(args, '=');
+	key = ft_getkey(args, pos);
+	value = ft_getvalue(args);
+	ft_setenv(data, key, value);
+	free(key);
+	free(value);
+}
+
+// HAY que hacer los frees del cpy_env y del contenido !!!!!!!!!!!
+long	print_sorted_env(t_env *env)
+{
+	t_env	*cpy_env;
+
+	cpy_env = dupe_env(env);
+	sort_pass(cpy_env);
+	while (cpy_env)
 	{
-		*eq_pos = '\0';
-		ft_setenv(data, arg, eq_pos + 1);
-		*eq_pos = '=';
+		if (cpy_env->visible)
+		{
+			printf("declare -x %s", cpy_env->key);
+			if (cpy_env->value)
+				printf("=\"%s\"", cpy_env->value);
+			printf("\n");
+		}
+		cpy_env = cpy_env->next;
 	}
-	else
-	{
-		if (!ft_getenv(arg, data->env))
-			ft_setenv(data, arg, NULL);
-	}
+	return (EXIT_SUCCESS);
 }
 
 int	bt_export(t_shell *data, char **args)
 {
 	int	i;
-	int	ret;
+	int	exit_status;
 
-	ret = EXIT_SUCCESS;
+	i = 1;
+	exit_status = EXIT_SUCCESS;
 	if (!args[1])
 		return (print_sorted_env(data->env));
-	i = 1;
 	while (args[i])
 	{
 		if (!is_valid_id(args[i]))
 		{
-			printf("export %s not a valid identifier", args[i]);
-			ret = 1;
+			return (print_msg("export", "not a valid identifier", 1));
+			exit_status = EXIT_FAILURE;
 		}
+		else if (ft_strchr(args[i], '=') != NULL)
+			handle_export(data, args[i]);
 		else
-			export_var(data, args[i]);
+		{
+			if (!ft_getenv(args[i], data->env))
+				ft_setenv(data, args[i], NULL);
+		}
 		i++;
 	}
-	return (ret);
+	return (exit_status);
 }

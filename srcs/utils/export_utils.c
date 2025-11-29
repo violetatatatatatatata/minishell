@@ -1,102 +1,91 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::   */
-/*	 export_utils.c										:+:		 :+:	:+:   */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: avelandr <avelandr@student.42barcelon		+#+  +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2025/11/25 16:00:20 by avelandr		   #+#	  #+#			  */
-/*	 Updated: 2025/11/25 16:00:20 by avelandr		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/23 01:15:44 by avelandr          #+#    #+#             */
+/*   Updated: 2025/11/28 12:59:40 by avelandr         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../../includes/minishell.h"
 
-static int	count_vars(t_env *env)
+// un ft_lstsize pero pa t_env vamo
+// NO se usa por ahora
+/*static int	count_env_vars(t_env *env)
 {
-	int	i;
+	int	n_vars;
 
-	i = 0;
+	n_vars = 0;
 	while (env)
 	{
-		i++;
+		n_vars++;
 		env = env->next;
 	}
-	return (i);
+	return (n_vars);
+}*/
+
+static void	swap_env_nodes(t_env *a, t_env *b)
+{
+	t_env	tmp;
+
+	tmp.key = a->key;
+	tmp.value = a->value;
+	tmp.visible = a->visible;
+	a->key = b->key;
+	a->value = b->value;
+	a->visible = b->visible;
+	b->key = tmp.key;
+	b->value = tmp.value;
+	b->visible = tmp.visible;
 }
 
-static void	sort_tab(t_env **tab, int size)
+int	sort_pass(t_env *list)
 {
-	int		i;
-	int		j;
-	t_env	*tmp;
+	t_env	*ptr;
+	int		swapped;
 
-	i = 0;
-	while (i < size - 1)
+	swapped = 0;
+	ptr = list;
+	while (ptr->next != NULL)
 	{
-		j = 0;
-		while (j < size - i - 1)
+		if (ft_strcmp(ptr->key, ptr->next->key) > 0)
 		{
-			if (ft_strcmp(tab[j]->key, tab[j + 1]->key) > 0)
-			{
-				tmp = tab[j];
-				tab[j] = tab[j + 1];
-				tab[j + 1] = tmp;
-			}
-			j++;
+			swap_env_nodes(ptr, ptr->next);
+			swapped = 1;
 		}
-		i++;
+		ptr = ptr->next;
 	}
+	return (swapped);
 }
 
-static t_env	**list_to_array(t_env *env, int size)
+t_env	*dupe_env(t_env *env)
 {
-	t_env	**tab;
-	int		i;
+	t_env	*new_head;
+	t_env	*curr;
+	t_env	*new_node;
 
-<<<<<<< HEAD
-	tab = malloc(sizeof(t_env *) * (size + 1));
-	if (!tab)
-		return (NULL);
-	i = 0;
-	while (env && i < size)
-=======
 	new_head = NULL;
 	curr = NULL;
 	while (env)
->>>>>>> origin/feature/Exec_Built-ins
 	{
-		tab[i] = env;
-		env = env->next;
-		i++;
-	}
-	tab[i] = NULL;
-	return (tab);
-}
-
-int	print_sorted_env(t_env *env)
-{
-	t_env	**tab;
-	int		size;
-	int		i;
-
-	size = count_vars(env);
-	tab = list_to_array(env, size);
-	if (!tab)
-		return (EXIT_FAILURE);
-	sort_tab(tab, size);
-	i = 0;
-	while (i < size)
-	{
-		if (tab[i]->visible)
+		new_node = create_env_variable(env->key, env->value);
+		if (!new_node)
+			return (NULL);
+		new_node->visible = env->visible;
+		if (!new_head)
 		{
-			printf("declare -x %s", tab[i]->key);
-			if (tab[i]->value)
-				printf("=\"%s\"", tab[i]->value);
-			printf("\n");
+			new_head = new_node;
+			curr = new_node;
 		}
-		i++;
+		else
+		{
+			curr->next = new_node;
+			curr = new_node;
+		}
+		env = env->next;
 	}
-	free(tab);
-	return (EXIT_SUCCESS);
+	return (new_head);
 }
