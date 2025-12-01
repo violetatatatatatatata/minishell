@@ -20,6 +20,7 @@
 # define	PATH_MAX 4096
 
 // EXECUTION MESSAGES
+# define	NOT_CMD_MSG "command not found"
 
 // ERRORES
 # define MANY_ARGS "too many arguments"

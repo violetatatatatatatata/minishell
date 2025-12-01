@@ -3,8 +3,9 @@ NAME = minishell
 CC = cc
 
 # Compiler flags
-CFLAGS = -Wall -Werror -Wextra
-BFLAGS = -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g
+#BFLAGS = -g -fsanitize=address
+BFLAGS = -g
 RDFLAG = -lreadline
 
 #Libs

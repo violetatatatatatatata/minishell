@@ -50,10 +50,14 @@ void	loop(t_shell *data)
 	{
 		data->user_input = get_user_input(data);
 		set_signals_handlers_exec();
-		if (data->user_input[0] != '\0')
+		if (data->user_input && data->user_input[0] != '\0')
 		{
 			add_history(data->user_input);
-			g_status = execute(data);
+			if (ft_lexer(data->user_input) == TRUE)
+				g_status = execute(data);
+			else
+				g_status = print_msg
+					(NULL, "syntax error near unexpected token", 2);
 		}
 		terminator(data, FALSE);
 		i++;

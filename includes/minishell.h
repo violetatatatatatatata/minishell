@@ -186,7 +186,7 @@ void	ft_free_double(char **arr);
 void	ft_free_triple(char ***arr);
 void	ft_free_double(char **arr);
 void	ft_free_cmd_list(t_cmd_table *table);
-void	ft_free_vals(t_values *vals);
+void	ft_free_vals(t_values *vals, int is_exit);
 void	terminator(t_shell *data, int exit);
 void	ft_here_doc(int *fd_in, const char *limiter);
 int		ft_open_infile(t_token *token);

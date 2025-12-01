@@ -10,7 +10,7 @@
 /*																			  */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 void	reset_prompt(int signo)
 {
