@@ -33,6 +33,7 @@ t_token	*ft_build_token(char *str_token)
 	token->content = str_token;
 	token->left_side = NULL;
 	token->right_side = NULL;
+	token->redir = NULL;
 	token->type = WORD;
 	if (ft_is_redirection(str_token))
 	{

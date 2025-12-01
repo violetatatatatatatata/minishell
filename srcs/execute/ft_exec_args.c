@@ -30,10 +30,12 @@
 
 static void	ft_path_error_message(char **argv)
 {
+	//print_msg(NULL, NOT_CMD_MSG, 2);
 	if (!argv || !argv[0])
 		ft_putstr_fd("pipex: command not found\n", 2);
 	else
 	{
+		//print_msg(argv[0], NOT_CMD_MSG, 2);
 		ft_putstr_fd("pipex: ", 2);
 		ft_putstr_fd(argv[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
@@ -60,16 +62,22 @@ int	ft_exec_args(t_values *vals, t_shell *data)
 {
 	char	*cmd_path;
 	int		return_val;
+	char	**env;
 
 	if (ft_is_buitlin(vals->args[0]))
 	{
 		return (ft_exec_builtin(vals, data));
 	}
 	return_val = ft_prepare_exec(vals->args, data, &cmd_path);
+	printf("EXEC ARGS 1\n");
 	if (return_val > EXIT_SUCCESS)
 		return (return_val);
-	execve(cmd_path, vals->args, env_to_array(data->env));
-	perror("execve");
+	printf("EXEC ARGS 2\n");
+	env = env_to_array(data->env);
+	execve(cmd_path, vals->args, env);
+	printf("EXEC ARGS 3\n");
+	ft_free_split(env);
+	print_msg(cmd_path, NOT_CMD_MSG, 2);
 	free(cmd_path);
-	return (EXIT_FAILURE);
+	return (127);
 }

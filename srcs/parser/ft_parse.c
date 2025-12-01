@@ -25,7 +25,7 @@ void	ft_print_debug(t_list *cmd_list)
 		while (token)
 		{
 			printf("Token: %s\n", token->content);
-			if (token->type == REDIR)
+			if (token->type == REDIR && token->redir->redir_content)
 				printf("Token redir: %s\n", token->redir->redir_content->content);
 			token = token->right_side;
 		}
@@ -53,7 +53,7 @@ void	ft_print_tokens_debug(t_token *token)
 	while (token)
 	{
 		printf("Token: %s\n", token->content);
-		if (token->type == REDIR)
+		if (token->type == REDIR && token->redir->redir_content)
 			printf("Token redir: %s\n", token->redir->redir_content->content);
 		token = token->right_side;
 	}

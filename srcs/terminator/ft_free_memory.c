@@ -74,12 +74,12 @@ void	free_cmd(void *content)
 	ft_free_cmd_list(node);
 }
 
-void	ft_free_vals(t_values *vals)
+void	ft_free_vals(t_values *vals, int is_exit)
 {
 	if (vals->pids)
 		free(vals->pids);
 	if (vals->cmd_list)
 		ft_lstclear(&vals->cmd_list, &free_cmd);
 	vals->cmd_list = NULL;
-	terminator(vals->val_env, TRUE);
+	terminator(vals->val_env, is_exit);
 }

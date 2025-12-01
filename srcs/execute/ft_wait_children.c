@@ -19,10 +19,11 @@ int	ft_wait_children(int num_cmds, pid_t *pids)
 	int	exit_code;
 
 	exit_code = 0;
+	status = 0;
 	i = 0;
 	while (i < num_cmds - 1)
 	{
-		waitpid(pids[i], NULL, 0);
+		waitpid(pids[i], &status, 0);
 		i++;
 	}
 	if (waitpid(pids[num_cmds - 1], &status, 0) == -1)
