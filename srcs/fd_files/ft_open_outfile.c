@@ -22,7 +22,7 @@ static int	ft_search_file(t_redir_type type)
 	return (0);
 }
 
-static int	ft_open_output_file(char *filename, int mode)
+static int	ft_open_output_file(char *filename, int mode, int *ret_val)
 {
 	int	fd_out;
 	int	flags;
@@ -34,11 +34,12 @@ static int	ft_open_output_file(char *filename, int mode)
 		flags |= O_APPEND;
 	fd_out = open(filename, flags, 0644);
 	if (fd_out < 0)
-		perror(filename);
+		if (access(filename, W_OK) == 0)
+			*ret_val = print_msg(NOT_PERMISSION_MSG, filename, 1);
 	return (fd_out);
 }
 
-int	ft_open_outfile(t_token *token)
+int	ft_open_outfile(t_token *token, int *ret_val)
 {
 	int	mode;
 	int	fd_out;
@@ -54,7 +55,7 @@ int	ft_open_outfile(t_token *token)
 		mode = ft_search_file(token->redir->redir_type);
 		if (mode == 1 || mode == 2)
 			fd_out = ft_open_output_file(token->redir->redir_content->content,
-					mode);
+					mode, ret_val);
 		token = token->right_side;
 	}
 	return (fd_out);

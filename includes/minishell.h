@@ -152,6 +152,7 @@ typedef struct s_values
 	int		fd_prev;
 	int		fd_in;
 	int		fd_out;
+	int		exit_val;
 }	t_values;
 
 // permite almacenar el estado de salida del ultimo
@@ -181,7 +182,7 @@ int		is_numeric(char *str);
 int		bt_exit(t_shell *data, char **args, t_list *table_lst);
 int		bt_export(t_shell *data, char **args);
 void	bt_pwd(t_shell *data);
-void	free_data();
+void	free_data(void);
 void	ft_free_double(char **arr);
 void	ft_free_triple(char ***arr);
 void	ft_free_double(char **arr);
@@ -189,8 +190,8 @@ void	ft_free_cmd_list(t_cmd_table *table);
 void	ft_free_vals(t_values *vals, int is_exit);
 void	terminator(t_shell *data, int exit);
 void	ft_here_doc(int *fd_in, const char *limiter);
-int		ft_open_infile(t_token *token);
-int		ft_open_outfile(t_token *token);
+int		ft_open_infile(t_token *token, int *ret_val);
+int		ft_open_outfile(t_token *token, int *ret_val);
 void	ft_set_infile(int *fd_write, const char *limiter);
 int		ft_exec_args(t_values *vals, t_shell *data);
 void	debug_fd(int fd);

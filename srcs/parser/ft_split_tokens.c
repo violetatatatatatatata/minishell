@@ -30,7 +30,7 @@ static void	handle_token_relation(t_token **token, char *token_str)
 	t_token	*tmp;
 
 	tmp = ft_build_token(token_str);
-	if ((*token)->type == REDIR)
+	if ((*token)->type == REDIR && !(*token)->redir->redir_content)
 		(*token)->redir->redir_content = tmp;
 	else
 	{

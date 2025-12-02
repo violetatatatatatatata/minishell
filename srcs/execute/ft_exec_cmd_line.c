@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdlib.h>
 
 void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
 {
@@ -43,7 +44,9 @@ static void	ft_child_body(t_values *vals, int *fd_pipe)
 	vals->pids = NULL;
 	if (vals->fd_in != STDIN_FILENO)
 		dup2(vals->fd_in, STDIN_FILENO);
-	fd_out = ft_open_outfile(vals->token);
+	fd_out = STDOUT_FILENO;
+	if (vals->exit_val == EXIT_SUCCESS)
+		fd_out = ft_open_outfile(vals->token, &vals->exit_val);
 	if (fd_out > 2)
 	{
 		dup2(fd_out, STDOUT_FILENO);
@@ -55,6 +58,11 @@ static void	ft_child_body(t_values *vals, int *fd_pipe)
 	close(fd_pipe[1]);
 	if (vals->fd_in > 2)
 		close(vals->fd_in);
+	if (vals->exit_val != EXIT_SUCCESS)
+	{
+		g_status = vals->exit_val;
+		ft_free_vals(vals, TRUE);
+	}
 	return_val = ft_exec_args(vals, vals->val_env);
 	g_status = return_val;
 	ft_free_vals(vals, TRUE);
@@ -66,7 +74,9 @@ static void	ft_last_cmd(t_values *vals)
 	int	return_val;
 	int	tmp_in;
 
-	tmp_in = ft_open_infile(vals->token);
+	vals->exit_val = 0;
+	tmp_in = ft_open_infile(vals->token, &vals->exit_val);
+	printf("--------------------EXIT-VAL FATHER: %i\n", vals->exit_val);
 	if (vals->fd_prev == -1)
 		vals->fd_in = tmp_in;
 	else
@@ -91,14 +101,25 @@ static void	ft_last_cmd(t_values *vals)
 			close(vals->fd_in);
 		if (vals->fd_prev > 2 && vals->fd_prev != vals->fd_in)
 			close(vals->fd_prev);
-		fd_out = ft_open_outfile(vals->token);
+		fd_out = STDOUT_FILENO;
+		if (vals->exit_val == EXIT_SUCCESS)
+			fd_out = ft_open_outfile(vals->token, &vals->exit_val);
 		if (fd_out > 2)
 		{
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
 		}
+		if (vals->exit_val != EXIT_SUCCESS)
+		{
+			g_status = vals->exit_val;
+			ft_free_vals(vals, TRUE);
+		}
 		return_val = ft_exec_args(vals, vals->val_env);
-		g_status = return_val;
+		printf("--------------------EXIT-VAL: %i\n", vals->exit_val);
+		if (vals->exit_val == EXIT_SUCCESS)
+			g_status = return_val;
+		else
+			g_status = vals->exit_val;
 		ft_free_vals(vals, TRUE);
 	}
 }
@@ -107,7 +128,8 @@ static void	ft_command_loop(t_values *vals, int fd_pipe[2])
 {
 	int	tmp_in;
 
-	tmp_in = ft_open_infile(vals->token);
+	vals->exit_val = 0;
+	tmp_in = ft_open_infile(vals->token, &vals->exit_val);
 	printf("FORK: %i\n", vals->index);
 	if (pipe(fd_pipe) == -1)
 		return (perror("Pipe"), free(vals->pids));

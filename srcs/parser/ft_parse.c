@@ -59,7 +59,7 @@ void	ft_print_tokens_debug(t_token *token)
 	}
 }
 
-static void	ft_print_cmd_table(t_list *cmd_table)
+void	ft_print_cmd_table(t_list *cmd_table)
 {
 	t_cmd_table	*table;
 	t_token		*token;
@@ -83,18 +83,18 @@ t_list	*ft_parse(char *prompt, t_shell *data)
 	tokens = ft_tokenize(prompt);
 	cmd_list = ft_split_tokens(tokens);
 	free(tokens);
-	ft_print_debug(cmd_list);
-	printf("--------- EXPAND ---------\n");
+	//ft_print_debug(cmd_list);
+	//printf("--------- EXPAND ---------\n");
 	ft_expand_dolar(&cmd_list, data);
-	ft_print_debug(cmd_list);
-	printf("----- REMOVE QUOTES ------\n");
+	//ft_print_debug(cmd_list);
+	//printf("----- REMOVE QUOTES ------\n");
 	ft_remove_quotes(cmd_list);
-	ft_print_debug(cmd_list);
+	//ft_print_debug(cmd_list);
 	cmd_list = ft_build_cmd_table(cmd_list);
-	ft_print_cmd_table(cmd_list);
-	printf("--------- EXPAND REDIRECTIONS ---------\n");
+	//ft_print_cmd_table(cmd_list);
+	//printf("--------- EXPAND REDIRECTIONS ---------\n");
 	ft_expand_red(cmd_list, data);
-	ft_print_cmd_table(cmd_list);
-	printf("----- END PARSE ------\n");
+	//ft_print_cmd_table(cmd_list);
+	//printf("----- END PARSE ------\n");
 	return (cmd_list);
 }

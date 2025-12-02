@@ -13,7 +13,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	str = (char *)ft_calloc(size, sizeof(char));
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, s1, size);
-	ft_strlcat(str, s2, size);
+	ft_strlcpy(str, (char *)s1, size);
+	ft_strlcat(str, (char *)s2, size);
 	return (str);
 }

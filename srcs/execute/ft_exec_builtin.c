@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <stdlib.h>
 
 static void	ft_restore(int saved_stdin, int saved_stdout)
 {
@@ -22,10 +23,11 @@ static void	ft_restore(int saved_stdin, int saved_stdout)
 
 static int	ft_redirections(t_values *data)
 {
-	data->fd_in = ft_open_infile(data->token);
-	if (data->fd_in == -2)
+	data->fd_in = ft_open_infile(data->token, &data->exit_val);
+	if (data->exit_val == EXIT_SUCCESS)
+		data->fd_out = ft_open_outfile(data->token, &data->exit_val);
+	if (data->exit_val == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	data->fd_out = ft_open_outfile(data->token);
 	if (data->fd_in != STDIN_FILENO && data->fd_in > 0)
 	{
 		dup2(data->fd_in, STDIN_FILENO);
@@ -73,7 +75,7 @@ int	ft_exec_builtin(t_values *data, t_shell *shell)
 		return (bt_exit(shell, data->args, data->cmd_list));
 	}
 	if (ft_redirections(data) == EXIT_FAILURE)
-		return (2);
+		return (EXIT_FAILURE);
 	ret = ft_run_builtin(data, shell);
 	ft_restore(saved_stdin, saved_stdout);
 	return (ret);

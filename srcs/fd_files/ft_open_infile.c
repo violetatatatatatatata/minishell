@@ -21,14 +21,17 @@ static int	ft_search_open_file(t_redir_type type)
 	return (0);
 }
 
-static int	ft_open_fdin(char *str)
+static int	ft_open_fdin(char *str, int *ret_val)
 {
 	int		fd_in;
 
 	fd_in = open(str, O_RDONLY);
 	if (fd_in < 0)
 	{
-		perror(str);
+		if (access(str, F_OK) != 0)
+			*ret_val = print_msg(NOT_INFILE_MSG, str, 1);
+		else if (access(str, R_OK) != 0)
+			*ret_val = print_msg(NOT_PERMISSION_MSG, str, 1);
 		fd_in = open("/dev/null", O_RDONLY);
 	}
 	return (fd_in);
@@ -46,7 +49,7 @@ static int	ft_handle_heredoc(char *str_lim)
 	return (fd_in);
 }
 
-static void	ft_open_infile_type(t_token *token, int *fd_in)
+static void	ft_open_infile_type(t_token *token, int *fd_in, int *ret_val)
 {
 	int	result;
 
@@ -62,11 +65,11 @@ static void	ft_open_infile_type(t_token *token, int *fd_in)
 	{
 		if (*fd_in > 2)
 			close(*fd_in);
-		*fd_in = ft_open_fdin(token->redir->redir_content->content);
+		*fd_in = ft_open_fdin(token->redir->redir_content->content, ret_val);
 	}
 }
 
-int	ft_open_infile(t_token *token)
+int	ft_open_infile(t_token *token, int *ret_val)
 {
 	int	fd_in;
 
@@ -78,7 +81,7 @@ int	ft_open_infile(t_token *token)
 			token = token->right_side;
 			continue ;
 		}
-		ft_open_infile_type(token, &fd_in);
+		ft_open_infile_type(token, &fd_in, ret_val);
 		token = token->right_side;
 	}
 	return (fd_in);
