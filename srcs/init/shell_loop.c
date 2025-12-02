@@ -58,7 +58,7 @@ static char	*get_user_input(t_shell *data)
 	char	*prompt_str;
 	char	*input;
 
-	set_signals_interactive();
+	set_signals(reset_prompt);
 	prompt_str = prompt(data);
 	input = readline(prompt_str);
 	free(prompt_str);
@@ -70,9 +70,9 @@ void	loop(t_shell *data)
 	int	i;
 
 	i = 0;
-	while (data->user_input != NULL) // DEBUG para poder salir mientra no funcione el built-in
+	data->user_input = get_user_input(data);
+	while (data->user_input != NULL)
 	{
-		data->user_input = get_user_input(data);
 		set_signals_handlers_exec();
 		if (data->user_input && data->user_input[0] != '\0')
 		{
@@ -84,6 +84,7 @@ void	loop(t_shell *data)
 					(NULL, "syntax error near unexpected token", 2);
 		}
 		terminator(data, FALSE);
+		data->user_input = get_user_input(data);
 		i++;
 	}
 }

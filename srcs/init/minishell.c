@@ -16,8 +16,8 @@ int	minishell(int argc, char **argv, char **env)
 {
 	t_shell	shell;
 
-	if (argc != 1 || argv[1] != NULL)
-		return (EXIT_FAILURE);
+	//if (argc != 1 || argv[1] != NULL)
+	//	return (EXIT_FAILURE);
 	print_prompt();
 	shell.pid = getpid();
 	if (env)

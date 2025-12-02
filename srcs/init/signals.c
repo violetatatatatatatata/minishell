@@ -29,14 +29,17 @@ void	sig_heredoc_handler(int signo)
 	exit(130);
 }
 
-void	set_signals_interactive(void)
+void	set_signals(void (*handler)(int))
 {
 	struct sigaction	act;
 
 	ft_memset(&act, 0, sizeof(act));
-	act.sa_handler = SIG_IGN;
+	if (handler == SIG_DFL)
+		act.sa_handler = SIG_DFL;
+	else
+		act.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &act, NULL);
-	act.sa_handler = &reset_prompt;
+	act.sa_handler = handler;
 	sigaction(SIGINT, &act, NULL);
 }
 

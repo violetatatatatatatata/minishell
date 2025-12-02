@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:10:10 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/28 13:01:46 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/02 12:37:24 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,7 +220,7 @@ t_list	*ft_parse(char *prompt, t_shell *data);
 int		minishell(int argc, char **argv, char **env);
 void	loop(t_shell *data);
 void	reset_prompt(int signo);
-void	set_signals_interactive(void);
+void	set_signals(void (*handler)(int));
 void	set_signals_handlers_exec(void);
 long	print_sorted_env(t_env *env);
 int		ft_is_buitlin(char *s);
