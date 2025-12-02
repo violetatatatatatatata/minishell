@@ -22,6 +22,13 @@ void	reset_prompt(int signo)
 	rl_redisplay();
 }
 
+void	sig_heredoc_handler(int signo)
+{
+	(void)signo;
+	write(1, "\n", 1);
+	exit(130);
+}
+
 void	set_signals_interactive(void)
 {
 	struct sigaction	act;
