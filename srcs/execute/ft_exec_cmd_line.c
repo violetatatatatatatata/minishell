@@ -6,12 +6,11 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/11/23 17:07:04 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/28 12:47:05 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include <stdlib.h>
+#include <minishell.h>
 
 void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
 {
@@ -23,7 +22,6 @@ void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
 		printf("fd inválido\n");
 		return ;
 	}
-	// Mover cursor al inicio (solo si es un file normal)
 	lseek(fd, 0, SEEK_SET);
 	n = read(fd, buffer, sizeof(buffer) - 1);
 	while (n > 0)

@@ -6,14 +6,13 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/08/07 13:23:03 by aalcaide         ###   ########.fr       */
+/*   Updated: 2025/12/02 12:27:59 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
-void	ft_here_doc(int *fd_in,
-	const char *limiter)
+void	ft_here_doc(int *fd_in,	const char *limiter)
 {
 	int	fd_pipe[2];
 

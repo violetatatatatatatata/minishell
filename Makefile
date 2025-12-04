@@ -30,7 +30,7 @@ all: $(NAME)
 	echo "Minishell done."
 
 $(NAME): $(OBJ_FILES) $(LIB_DIR)/$(LIBFT_DIR)$(CLIB)
-	$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft $(RDFLAG)
+	$(CC) $(CFLAGS) $(BFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft $(RDFLAG)
 
 $(LIB_DIR)/$(LIBFT_DIR)$(CLIB):
 	@make -C $(LIBFT_DIR)

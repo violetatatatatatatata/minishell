@@ -10,14 +10,14 @@
 /*																			  */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 int	minishell(int argc, char **argv, char **env)
 {
 	t_shell	shell;
 
-	if (argc != 1 || argv[1] != NULL)
-		return (EXIT_FAILURE);
+	//if (argc != 1 || argv[1] != NULL)
+	//	return (EXIT_FAILURE);
 	print_prompt();
 	shell.pid = getpid();
 	if (env)
@@ -25,6 +25,6 @@ int	minishell(int argc, char **argv, char **env)
 	else
 		handle_missing_env(&shell, argv[0]);
 	loop(&shell);
-	terminator(&shell, TRUE);
+	// terminator(&shell, TRUE);
 	return (EXIT_SUCCESS);
 }
