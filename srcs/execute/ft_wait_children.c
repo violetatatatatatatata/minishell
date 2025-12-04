@@ -14,9 +14,10 @@
 
 int	ft_wait_children(int num_cmds, pid_t *pids)
 {
-	int	i;
-	int	status;
-	int	exit_code;
+	int		i;
+	int		status;
+	int		exit_code;
+	pid_t	wpid;
 
 	exit_code = 0;
 	status = 0;
@@ -26,7 +27,10 @@ int	ft_wait_children(int num_cmds, pid_t *pids)
 		waitpid(pids[i], &status, 0);
 		i++;
 	}
-	if (waitpid(pids[num_cmds - 1], &status, 0) == -1)
+	wpid = waitpid(pids[num_cmds - 1], &status, 0);
+	while (wpid == -1 && errno == EINTR)
+		wpid = waitpid(pids[num_cmds - 1], &status, 0);
+	if (wpid == -1)
 		perror("waitpid");
 	if (WIFEXITED(status))
 		exit_code = WEXITSTATUS(status);

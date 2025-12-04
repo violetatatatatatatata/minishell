@@ -223,7 +223,7 @@ t_list	*ft_parse(char *prompt, t_shell *data);
 int		minishell(int argc, char **argv, char **env);
 void	loop(t_shell *data);
 void	reset_prompt(int signo);
-void	set_signals(void (*handler)(int));
+void	set_signals_int(void);
 void	set_signals_handlers_exec(void);
 long	print_sorted_env(t_env *env);
 int		ft_is_buitlin(char *s);

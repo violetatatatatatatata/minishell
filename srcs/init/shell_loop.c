@@ -58,7 +58,7 @@ static char	*get_user_input(t_shell *data)
 	char	*prompt_str;
 	char	*input;
 
-	set_signals(reset_prompt);
+	set_signals_int();
 	prompt_str = prompt(data);
 	input = readline(prompt_str);
 	free(prompt_str);
