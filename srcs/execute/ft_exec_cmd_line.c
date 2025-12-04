@@ -57,13 +57,9 @@ static void	ft_child_body(t_values *vals, int *fd_pipe)
 	if (vals->fd_in > 2)
 		close(vals->fd_in);
 	if (vals->exit_val != EXIT_SUCCESS)
-	{
-		g_status = vals->exit_val;
-		ft_free_vals(vals, TRUE);
-	}
+		ft_free_vals(vals, vals->exit_val, TRUE);
 	return_val = ft_exec_args(vals, vals->val_env);
-	g_status = return_val;
-	ft_free_vals(vals, TRUE);
+	ft_free_vals(vals, return_val, TRUE);
 }
 
 static void	ft_last_cmd(t_values *vals)
@@ -108,17 +104,12 @@ static void	ft_last_cmd(t_values *vals)
 			close(fd_out);
 		}
 		if (vals->exit_val != EXIT_SUCCESS)
-		{
-			g_status = vals->exit_val;
-			ft_free_vals(vals, TRUE);
-		}
+			ft_free_vals(vals, vals->exit_val, TRUE);
 		return_val = ft_exec_args(vals, vals->val_env);
 		printf("--------------------EXIT-VAL: %i\n", vals->exit_val);
 		if (vals->exit_val == EXIT_SUCCESS)
-			g_status = return_val;
-		else
-			g_status = vals->exit_val;
-		ft_free_vals(vals, TRUE);
+			ft_free_vals(vals, return_val, TRUE);
+		ft_free_vals(vals, vals->exit_val, TRUE);
 	}
 }
 

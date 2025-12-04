@@ -47,7 +47,7 @@ static int	execute(t_shell *data)
 
 	cmd_list = ft_parse(data->user_input, data);
 	if (!cmd_list)
-		return (g_status);
+		return (data->exit_status);
 	exit_status = ft_exec_cmd_line(cmd_list, data);
 	ft_lstclear(&cmd_list, &free_cmd);
 	return (exit_status);
@@ -75,12 +75,12 @@ void	loop(t_shell *data)
 		{
 			add_history(data->user_input);
 			if (ft_lexer(data->user_input) == TRUE)
-				g_status = execute(data);
+				data->exit_status = execute(data);
 			else
-				g_status = print_msg
+				data->exit_status = print_msg
 					(NULL, "syntax error near unexpected token", 2);
 		}
-		terminator(data, FALSE);
+		terminator(data, data->exit_status, FALSE);
 		data->user_input = get_user_input(data);
 	}
 }

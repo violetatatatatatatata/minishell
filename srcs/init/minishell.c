@@ -22,6 +22,7 @@ int	minishell(int argc, char **argv, char **env)
 	(void)argv;
 	print_prompt();
 	shell.pid = getpid();
+	shell.exit_status = 0;
 	if (env)
 		shell.env = init_env(env);
 	else

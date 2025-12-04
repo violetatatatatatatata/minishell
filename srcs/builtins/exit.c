@@ -57,18 +57,17 @@ int	bt_exit(t_shell *data, char **args, t_list *table_lst)
 
 	if (!args[1])
 	{
-		exit_code = g_status;
 		ft_lstclear(&table_lst, free_cmd);
-		terminator(data, TRUE);
+		terminator(data, 0, TRUE);
 	}
 	if (!check_long_overflow(args[1]) || !is_numeric(args[1]))
 	{
 		print_msg("exit", "numeric argument required", EXIT_FAILURE);
-		terminator(data, 2);
+		terminator(data, 2, TRUE);
 	}
 	if (args[2])
 		print_msg("exit", "too many arguments", EXIT_FAILURE);
 	exit_code = ft_atoi(args[1]);
-	terminator(data, exit_code);
+	terminator(data, exit_code, TRUE);
 	return (EXIT_SUCCESS);
 }

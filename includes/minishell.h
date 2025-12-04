@@ -89,6 +89,7 @@ typedef struct s_shell
 	t_env	*env;
 	char	*user_input;
 	int		pid;
+	int		exit_status;
 }	t_shell;
 
 typedef struct s_tokens_values
@@ -116,6 +117,7 @@ typedef struct s_expand_data
 	int				*index;
 	int				*sub_start;
 	t_quote_type	current_quote;
+	int				*exit_status;
 }	t_expand_data;
 
 typedef struct s_redir
@@ -187,8 +189,8 @@ void	ft_free_double(char **arr);
 void	ft_free_triple(char ***arr);
 void	ft_free_double(char **arr);
 void	ft_free_cmd_list(t_cmd_table *table);
-void	ft_free_vals(t_values *vals, int is_exit);
-void	terminator(t_shell *data, int exit);
+void	ft_free_vals(t_values *vals, int exit_status, int is_exit);
+void	terminator(t_shell *data, int exit_status, int is_exit);
 void	ft_here_doc(int *fd_in, const char *limiter);
 int		ft_open_infile(t_token *token, int *ret_val);
 int		ft_open_outfile(t_token *token, int *ret_val);

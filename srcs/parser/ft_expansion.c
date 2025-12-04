@@ -29,7 +29,7 @@ static void	ft_dolar_expansion(t_expand_data *data)
 			sub_end - *data->sub_start - 1);
 	printf("--- SubStart: %i, Len: %i\n", tmp_start, sub_end - *data->sub_start - 1);
 	printf("Expand simple, Prev_str: %s\n", prev_str);
-	ft_insert_exit_value(data, g_status, prev_str);
+	ft_insert_exit_value(data, *data->exit_status, prev_str);
 	*data->sub_start = *data->index + 2;
 	free(prev_str);
 	(*data->index)--;

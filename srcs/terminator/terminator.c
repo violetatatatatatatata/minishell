@@ -12,7 +12,7 @@
 
 #include <minishell.h>
 
-void	terminator(t_shell *data, int exit_status)
+void	terminator(t_shell *data, int exit_status, int is_exit)
 {
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (data->user_input)
@@ -20,11 +20,11 @@ void	terminator(t_shell *data, int exit_status)
 		free(data->user_input);
 		data->user_input = NULL;
 	}
-	if (exit_status)
+	if (is_exit)
 	{
 		if (data->env)
 			ft_lstclear_env(&data->env);
 		rl_clear_history();
-		exit(g_status);
+		exit(exit_status);
 	}
 }

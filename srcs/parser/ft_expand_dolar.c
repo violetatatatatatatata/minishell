@@ -64,6 +64,7 @@ static void	ft_process_content(char *content, t_token *token, t_shell *dat_env)
 	v.sub_start = 0;
 	v.i = 0;
 	data.val = dat_env;
+	data.exit_status = &dat_env->exit_status;
 	while (content[v.i])
 	{
 		ft_process_char(&v, &data, content, token);
