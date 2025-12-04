@@ -18,6 +18,8 @@ int	minishell(int argc, char **argv, char **env)
 
 	//if (argc != 1 || argv[1] != NULL)
 	//	return (EXIT_FAILURE);
+	(void)argc;
+	(void)argv;
 	print_prompt();
 	shell.pid = getpid();
 	if (env)
