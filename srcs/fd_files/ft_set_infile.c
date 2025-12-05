@@ -27,7 +27,19 @@ static int	is_exact_match(const char *line,
 	return (line[i] == '\n' || line[i] == '\0');
 }
 
-static void	ft_get_text(const char *limiter, int *fd_write)
+static int	ft_check_sig_stop(char *line, int *ret_val)
+{
+	if (g_status == SIGINT)
+	{
+		if (line)
+			free(line);
+		*ret_val = 130;
+		return (1);
+	}
+	return (0);
+}
+
+static void	ft_get_text(const char *limiter, int *fd_write, int *ret_val)
 {
 	char	*line;
 	size_t	limiter_len;
@@ -38,6 +50,8 @@ static void	ft_get_text(const char *limiter, int *fd_write)
 		printf("heredoc> ");
 		line = get_next_line(STDIN_FILENO);
 		printf("LINE: %s\n", line);
+		if (ft_check_sig_stop(line, ret_val))
+			break ;
 		if (!line)
 			break ;
 		if (is_exact_match(line, limiter, limiter_len))
@@ -50,10 +64,17 @@ static void	ft_get_text(const char *limiter, int *fd_write)
 	}
 }
 
-void	ft_set_infile(int *fd_write,
+int	ft_set_infile(int *fd_write,
 	const char *limiter)
 {
+	int	ret_val;
+
+	ret_val = 0;
 	if (!limiter)
 		perror("Limiter not found");
-	ft_get_text(limiter, fd_write);
+	g_status = 0;
+	signals_heredoc();
+	ft_get_text(limiter, fd_write, &ret_val);
+	set_signals_handlers_exec();
+	return (ret_val);
 }

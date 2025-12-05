@@ -37,14 +37,14 @@ static int	ft_open_fdin(char *str, int *ret_val)
 	return (fd_in);
 }
 
-static int	ft_handle_heredoc(char *str_lim)
+static int	ft_handle_heredoc(char *str_lim, int *ret_val)
 {
 	char	*limiter;
 	int		fd_in;
 
 	fd_in = -1;
 	limiter = ft_strdup(str_lim);
-	ft_here_doc(&fd_in, limiter);
+	*ret_val = ft_here_doc(&fd_in, limiter);
 	free(limiter);
 	return (fd_in);
 }
@@ -59,7 +59,8 @@ static void	ft_open_infile_type(t_token *token, int *fd_in, int *ret_val)
 	{
 		if (*fd_in > 2)
 			close(*fd_in);
-		*fd_in = ft_handle_heredoc(token->redir->redir_content->content);
+		*fd_in
+			= ft_handle_heredoc(token->redir->redir_content->content, ret_val);
 	}
 	else if (result == 2)
 	{

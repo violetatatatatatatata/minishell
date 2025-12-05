@@ -12,16 +12,18 @@
 
 #include <minishell.h>
 
-void	ft_here_doc(int *fd_in,	const char *limiter)
+int	ft_here_doc(int *fd_in,	const char *limiter)
 {
 	int	fd_pipe[2];
+	int	ret_val;
 
 	if (pipe(fd_pipe) == -1)
 	{
 		perror("pipe");
 		exit(EXIT_FAILURE);
 	}
-	ft_set_infile(&fd_pipe[1], limiter);
+	ret_val = ft_set_infile(&fd_pipe[1], limiter);
 	close(fd_pipe[1]);
 	*fd_in = fd_pipe[0];
+	return (ret_val);
 }
