@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/09 17:24:45 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/09 18:08:56 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	handle_export(t_shell *data, char *args)
 	pos = ft_strchr(args, '=');
 	key = ft_getkey(args, pos);
 	value = ft_getvalue(pos);
-	// printf("key == %s\nvalue == %s\n", key, value);
+	printf("key == %s\nvalue == %s\n", key, value);
 	ft_setenv(data, key, value);
 	free(key);
 	free(value);
@@ -56,7 +56,7 @@ long	print_sorted_env(t_env *env)
 		if (cpy_env->visible)
 		{
 			printf("declare -x %s", cpy_env->key);
-			if (cpy_env->value)
+			if (cpy_env->value != NULL)
 				printf("=\"%s\"", cpy_env->value);
 			printf("\n");
 		}

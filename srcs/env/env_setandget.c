@@ -16,13 +16,16 @@ t_env	*create_env_variable(char *key, char *value)
 {
 	int		visible;
 	t_env	*node;
+	char	*aux;
 
 	visible = TRUE;
 	node = ft_calloc(1, sizeof(t_env));
 	if (node)
 	{
-		if (value == NULL || ft_strcmp(value, "") == 0)
-			visible = FALSE;
+		if (value)
+			aux = ft_strdup(value);
+		else
+			aux = NULL;
 		create_node(node, ft_strdup(key), ft_strdup(value), visible);
 	}
 	return (node);
@@ -57,7 +60,10 @@ void	already_exists(t_env *cpy, char *val)
 {
 	if (cpy->value)
 		free(cpy->value);
-	cpy->value = ft_strdup(val);
+	if (val)
+		cpy->value = ft_strdup(val);
+	else
+		cpy->value = NULL;
 	cpy->visible = 1;
 }
 
