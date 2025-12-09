@@ -78,11 +78,9 @@ void	ft_word_split(char *env_var, char *prev_content, t_token **token)
 	char	**word_split;
 	int		tokens_count;
 
-	printf("WORD SPLIT\n");
 	word_split = ft_split(env_var, ' ');
 	if (!word_split)
 	{
-		printf("WORD SPLIT NULL, prev: %s\n", prev_content);
 		if (prev_content && ft_strlen(prev_content) > 0)
 			(*token)->content = ft_strdup(prev_content);
 		else
@@ -93,7 +91,6 @@ void	ft_word_split(char *env_var, char *prev_content, t_token **token)
 		return ;
 	}
 	tokens_count = ft_double_arr_size(word_split);
-	printf("Tokens count %i\n", tokens_count);
 	if (tokens_count == 0)
 		return ;
 	ft_join_first_token(prev_content, word_split, token);

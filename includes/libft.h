@@ -62,7 +62,7 @@ int				*ft_range(int min, int max);
 //Strings
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
-char			*ft_strdup(const char *s);
+char			*ft_strdup(const char *string);
 size_t			ft_strlcat(char *dest, char *src, size_t size);
 size_t			ft_strlcpy(char *dest, char *src, size_t size);
 size_t			ft_strlen(const char *str);

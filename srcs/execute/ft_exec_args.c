@@ -69,13 +69,10 @@ int	ft_exec_args(t_values *vals, t_shell *data)
 		return (ft_exec_builtin(vals, data));
 	}
 	return_val = ft_prepare_exec(vals->args, data, &cmd_path);
-	printf("EXEC ARGS 1\n");
 	if (return_val > EXIT_SUCCESS)
 		return (return_val);
-	printf("EXEC ARGS 2\n");
 	env = env_to_array(data->env);
 	execve(cmd_path, vals->args, env);
-	printf("EXEC ARGS 3\n");
 	ft_free_split(env);
 	print_msg(cmd_path, NOT_CMD_MSG, 2);
 	free(cmd_path);

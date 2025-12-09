@@ -148,6 +148,7 @@ typedef struct s_values
 	t_shell	*val_env;
 	pid_t	*pids;
 	t_list	*cmd_list;
+	int		**pipes;
 	int		index;
 	int		cmds_size;
 	int		status;
@@ -201,6 +202,7 @@ int		ft_exec_builtin(t_values *data, t_shell *shell);
 int		ft_exec_cmd_line(t_list *cmd_list, t_shell *data);
 char	*ft_find_command_path(const char *cmd, t_shell *data);
 int		ft_wait_children(int num_cmds, pid_t *pids);
+int		ft_wait_fork(pid_t pid);
 int		ft_lexer(char *prompt);
 void	ft_add_tokentolist(char *content, t_token *token);
 t_list	*ft_build_cmd_table(t_list *tokens);
@@ -253,5 +255,8 @@ void	ft_insert_env_value(t_expand_data *data, char *env_var, char *prev_str);
 void	ft_expand_token_list(t_token *token, t_shell *data);
 void	ft_process_token_list(t_token *token);
 void	ft_expand_red(t_list *cmd_list, t_shell *data);
+int		ft_set_pipes(t_values *vals);
+void	ft_free_pipes(t_values *vals, int size);
+void	ft_close_pipes(t_values *vals);
 
 #endif

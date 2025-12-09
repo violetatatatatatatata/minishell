@@ -1,21 +1,25 @@
 #include "../Includes/libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *string)
 {
-	char				*fin;
-	unsigned long		tam;
-	int					i;
+	char		*str;
+	size_t		size;
+	size_t		i;
 
-	i = 0;
-	tam = ft_strlen((char *)s);
-	fin = (char *)malloc(sizeof(char) * tam + 1);
-	if (!fin)
+	if (!string)
 		return (NULL);
-	while (s[i])
+	size = ft_strlen(string);
+	if (size == 0)
+		return (NULL);
+	str = (char *)ft_calloc(size + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < size)
 	{
-		fin[i] = s[i];
+		str[i] = string[i];
 		i++;
 	}
-	fin[i] = 0;
-	return (fin);
+	str[i] = '\0';
+	return (str);
 }

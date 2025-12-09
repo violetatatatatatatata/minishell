@@ -37,7 +37,8 @@ static void	handle_export(t_shell *data, char *args)
 
 	pos = ft_strchr(args, '=');
 	key = ft_getkey(args, pos);
-	value = ft_getvalue(args);
+	value = ft_getvalue(pos);
+	printf("key == %s\nvalue == %s\n", key, value);
 	ft_setenv(data, key, value);
 	free(key);
 	free(value);

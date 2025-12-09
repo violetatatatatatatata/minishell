@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <stdlib.h>
 
 static void	ft_restore(int saved_stdin, int saved_stdout)
 {

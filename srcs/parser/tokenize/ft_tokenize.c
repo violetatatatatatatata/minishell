@@ -33,19 +33,15 @@ char	**ft_tokenize(char *text)
 	int		i;
 
 	num_tokens = ft_tokens_count(text);
-	printf("Tokens count: %i\n", num_tokens);
 	tokens = malloc(sizeof(char *) * (num_tokens + 1));
 	i = 0;
 	while (i < num_tokens)
 	{
 		tokens[i] = ft_get_token(text);
-		printf("Token: %s\n", tokens[i]);
-		printf("LEN: %lu\n", ft_strlen(tokens[i]));
 		text += ft_strlen(tokens[i]);
 		while (ft_isspace(*text))
 			text++;
 		i++;
-		printf("Character: %c\n", *text);
 	}
 	tokens[num_tokens] = NULL;
 	return (tokens);

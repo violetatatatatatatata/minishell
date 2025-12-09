@@ -70,8 +70,6 @@ static void	ft_set_args(t_list *cmd_tables)
 		i = 0;
 		while (i < size)
 		{
-			printf("CHECK %s, ", current_token->content);
-			printf("TYPE %i\n", current_token->type);
 			if (!current_token->content || current_token->type == REDIR)
 			{
 				current_token = current_token->right_side;

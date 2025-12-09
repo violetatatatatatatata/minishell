@@ -24,7 +24,6 @@ static void	ft_finalize_token_expansion(t_token *token,
 	{
 		sub_str = ft_substr(content, sub_start - 1,
 				ft_strlen(content) + 1 - sub_start);
-		printf("Token content: %s.\n", token->content);
 		tmp_str = token->content;
 		token->content = ft_strjoin(tmp_str, sub_str);
 		if (tmp_str)
@@ -39,7 +38,6 @@ static void	ft_process_char(t_process_vars *v, t_expand_data *data,
 {
 	if (content[v->i] == '"' || content[v->i] == '\'')
 		v->current_quote = ft_check_quotes(&content[v->i], v->current_quote);
-	printf("-----CURRENT QUOTES %i\n", v->current_quote);
 	if (content[v->i] == '$' && content[v->i + 1]
 		&& (ft_isalnum(content[v->i + 1]) || content[v->i + 1] == '_'
 			|| content[v->i + 1] == '{' || content[v->i + 1] == '?'))

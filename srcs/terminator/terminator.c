@@ -14,7 +14,6 @@
 
 void	terminator(t_shell *data, int exit_status, int is_exit)
 {
-	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (data->user_input)
 	{
 		free(data->user_input);

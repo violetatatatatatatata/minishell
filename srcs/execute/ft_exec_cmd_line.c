@@ -33,13 +33,14 @@ void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
 	printf("\n");
 }
 
-static void	ft_child_body(t_values *vals, int *fd_pipe)
+static void	ft_child_body(t_values *vals)
 {
 	int	fd_out;
 	int	return_val;
 
 	free(vals->pids);
 	vals->pids = NULL;
+	ft_close_pipes(vals);
 	if (vals->fd_in != STDIN_FILENO)
 		dup2(vals->fd_in, STDIN_FILENO);
 	fd_out = STDOUT_FILENO;
@@ -51,9 +52,9 @@ static void	ft_child_body(t_values *vals, int *fd_pipe)
 		close(fd_out);
 	}
 	else
-		dup2(fd_pipe[1], STDOUT_FILENO);
-	close(fd_pipe[0]);
-	close(fd_pipe[1]);
+		dup2(vals->pipes[vals->index][1], STDOUT_FILENO);
+	close(vals->pipes[vals->index][0]);
+	close(vals->pipes[vals->index][1]);
 	if (vals->fd_in > 2)
 		close(vals->fd_in);
 	if (vals->exit_val != EXIT_SUCCESS)
@@ -70,7 +71,6 @@ static void	ft_last_cmd(t_values *vals)
 
 	vals->exit_val = 0;
 	tmp_in = ft_open_infile(vals->token, &vals->exit_val);
-	printf("--------------------EXIT-VAL FATHER: %i\n", vals->exit_val);
 	if (vals->fd_prev == -1)
 		vals->fd_in = tmp_in;
 	else
@@ -80,8 +80,6 @@ static void	ft_last_cmd(t_values *vals)
 		else
 			vals->fd_in = vals->fd_prev;
 	}
-	printf("LAST FORK: %i\n", vals->index);
-	printf("Last cmd fd_in: %i\n", vals->fd_in);
 	vals->pids[vals->index] = fork();
 	if (vals->pids[vals->index] == -1)
 		return (perror("Couldn't create child"),
@@ -90,6 +88,7 @@ static void	ft_last_cmd(t_values *vals)
 	{
 		free(vals->pids);
 		vals->pids = NULL;
+		ft_close_pipes(vals);
 		dup2(vals->fd_in, STDIN_FILENO);
 		if (vals->fd_in > 0)
 			close(vals->fd_in);
@@ -106,22 +105,18 @@ static void	ft_last_cmd(t_values *vals)
 		if (vals->exit_val != EXIT_SUCCESS)
 			ft_free_vals(vals, vals->exit_val, TRUE);
 		return_val = ft_exec_args(vals, vals->val_env);
-		printf("--------------------EXIT-VAL: %i\n", vals->exit_val);
 		if (vals->exit_val == EXIT_SUCCESS)
 			ft_free_vals(vals, return_val, TRUE);
 		ft_free_vals(vals, vals->exit_val, TRUE);
 	}
 }
 
-static void	ft_command_loop(t_values *vals, int fd_pipe[2])
+static void	ft_command_loop(t_values *vals)
 {
 	int	tmp_in;
 
 	vals->exit_val = 0;
 	tmp_in = ft_open_infile(vals->token, &vals->exit_val);
-	printf("FORK: %i\n", vals->index);
-	if (pipe(fd_pipe) == -1)
-		return (perror("Pipe"), free(vals->pids));
 	if (vals->fd_prev == -1)
 		vals->fd_in = tmp_in;
 	else
@@ -136,19 +131,18 @@ static void	ft_command_loop(t_values *vals, int fd_pipe[2])
 		return (perror("Couldn't create child"),
 			free(vals->pids));
 	if (vals->pids[vals->index] == 0)
-		ft_child_body(vals, fd_pipe);
+		ft_child_body(vals);
 	else
 	{
-		close(fd_pipe[1]);
+		close(vals->pipes[vals->index][1]);
 		if (vals->fd_prev != vals->fd_in && vals->fd_prev > 2)
 			close(vals->fd_prev);
-		vals->fd_prev = fd_pipe[0];
+		vals->fd_prev = vals->pipes[vals->index][0];
 	}
 }
 
 int	ft_exec_cmd_line(t_list *cmd_list, t_shell *data)
 {
-	int			fd_pipe[2];
 	int			ret_val;
 	t_values	vals;
 	t_cmd_table	*table;
@@ -158,11 +152,10 @@ int	ft_exec_cmd_line(t_list *cmd_list, t_shell *data)
 	vals.index = 0;
 	vals.cmds_size = ft_lstsize(cmd_list);
 	vals.cmd_list = cmd_list;
-	printf("CMDS SIZE: %i\n", vals.cmds_size);
 	table = (t_cmd_table *)cmd_list->content;
+	ft_set_pipes(&vals);
 	if (vals.cmds_size == 1 && ft_is_buitlin(table->token->content))
 	{
-		printf("SOLO BUILT-IN\n");
 		vals.token = table->token;
 		vals.args = table->args;
 		return (ft_exec_builtin(&vals, data));
@@ -178,15 +171,15 @@ int	ft_exec_cmd_line(t_list *cmd_list, t_shell *data)
 			ft_last_cmd(&vals);
 			break ;
 		}
-		ft_command_loop(&vals, fd_pipe);
+		ft_command_loop(&vals);
 		vals.index++;
 		cmd_list = cmd_list->next;
 	}
-	ret_val = ft_wait_children(vals.cmds_size, vals.pids);
-	printf("RETURN VAL: %i\n", ret_val);
 	if (vals.fd_in > 2)
 		close(vals.fd_in);
 	if (vals.fd_prev > 2 && vals.fd_prev != vals.fd_in)
 		close(vals.fd_prev);
+	ft_free_pipes(&vals, vals.cmds_size - 1);
+	ret_val = ft_wait_children(vals.cmds_size, vals.pids);
 	return (ret_val);
 }

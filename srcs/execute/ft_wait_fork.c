@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_insert_exit_value.c                             :+:      :+:    :+:   */
+/*   ft_wait_fork.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*   Created: 2025/12/09 12:51:48 by aalcaide          #+#    #+#             */
+/*   Updated: 2025/12/09 12:51:51 by aalcaide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_insert_exit_value(t_expand_data *data,
-	int val, char *prev_str)
+int	ft_wait_fork(pid_t pid)
 {
-	char	*str_val;
+	int		status;
+	int		exit_code;
+	pid_t	wpid;
 
-	str_val = ft_itoa(val);
-	ft_insert_env_value(data, str_val, prev_str);
-	free(str_val);
+	exit_code = 0;
+	status = 0;
+	wpid = waitpid(pid, &status, 0);
+	while (wpid == -1 && errno == EINTR)
+		wpid = waitpid(pid, &status, 0);
+	if (wpid == -1)
+		perror("waitpid");
+	if (WIFEXITED(status))
+		exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		exit_code = 128 + WTERMSIG(status);
+	return (exit_code);
 }

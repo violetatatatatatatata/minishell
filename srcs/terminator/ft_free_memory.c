@@ -78,6 +78,8 @@ void	ft_free_vals(t_values *vals, int exit_status, int is_exit)
 {
 	if (vals->pids)
 		free(vals->pids);
+	if (vals->pipes)
+		ft_free_pipes(vals, vals->cmds_size - 1);
 	if (vals->cmd_list)
 		ft_lstclear(&vals->cmd_list, &free_cmd);
 	vals->cmd_list = NULL;

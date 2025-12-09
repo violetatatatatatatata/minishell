@@ -17,7 +17,6 @@ static void	ft_add_token(char *env_var, char *prev_str, t_token **token)
 	char	*new_content;
 	char	*tmp_content;
 
-	printf("Add token\n");
 	if (!(*token)->content)
 	{
 		new_content = ft_strjoin(prev_str, env_var);
@@ -29,7 +28,6 @@ static void	ft_add_token(char *env_var, char *prev_str, t_token **token)
 		free((*token)->content);
 		new_content = ft_strjoin(tmp_content, env_var);
 		free(tmp_content);
-		printf("Add token, existing list\n");
 		(*token)->content = new_content;
 	}
 }
@@ -69,10 +67,8 @@ void	ft_handle_env_var(t_expand_data *data,
 	char	*env_var;
 
 	env_var = ft_get_env_value(data, name);
-	printf("Get_env: %s\n", env_var);
 	if (env_var)
 	{
-		printf("Valid env\n");
 		ft_insert_env_value(data, env_var, prev_str);
 	}
 	//else

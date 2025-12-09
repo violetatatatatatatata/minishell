@@ -27,13 +27,10 @@ static void	ft_dolar_expansion(t_expand_data *data)
 	}
 	prev_str = ft_substr(data->content, tmp_start,
 			sub_end - *data->sub_start - 1);
-	printf("--- SubStart: %i, Len: %i\n", tmp_start, sub_end - *data->sub_start - 1);
-	printf("Expand simple, Prev_str: %s\n", prev_str);
 	ft_insert_exit_value(data, *data->exit_status, prev_str);
 	*data->sub_start = *data->index + 2;
 	free(prev_str);
 	(*data->index)--;
-	printf("Current index: %i\n", (*data->index));
 }
 
 static void	ft_expand_braced_var(t_expand_data *data)
@@ -83,15 +80,12 @@ static void	ft_expand_simple_var(t_expand_data *data)
 	}
 	prev_str = ft_substr(data->content, tmp_start,
 			sub_end - *data->sub_start - 1);
-	printf("--- SubStart: %i, Len: %i\n", tmp_start, sub_end - *data->sub_start - 1);
-	printf("Expand simple, Prev_str: %s\n", prev_str);
 	ft_handle_env_var(data, &name, prev_str);
 	*data->sub_start = *data->index + 1;
 	if (name)
 		free(name);
 	free(prev_str);
 	(*data->index)--;
-	printf("Current index: %i\n", (*data->index));
 }
 
 void	ft_expansion(t_expand_data *data)

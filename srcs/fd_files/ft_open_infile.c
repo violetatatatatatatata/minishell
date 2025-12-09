@@ -34,6 +34,8 @@ static int	ft_open_fdin(char *str, int *ret_val)
 			*ret_val = print_msg(NOT_PERMISSION_MSG, str, 1);
 		fd_in = open("/dev/null", O_RDONLY);
 	}
+	else
+		*ret_val = 0;
 	return (fd_in);
 }
 
@@ -74,6 +76,7 @@ int	ft_open_infile(t_token *token, int *ret_val)
 {
 	int	fd_in;
 
+	*ret_val = 0;
 	fd_in = STDIN_FILENO;
 	while (token)
 	{
