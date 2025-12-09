@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:09:26 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 11:02:53 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/09 17:16:46 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ char	*ft_getkey(char *line, char *eq_pos)
 
 char	*ft_getvalue(char *eq_pos)
 {
-	return (ft_strdup(eq_pos + 1));
+	if (ft_strdup(eq_pos + 1) != NULL)
+		return (ft_strdup(eq_pos + 1));
+	return (NULL);
 }
