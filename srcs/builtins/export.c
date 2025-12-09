@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/09 18:08:56 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/09 20:01:31 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,27 @@ static void	handle_export(t_shell *data, char *args)
 	char	*pos;
 
 	pos = ft_strchr(args, '=');
-	key = ft_getkey(args, pos);
-	value = ft_getvalue(pos);
-	printf("key == %s\nvalue == %s\n", key, value);
+	if (pos)
+	{
+		key = ft_getkey(args, pos);
+		value = ft_getvalue(pos);
+	}
+	else
+	{
+		key = ft_strdup(args);
+		value = NULL;
+	}
 	ft_setenv(data, key, value);
 	free(key);
-	free(value);
+	if (value)
+		free(value);
 }
 
 // HAY que hacer los frees del cpy_env y del contenido !!!!!!!!!!!
 long	print_sorted_env(t_env *env)
 {
 	t_env	*cpy_env;
+	t_env	*temp;
 
 	cpy_env = dupe_env(env);
 	sort_pass(cpy_env);
@@ -60,7 +69,13 @@ long	print_sorted_env(t_env *env)
 				printf("=\"%s\"", cpy_env->value);
 			printf("\n");
 		}
+		temp = cpy_env;
 		cpy_env = cpy_env->next;
+		if (temp->key)
+			free(temp->key);
+		if (temp->value)
+			free(temp->value);
+		free(temp);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -81,13 +96,9 @@ int	bt_export(t_shell *data, char **args)
 			return (print_msg("export", "not a valid identifier", 1));
 			exit_status = EXIT_FAILURE;
 		}
-		else if (ft_strchr(args[i], '=') != NULL)
-			handle_export(data, args[i]);
-		else
-		{
-			if (!ft_getenv(args[i], data->env))
-				ft_setenv(data, args[i], NULL);
-		}
+		handle_export(data, args[i]);
+		if (!ft_getenv(args[i], data->env))
+			ft_setenv(data, args[i], NULL);
 		i++;
 	}
 	return (exit_status);
