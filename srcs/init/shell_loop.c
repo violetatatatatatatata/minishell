@@ -71,6 +71,7 @@ void	loop(t_shell *data)
 	while (data->user_input != NULL)
 	{
 		set_signals_handlers_exec();
+		printf("argumentos por consola: %s\n", data->user_input);
 		if (data->user_input && data->user_input[0] != '\0')
 		{
 			add_history(data->user_input);

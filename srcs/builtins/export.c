@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/09 20:01:31 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/14 17:35:52 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	bt_export(t_shell *data, char **args)
 
 	i = 1;
 	exit_status = EXIT_SUCCESS;
+	printf("una vez tokenizado: %s\n", args[1]);
 	if (!args[1])
 		return (print_sorted_env(data->env));
 	while (args[i])
@@ -97,8 +98,6 @@ int	bt_export(t_shell *data, char **args)
 			exit_status = EXIT_FAILURE;
 		}
 		handle_export(data, args[i]);
-		if (!ft_getenv(args[i], data->env))
-			ft_setenv(data, args[i], NULL);
 		i++;
 	}
 	return (exit_status);
