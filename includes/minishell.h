@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:10:10 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/02 12:37:24 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:39:59 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ int		ft_exec_args(t_values *vals, t_shell *data);
 void	debug_fd(int fd);
 int		ft_exec_builtin(t_values *data, t_shell *shell);
 int		ft_exec_cmd_line(t_list *cmd_list, t_shell *data);
-char	*ft_find_command_path(const char *cmd, t_shell *data);
+char	*ft_find_command_path(char *cmd, t_shell *data);
 int		ft_wait_children(int num_cmds, pid_t *pids);
 int		ft_wait_fork(pid_t pid);
 int		ft_lexer(char *prompt);

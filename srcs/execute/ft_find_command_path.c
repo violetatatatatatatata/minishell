@@ -6,7 +6,7 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/06/02 10:55:31 by aalcaide         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:39:09 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	ft_free_memory(char **arr)
 	free(arr);
 }
 
-char	*ft_find_command_path(const char *cmd, t_shell *data)
+char	*ft_find_command_path(char *cmd, t_shell *data)
 {
 	char	**paths;
 	char	**prefixes;

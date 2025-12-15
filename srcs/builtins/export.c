@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/14 17:35:52 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:46:28 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static void	handle_export(t_shell *data, char *args)
 	{
 		key = ft_getkey(args, pos);
 		value = ft_getvalue(pos);
+		if (value == NULL)
+			value = ft_strdup("pepito");
 	}
 	else
 	{
@@ -87,7 +89,6 @@ int	bt_export(t_shell *data, char **args)
 
 	i = 1;
 	exit_status = EXIT_SUCCESS;
-	printf("una vez tokenizado: %s\n", args[1]);
 	if (!args[1])
 		return (print_sorted_env(data->env));
 	while (args[i])

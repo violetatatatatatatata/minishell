@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/15 14:30:58 by avelandr          #+#    #+#             */
+/*   Updated: 2025/12/15 14:45:14 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/libft.h"
 
-char	*ft_strdup(const char *string)
+char	*ft_strdup(char *string)
 {
 	char		*str;
 	size_t		size;
@@ -9,8 +21,6 @@ char	*ft_strdup(const char *string)
 	if (!string)
 		return (NULL);
 	size = ft_strlen(string);
-	if (size == 0)
-		return (NULL);
 	str = (char *)ft_calloc(size + 1, sizeof(char));
 	if (!str)
 		return (NULL);

@@ -11,35 +11,7 @@
 /* ************************************************************************** */
 
 #include <minishell.h>
-/*
-static void	free_tokens(t_token *token)
-{
-	if (!token)
-		return ;
-	if (token->content)
-		free(token->content);
-	if (token->left_side)
-		free_tokens(token->left_side);
-	if (token->right_side)
-		free_tokens(token->right_side);
-	free(token);
-}
-*/
-/*
-void	free_cmd(void *content)
-{
-	t_cmd_table	*node;
 
-	node = (t_cmd_table *)content;
-	if (!node)
-		return ;
-	if (node->args)
-		ft_free_split(node->args);
-	if (node->token)
-		free_tokens(node->token);
-	free(node);
-}
-*/
 static int	execute(t_shell *data)
 {
 	t_list	*cmd_list;
@@ -71,7 +43,6 @@ void	loop(t_shell *data)
 	while (data->user_input != NULL)
 	{
 		set_signals_handlers_exec();
-		printf("argumentos por consola: %s\n", data->user_input);
 		if (data->user_input && data->user_input[0] != '\0')
 		{
 			add_history(data->user_input);

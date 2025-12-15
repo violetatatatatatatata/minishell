@@ -6,26 +6,11 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:15:44 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/28 12:59:40 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:26:26 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-// un ft_lstsize pero pa t_env vamo
-// NO se usa por ahora
-/*static int	count_env_vars(t_env *env)
-{
-	int	n_vars;
-
-	n_vars = 0;
-	while (env)
-	{
-		n_vars++;
-		env = env->next;
-	}
-	return (n_vars);
-}*/
+#include <minishell.h>
 
 static void	swap_env_nodes(t_env *a, t_env *b)
 {
