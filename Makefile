@@ -3,9 +3,7 @@ NAME = minishell
 CC = cc
 
 # Compiler flags
-CFLAGS = -Wall -Werror -Wextra -g
-#BFLAGS = -g -fsanitize=address
-BFLAGS = -g
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 RDFLAG = -lreadline
 
 #Libs
@@ -30,7 +28,7 @@ all: $(NAME)
 	echo "Minishell done."
 
 $(NAME): $(OBJ_FILES) $(LIB_DIR)/$(LIBFT_DIR)$(CLIB)
-	$(CC) $(CFLAGS) $(BFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft $(RDFLAG)
+	$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft $(RDFLAG)
 
 $(LIB_DIR)/$(LIBFT_DIR)$(CLIB):
 	@make -C $(LIBFT_DIR)
@@ -51,8 +49,8 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
 norm:
 	norminette $(Includes) $(SRC_DIR)# $(LIBFT_DIR)
 
-mem:
-	valgrind --track-origins=yes --show-leak-kinds=all --leakcheck=full ./$(NAME)
+#mem:
+#	valgrind --track-origins=yes --show-leak-kinds=all --leakcheck=full ./$(NAME)
 
 clean:
 	@rm -rf $(OBJ_DIR)

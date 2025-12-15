@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:00:06 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 11:03:45 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/15 15:11:51 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ t_env	*init_env(char **env)
 	{
 		new = env_nodes(env[i]);
 		if (!new)
+		{
+			ft_lstclear_env(&head);
 			return (NULL);
+		}
 		if (head == NULL)
 			head = new;
 		else
