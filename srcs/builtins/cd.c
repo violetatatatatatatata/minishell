@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 19:00:11 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/15 16:12:38 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:57:58 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 static int	change_dir(t_values *data, char *dir)
 {
-	char	*curpath;
+	char	*old_pwd;
 	char	cwd[PATH_MAX];
 
-	curpath = getcwd(cwd, PATH_MAX);
-	if (!chdir(dir))
+	old_pwd = ft_getenv("PWD", data->val_env->env);
+	if (chdir(dir) == -1)
 		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
-	ft_setenv(data->val_env, "PWD", dir);
-	if (!curpath)
-		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
-	ft_setenv(data->val_env, "OLDPWD", curpath);
+	if (old_pwd)
+		ft_setenv(data->val_env, "OLDPWD", old_pwd);
+	if (getcwd(cwd, PATH_MAX))
+		ft_setenv(data->val_env, "PWD", cwd);
+	else
+		ft_setenv(data->val_env, "PWD", dir);
 	return (EXIT_SUCCESS);
 }
 
@@ -49,5 +51,5 @@ int	bt_cd(char **args, t_values *data)
 			return (print_msg("cd", "OLDPWD not set", EXIT_FAILURE));
 		return (!change_dir(data, path));
 	}
-	return (change_dir(data, path));
+	return (change_dir(data, args[1]));
 }
