@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:00:06 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/15 15:11:51 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:03:31 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,30 @@ static t_env	*env_nodes(char *line)
 	return (new_node);
 }
 
+static void	increment_shlvl(t_env *env)
+{
+	t_env	*tmp;
+	int		lvl;
+	char	*new_val;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, "SHLVL") == 0 && tmp->value)
+		{
+			lvl = ft_atoi(tmp->value) + 1;
+			if (lvl < 0)
+				lvl = 0;
+			new_val = ft_itoa(lvl);
+			free(tmp->value);
+			tmp->value = new_val;
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	env = create_env_variable("SHLVL", "1");
+}
+
 t_env	*init_env(char **env)
 {
 	t_env	*head;
@@ -62,6 +86,7 @@ t_env	*init_env(char **env)
 			current_position->next = new;
 		current_position = new;
 	}
+	increment_shlvl(head);
 	return (head);
 }
 

@@ -21,7 +21,7 @@ int	minishell(int argc, char **argv, char **env)
 	print_prompt();
 	shell.pid = getpid();
 	shell.exit_status = 0;
-	if (env)
+	if (env && *env)
 		shell.env = init_env(env);
 	else
 		handle_missing_env(&shell, argv[0]);

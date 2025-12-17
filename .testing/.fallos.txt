@@ -1,5 +1,5 @@
 > cuando se borra el env no funciona el inicializar entorno minimo
-> no decrece ni decrece el SHLVLi
+> no decrece ni decrece el SHLVL
 
 Compile
 Simple Command & global variables
@@ -7,8 +7,7 @@ Simple Command & global variables
 
 Arguments
 
-echo
-
+# echo
 exit
 avelandr@car11s3:~/Desktop/mondongo/M3/exam03/lvl1/ft_scanf$ exit 34 j
 exit
@@ -47,6 +46,8 @@ hola PENE
 avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ mkdir $A
 ESTO DA DOUBLE FREE EN EXPAND
 
+arreglar acceder a el path porque da segfault cuando no existe
+
 expected:
 avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ export a="a a"
 avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ echo hola>$a
@@ -56,92 +57,20 @@ a nosotros nos peta por double free
 unset
 
 cd
-Use the command cd to move the working directory and check if you are in the right directory with /bin/ls
-
-Repeat multiple times with working and not working cd
-
-Also, try '.' and '..' as arguments.
-
-✅ Yes | ❌ No
 
 pwd
-Use the command pwd.
-
-Repeat multiple times in different directories.
-
-✅ Yes | ❌ No
 
 Relative Path
-Execute commands but this time use a relative path.
-
-Repeat multiple times in different directories with a complex relative path (lots of ..).
-
-✅ Yes | ❌ No
 
 Environment path
 Execute commands but this time without any path (ls, wc, awk and so forth).
 
-Unset the $PATH and ensure commands are not working anymore.
-
-Set the $PATH to a multiple directory value (directory1:directory2) and ensure that directories are checked in order from left to right.
-
-✅ Yes | ❌ No
+!! Unset the $PATH and ensure commands are not working anymore.
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ unset PATH
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ ls
 
 Redirection
 Execute commands with redirections < and/or >
+buscar el printf 
 
-Repeat multiple times with different commands and arguments and sometimes change > with >>
-
-Check if multiple tries of the same redirections fail.
-
-Test << redirection (it doesn't have to update the history).
-
-✅ Yes | ❌ No
-
-Pipes
-Execute commands with pipes like 'cat file | grep bla | more'
-
-Repeat multiple times with different commands and arguments.
-
-Try some wrong commands like 'ls filethatdoesnotexist | grep bla | more'
-
-Try to mix pipes and redirections.
-
-✅ Yes | ❌ No
-
-Go Crazy and history
-Type a command line, then use ctrl-C and press "Enter". The buffer should be clean and there should be nothing left to execute.
-
-Can we navigate through history using Up and Down? Can we retry some command?
-
-Execute commands that should not work like 'dsbkjdgbksdghsd'. Ensure minishell doesn't crash and prints an error.
-
-'cat | cat | ls' should behave in a "normal way".
-
-Try to execute a long command with a ton of arguments.
-
-Have fun with that beautiful minishell and enjoy it!
-
-✅ Yes | ❌ No
-
-Environment variables
-Execute echo with some environment variables ($variable) as arguments.
-
-Check that $ is interpreted as an environment variable.
-
-Check that double quotes interpolate $.
-
-Check that USER exists. Otherwise, set it.
-
-echo "$USER" should print the value of the USER variable.
-
-✅ Yes | ❌ No
-
-Bonus
-Evaluate the bonus part if, and only if, the mandatory part has been entirely and perfectly done, and the error management handles unexpected or bad usage. In case all the mandatory points were not passed during the defense, bonus points must be totally ignored.
-
-And, Or
-
-Use &&, || and parenthesis with commands and ensure minishell behaves the same way bash does.
-
-✅ Yes | ❌ No
+!! Test << redirection (it doesn't have to update the history).
