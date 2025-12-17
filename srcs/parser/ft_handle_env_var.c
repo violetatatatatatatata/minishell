@@ -6,7 +6,7 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:06:02 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,4 @@ void	ft_handle_env_var(t_expand_data *data,
 	{
 		ft_insert_env_value(data, env_var, prev_str);
 	}
-	//else
-		//ft_add_token(env_var, prev_str, data->token);
 }

@@ -6,7 +6,7 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/12/17 18:00:24 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:11:17 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,59 @@ static void	ft_child_body(t_values *vals)
 	ft_free_vals(vals, return_val, TRUE);
 }
 */
+
+// tenia el mismo problema de cerrar pipes antes de configurarlos
+static void	ft_last_cmd(t_values *vals)
+{
+	int	fd_out;
+	int	return_val;
+	int	tmp_in;
+
+	vals->exit_val = 0;
+	tmp_in = ft_open_infile(vals->token, &vals->exit_val);
+	if (vals->fd_prev == -1)
+		vals->fd_in = tmp_in;
+	else
+	{
+		if (tmp_in != STDIN_FILENO)
+			vals->fd_in = tmp_in;
+		else
+			vals->fd_in = vals->fd_prev;
+	}
+	vals->pids[vals->index] = fork();
+	if (vals->pids[vals->index] == -1)
+		return (perror("Couldn't create child"), free(vals->pids));
+	if (vals->pids[vals->index] == 0)
+	{
+		free(vals->pids);
+		vals->pids = NULL;
+		if (vals->fd_in != STDIN_FILENO)
+		{
+			if (dup2(vals->fd_in, STDIN_FILENO) == -1)
+			{
+				perror("");
+				ft_free_vals(vals, EXIT_FAILURE, TRUE);
+			}
+			close(vals->fd_in);
+		}
+		fd_out = STDOUT_FILENO;
+		if (vals->exit_val == EXIT_SUCCESS)
+			fd_out = ft_open_outfile(vals->token, &vals->exit_val);
+		if (fd_out > 2)
+		{
+			dup2(fd_out, STDOUT_FILENO);
+			close(fd_out);
+		}
+		ft_close_pipes(vals);
+
+		if (vals->exit_val != EXIT_SUCCESS)
+			ft_free_vals(vals, vals->exit_val, TRUE);
+
+		return_val = ft_exec_args(vals, vals->val_env);
+		ft_free_vals(vals, return_val, TRUE);
+	}
+}
+/*
 static void	ft_last_cmd(t_values *vals)
 {
 	int	fd_out;
@@ -149,7 +202,7 @@ static void	ft_last_cmd(t_values *vals)
 		ft_free_vals(vals, vals->exit_val, TRUE);
 	}
 }
-
+*/
 static void	ft_command_loop(t_values *vals)
 {
 	int	tmp_in;

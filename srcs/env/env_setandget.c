@@ -19,7 +19,7 @@ t_env	*create_env_variable(char *key, char *value)
 	node = ft_calloc(1, sizeof(t_env));
 	if (!node)
 		return (NULL);
-	node->visible = 1; 
+	node->visible = 1;
 	node->key = ft_strdup(key);
 	if (value == NULL)
 		node->value = NULL;
