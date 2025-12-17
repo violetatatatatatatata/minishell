@@ -51,3 +51,84 @@ Execute commands with redirections < and/or >
 buscar el printf 
 
 !! Test << redirection (it doesn't have to update the history).
+
+
+
+ALBA: 
+> exit:
+-- minishell
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ bash
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ exit 5
+exit
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ exit
+exit                                                                                               ~11s
+
+╭─[car11s3] as avelandr in ~/Desktop/mondongo/M3/padrastros on (feature/norminette)✘✘✘         17:15:00
+╰─(ﾉ˚Д˚)ﾉ echo $?
+0
+
+-- bash:
+╭─[car11s3] as avelandr in ~/Desktop/mondongo/M3/padrastros on (feature/norminette)✘✘✘         17:14:24
+╰─(ﾉ˚Д˚)ﾉ bash
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ bash
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ exit 5
+exit
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ exit
+exit                                                                                        ~5s  exit:5
+
+╭─[car11s3] as avelandr in ~/Desktop/mondongo/M3/padrastros on (feature/norminette)✘✘✘         17:15:12
+╰─(ﾉ˚Д˚)ﾉ echo $?
+5
+
+> heredoc 
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ << here cat
+dsffds
+heredoc> LINE: dsffds
+
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ << here cat
+dsffds
+heredoc> LINE: dsffds
+
+^Cheredoc>
+LINE:
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ << here
+$USEER^Cheredoc>
+LINE:
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ << here cat
+$USER
+heredoc> LINE: $USER
+
+here
+heredoc> LINE: here
+
+TYPE TOKEN: 1
+$USER
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ << here cat
+$USER <- esto se expande
+heredoc> LINE: $USER <- esto se expande
+
+"$USER" <- esto no se expande
+heredoc> LINE: "$USER" <- esto no se expande
+
+here
+heredoc> LINE: here
+
+TYPE TOKEN: 1
+$USER <- esto se expande
+"$USER" <- esto no se expande
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ << "here" cat
+NO SE EXPANDE NADA
+heredoc> LINE: NO SE EXPANDE NADA
+
+here
+heredoc> LINE: here
+
+TYPE TOKEN: 1
+NO SE EXPANDE NADA
+avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ << here"" cat
+here
+heredoc> LINE: here
+
+TYPE TOKEN: 1
+
+FALLO DE VALGRIND AL HACER ls | sdjkhk | date

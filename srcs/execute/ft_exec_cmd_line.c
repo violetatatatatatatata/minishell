@@ -6,7 +6,7 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/11/28 12:47:05 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:00:24 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,45 @@ void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
 	printf("\n");
 }
 
+// se ha modificado porque al hacer ls | sdjkhk | date
+// ignoraba el comando incorrecto de la mitad
+static void	ft_child_body(t_values *vals)
+{
+	int	fd_out;
+	int	return_val;
+
+	free(vals->pids);
+	vals->pids = NULL;
+	// antes de cerrar las pipes se ha de configurar la entrada
+	if (vals->fd_in != STDIN_FILENO)
+	{
+		// ademas se han de controlar errores
+		if (dup2(vals->fd_in, STDIN_FILENO) == -1)
+		{
+			perror("");
+			ft_free_vals(vals, EXIT_FAILURE, TRUE);
+		}
+		close(vals->fd_in); // cerrar el original ya duplicado
+	}
+	fd_out = STDOUT_FILENO;
+	if (vals->exit_val == EXIT_SUCCESS)
+		fd_out = ft_open_outfile(vals->token, &vals->exit_val);
+	if (fd_out > 2)
+	{
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
+	else if (vals->index < vals->cmds_size - 1) // si NO es el último comando
+		dup2(vals->pipes[vals->index][1], STDOUT_FILENO);
+	// aqui si se cierran las pipes
+	ft_close_pipes(vals);
+	if (vals->exit_val != EXIT_SUCCESS)
+		ft_free_vals(vals, vals->exit_val, TRUE);
+	return_val = ft_exec_args(vals, vals->val_env);
+	ft_free_vals(vals, return_val, TRUE);
+}
+
+/*
 static void	ft_child_body(t_values *vals)
 {
 	int	fd_out;
@@ -62,7 +101,7 @@ static void	ft_child_body(t_values *vals)
 	return_val = ft_exec_args(vals, vals->val_env);
 	ft_free_vals(vals, return_val, TRUE);
 }
-
+*/
 static void	ft_last_cmd(t_values *vals)
 {
 	int	fd_out;
@@ -153,7 +192,9 @@ int	ft_exec_cmd_line(t_list *cmd_list, t_shell *data)
 	vals.cmds_size = ft_lstsize(cmd_list);
 	vals.cmd_list = cmd_list;
 	table = (t_cmd_table *)cmd_list->content;
-	ft_set_pipes(&vals);
+	if (ft_set_pipes(&vals) != 0)
+		return (EXIT_FAILURE);
+	//ft_set_pipes(&vals);
 	if (vals.cmds_size == 1 && ft_is_buitlin(table->token->content))
 	{
 		vals.token = table->token;
