@@ -55,6 +55,7 @@ int	bt_exit(t_shell *data, char **args, t_list *table_lst)
 {
 	int	exit_code;
 
+	ft_putendl_fd("exit", 2);
 	if (!args[1])
 	{
 		ft_lstclear(&table_lst, free_cmd);
@@ -66,7 +67,7 @@ int	bt_exit(t_shell *data, char **args, t_list *table_lst)
 		terminator(data, 2, TRUE);
 	}
 	if (args[2])
-		print_msg("exit", "too many arguments", EXIT_FAILURE);
+		return (print_msg("exit", "too many arguments", EXIT_FAILURE));
 	exit_code = ft_atoi(args[1]);
 	terminator(data, exit_code, TRUE);
 	return (EXIT_SUCCESS);

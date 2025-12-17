@@ -1,23 +1,6 @@
-> cuando se borra el env no funciona el inicializar entorno minimo
-> no decrece ni decrece el SHLVL
-
-Compile
-Simple Command & global variables
-> relink en libft, al hacer touch en cualquier archivo no lo compila
-
 Arguments
 
 # echo
-exit
-avelandr@car11s3:~/Desktop/mondongo/M3/exam03/lvl1/ft_scanf$ exit 34 j
-exit
-bash: exit: too many arguments
-avelandr@car11s3:~/Desktop/mondongo/M3/exam03/lvl1/ft_scanf$ echo $?
-1
-
-en nuestro caso da 34
-
-Return value of a process
 
 !!mirar que cojones es esto
 Try anything like expr $? + $?
@@ -39,12 +22,6 @@ Single Quotes
 env
 
 export
-
-avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ export A="hola PENE"
-avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ echo "$A"
-hola PENE
-avelandr:/home/avelandr/Desktop/mondongo/M3/padrastros$ mkdir $A
-ESTO DA DOUBLE FREE EN EXPAND
 
 arreglar acceder a el path porque da segfault cuando no existe
 
