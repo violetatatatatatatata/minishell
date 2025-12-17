@@ -6,7 +6,7 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/11/25 19:17:40 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/17 20:07:30 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,6 @@ static t_list	*ft_add_cmd_table(t_token *token)
 	cmd_table->token = token;
 	cmd_table->args = NULL;
 	return (ft_lstnew(cmd_table));
-}
-
-static int	ft_args_count(t_token *token)
-{
-	int	i;
-
-	i = 0;
-	while (token)
-	{
-		i++;
-		token = token->right_side;
-	}
-	return (i);
 }
 
 static char	*ft_check_null_char(char *token)
@@ -53,13 +40,33 @@ static char	*ft_check_null_char(char *token)
 	return (str);
 }
 
+static void	set_args_aux(int size, t_token *current_token,
+		t_cmd_table *cmd_table)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	while (i < size)
+	{
+		if (!current_token->content || current_token->type == REDIR)
+		{
+			current_token = current_token->right_side;
+			size--;
+			continue ;
+		}
+		str = ft_check_null_char(current_token->content);
+		cmd_table->args[i++] = str;
+		current_token = current_token->right_side;
+	}
+	cmd_table->args[i] = NULL;
+}
+
 static void	ft_set_args(t_list *cmd_tables)
 {
 	t_cmd_table	*cmd_table;
 	t_token		*current_token;
 	int			size;
-	int			i;
-	char		*str;
 
 	while (cmd_tables)
 	{
@@ -67,20 +74,7 @@ static void	ft_set_args(t_list *cmd_tables)
 		size = ft_args_count(cmd_table->token);
 		cmd_table->args = malloc(sizeof(char *) * (size + 1));
 		current_token = cmd_table->token;
-		i = 0;
-		while (i < size)
-		{
-			if (!current_token->content || current_token->type == REDIR)
-			{
-				current_token = current_token->right_side;
-				size--;
-				continue ;
-			}
-			str = ft_check_null_char(current_token->content);
-			cmd_table->args[i++] = str;
-			current_token = current_token->right_side;
-		}
-		cmd_table->args[i] = NULL;
+		set_args_aux(size, current_token, cmd_table);
 		cmd_tables = cmd_tables->next;
 	}
 }

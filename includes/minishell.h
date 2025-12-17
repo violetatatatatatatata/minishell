@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:10:10 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/17 19:52:16 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/17 20:07:09 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,5 +260,5 @@ void	ft_free_pipes(t_values *vals, int size);
 void	ft_close_pipes(t_values *vals);
 void    ft_last_cmd(t_values *vals);
 void    ft_command_loop(t_values *vals);
-
+int		ft_args_count(t_token *token);
 #endif
