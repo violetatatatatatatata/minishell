@@ -34,7 +34,7 @@ char	*ft_find_command_path(char *cmd, t_shell *data)
 	i = 0;
 	ind_path = ft_getenv("PATH", data->env);
 	if (ind_path == NULL)
-		return (cmd);
+		return (ft_strdup(cmd));
 	paths = ft_split(ind_path, ':');
 	prefixes = ft_split(cmd, ' ');
 	while (paths[i])
