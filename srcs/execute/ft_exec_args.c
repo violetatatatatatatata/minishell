@@ -6,7 +6,7 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/12/17 18:05:28 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:25:26 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,11 @@ int	ft_exec_args(t_values *vals, t_shell *data)
 		return (return_val);
 	env = env_to_array(data->env);
 	execve(cmd_path, vals->args, env);
-	ft_free_split(env);
-	print_msg(cmd_path, NOT_CMD_MSG, 2);
+	if (env)
+		ft_free_split(env);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(vals->args[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
 	free(cmd_path);
 	return (127);
 }

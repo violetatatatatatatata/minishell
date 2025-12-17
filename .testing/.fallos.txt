@@ -132,3 +132,24 @@ heredoc> LINE: here
 TYPE TOKEN: 1
 
 FALLO DE VALGRIND AL HACER ls | sdjkhk | date
+
+
+FRANK:
+lo mismo q alba, vaya pringao'
+
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ << a << b | | << c
+bash: syntax error near unexpected token `|'
+> a
+> b
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ << a << b | | << c
+a
+b
+
+reto personal: (opcional pero recomendable para flexear)
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ export a="Hola"
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ export a+=" adios"
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ echo $a
+Hola adios
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ export a+=$PWD
+avelandr@car11s3:~/Desktop/mondongo/M3/padrastros$ echo $a
+Hola adios/home/avelandr/Desktop/mondongo/M3/padrastros

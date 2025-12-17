@@ -6,12 +6,13 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/12/17 18:11:17 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/17 18:39:54 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*
 void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
 {
 	char	buffer[1024];
@@ -32,7 +33,7 @@ void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
 	}
 	printf("\n");
 }
-
+*/
 // se ha modificado porque al hacer ls | sdjkhk | date
 // ignoraba el comando incorrecto de la mitad
 static void	ft_child_body(t_values *vals)
