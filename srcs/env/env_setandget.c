@@ -65,7 +65,6 @@ void	already_exists(t_env *cpy, char *val)
 	cpy->visible = 1;
 }
 
-// ojo pelao con el export
 char	*ft_getenv(char *key, t_env *env)
 {
 	while (env)

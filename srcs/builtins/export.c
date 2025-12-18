@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/15 14:46:28 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/18 19:47:38 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static void	handle_export(t_shell *data, char *args)
 		free(value);
 }
 
-// HAY que hacer los frees del cpy_env y del contenido !!!!!!!!!!!
 long	print_sorted_env(t_env *env)
 {
 	t_env	*cpy_env;

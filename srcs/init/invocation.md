@@ -1,70 +1,57 @@
-# INVOCATION
+# MAIN LOOP
 
-# ENV
-	SHLVL: nivel de bash que te encuentras
-		- Buscar el valor actual de SHLVL (que será un string, ej: "1").
-		- Convertir: convertir a entero usando ft_atoi.
-		- Incrementar: sumar 1 (nivel++).
-		- Guardar: convertir de nuevo a string usando ft_itoa y almacenar en la estructura.
-## Algorithm
-- Allocate memory for the main struct
-- Print the first prompt
-- Init the main struct
-- First parse check: number of arguments
+## 1. Initialization (`minishell`)
+Before entering the main loop, the shell prepares its internal state.
 
-## Interactive mode
-An interactive shell is one started without non-option arguments (unless -s is
-specified) and without the -c option whose standard input and error are both
-connected to terminals (as determined by isatty(3)), or one started with the -i
-option.
-	   
-### how bash executes its startup files
-If	any  of the	files  exist but cannot be read, bash reports an error.
-Tildes are expanded in filenames as described below under Tilde Expansion
-in the EXPANSION section.
+* **Environment Setup**:
+    * The shell receives `char **envp` from `main`. If it is empty, creates a basic enviroment with '_', 'PWD' and 'SHLVL'
+    * It converts this array into a linked list (`t_env`) for easier manipulation.
+    * **SHLVL**: Increments the `SHLVL` variable (or creates it set to `1` if missing).
+    * **PWD/OLDPWD**: Ensures these variables are set correctly based on the current directory.
+* **Signal Handlers**: Configures the initial signal traps (`SIGINT`, `SIGQUIT`) to behave like a shell (e.g., creating a new prompt line on `Ctrl+C`).
 
-- When bash is invoked as an interactive login shell,	itfirst reads and
-executes commands from the file /etc/profile, if that file exists.
-- After reading that file, it looks for `~/.bash_profile`, `~/.bash_login`,
-and `~/.profile`, in that order, and reads and executes commands from the first
-one that exists and is readable.
+## 2. The Main Loop (`loop`)
+Located in `srcs/init/shell_loop.c`, this function runs indefinitely until the shell exits. Each iteration represents one command cycle.
 
-When an interactive login shell exits, or a non-interactive login shell executes
-the exit builtin command, bash reads and executes commands from the file
-`~/.bash_logout`, if it exists.
+### Step 1: Read Input
+* **Prompt**: Displays the prompt (e.g., `user@minishell$ `) using `readline()`.
+* **History**: If the input is not empty, it is added to the history using `add_history()`.
+* **EOF (Ctrl+D)**: If `readline` returns `NULL`, the shell prints `exit`, frees resources, and terminates execution.
 
-## Non-Interactive mode
-When bash is started non-interactively, to run a shell script, for example, it
-looks for the variable `BASH_ENV` in the environment, expands its value if it
-appears there, and uses the expanded value as the name of a file to read and
-execute.
+### Step 2: Lexer / Validation (`ft_lexer`)
+Before processing the input, the shell performs a syntax check to ensure the quotes and pipes are closed.
 
-### Bash behaves as if the following command were executed:
-	if [ -n "$BASH_ENV" ];
-		then . "$BASH_ENV"; fi
-	but the value of the PATH variable is not used to search for the filename.
-When invoked as an interactive shell with the name sh,  bash looks  for  the
-variable  ENV, expands its value if it is defined, and uses the expanded value
-as the name of a file to read and execute.
-Since a shell invoked as sh does  not  attempt  to  read  and execute commands
-from any other startup files, the --rcfile option has no effect.
+* Checks for unclosed quotes (`'` or `"`).
+* Checks for invalid pipe placement (e.g., `| cmd`, `cmd |`, or `||`).
+* *Error Handling*: If a syntax error is detected, an error message is printed, the exit status is updated, and the loop restarts (skipping execution).
 
-# SIGNALS
- When bash is interactive, in the absence of any traps, it ignores SIGTERM
- (so that kill 0 does not kill an interactive shell), and SIGINT is caught and
- handled (so that the  wait builtin is interruptible).
- In all cases, bash ignores SIGQUIT.  
+### Step 3: Parsing (`ft_parse`)
+Transforms the raw string input into a structured list of commands ready for execution.
 
- Non-builtin  commands  run by bash have signal handlers set to the values
- inherited by the shell from its parent.  When job control is not in effect,
- asynchronous commands ignore SIGINT and SIGQUIT in addition to these inherited
- handlers.
- 
- If bash is waiting for a command to complete and receives a signal for which a
- trap has been set, the trap will not be executed until the command completes.
- When bash is waiting for an asynchronous command via the wait builtin, the
- reception of a signal for which a trap has been set will cause the wait builtin
- to return immediately with  an  exit  status greater than 128, immediately
- after which the trap is executed.
+1.  **Tokenization**: Splits the input string into tokens (words, operators, redirection symbols) while respecting quotes.
+2.  **Expansion**: Expands environment variables (`$VAR`) and handles `$?`.
+3.  **Quote Removal**: Strips the outer quotes from the tokens after expansion.
+4.  **Command Table Creation**: Groups tokens into `t_cmd_table` structures. Each node in the list represents one command in a pipeline.
+    * *Example*: `ls -l | grep .c` becomes a list of two nodes.
 
+### Step 4: Execution (`ft_exec_cmd_line`)
+The structured command list is passed to the execution engine.
 
+* **Signal Update**: Before execution, signal handlers are updated to ignore `SIGINT`/`SIGQUIT` in the parent process (so only the child processes handle them).
+* **Pipeline Execution**: The shell forks processes and sets up pipes/redirections as described in the **Execution Module**.
+* **Waiting**: The parent waits for the pipeline to finish and collects the exit status.
+* **Signal Restore**: After execution, signals are reset to interactive mode (prompt mode).
+
+### Step 5: Cleanup & Reset
+At the end of each iteration, temporary resources are freed to prevent memory leaks.
+
+* The command list (`t_list`) and its contents are freed.
+* The raw input string from `readline` is freed.
+* The shell creates a new prompt line and waits for the next input.
+
+## Termination
+The shell exits the loop only under specific conditions:
+* **Interactive**: The user presses `Ctrl+D` (sending EOF to `readline`).
+* **Command**: The user executes the `exit` builtin.
+
+In both cases, `free_data()` is called to clean up the environment list and global structures before returning the final exit code to the operating system.

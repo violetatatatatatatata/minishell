@@ -6,15 +6,13 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:10:10 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/18 17:37:49 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/18 20:16:20 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/*	LIBRERIAS
- *	*/
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
@@ -23,23 +21,18 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 
-// terminal y entorno
 # include <termios.h>
 # include <sys/ioctl.h>
 # include <termcap.h>
 
-// archivos y directorios
 # include <dirent.h>
 # include <sys/stat.h>
 
-// senyales
 # include <signal.h>
 
-// readline
 # include <readline/readline.h>
 # include <readline/history.h>
 
-// implemented
 # include "../libft/Includes/libft.h"
 # include "colors.h"
 
@@ -90,6 +83,8 @@ typedef enum e_cmd_type
 
 /*	DATA STRUCTURES
  * */
+typedef struct s_token	t_token;
+
 typedef struct s_env
 {
 	char			*key;
@@ -137,14 +132,14 @@ typedef struct s_redir
 	t_redir_type	redir_type;
 }	t_redir;
 
-struct s_token
+typedef struct s_token
 {
 	t_token			*left_side;
 	t_token			*right_side;
 	char			*content;
 	t_token_type	type;
 	t_redir			*redir;
-};
+}	t_token;
 
 typedef struct s_cmd_table
 {

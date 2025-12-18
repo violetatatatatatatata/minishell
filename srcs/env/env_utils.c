@@ -6,13 +6,12 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:09:26 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/15 13:09:54 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/18 19:49:43 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// tema doble frees
 void	free_node(t_env *node)
 {
 	if (!node)

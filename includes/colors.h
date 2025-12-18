@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 02:08:34 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/25 19:53:07 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/18 19:53:37 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # define COLOR7 "\x1B[38;2;156;64;64m"
 # define RESET "\x1b[m"
 
-// Para modificar el RGB
 // \x1B[38;2;R;G;Bm
 
 # define BG_BLACK   "\x1B[40m"
@@ -44,7 +43,6 @@
 # define BG_CYAN    "\x1B[46m"
 # define BG_WHITE   "\x1B[47m"
 
-// Para modificar el RGB de fondo
 // \x1B[48;2;R;G;Bm
 
 #endif
