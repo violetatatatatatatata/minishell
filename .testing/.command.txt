@@ -1,1 +1,0 @@
-find srcs -name "*.c" -exec awk '/^[a-zA-Z]/{buf=$0; while($0 !~ /\)/) {if (getline <= 0) break; buf=buf" "$0} if(buf !~ /static/ && buf !~ /;/ && buf ~ /\)/) {gsub(/[ \t\n]+/, " ", buf); print buf ";"}}' {} \;
