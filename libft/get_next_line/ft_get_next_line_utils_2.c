@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_2.c                            :+:      :+:    :+:   */
+/*   ft_get_next_line_utils_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:08:43 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/05/15 15:08:47 by aalcaide         ###   ########.fr       */
+/*   Updated: 2025/12/18 16:47:51 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ char	*ft_cut_new_line(char **all_line)
 	return (cut_line);
 }
 
-char	*ft_read_buffer(char **temp_buffer,
-	t_get_next_line_var	*vars, int fd)
+char	*ft_read_buffer(char **temp_buffer,	t_get_next_line_var	*vars, int fd)
 {
 	size_t	bytes_read;
 

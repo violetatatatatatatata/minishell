@@ -1,20 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_get_next_line_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 15:08:43 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/05/15 15:08:47 by aalcaide         ###   ########.fr       */
+/*   Updated: 2025/12/18 16:47:12 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/libft.h"
 
-/// @brief Calculates the size of a line including line jump if there is
-/// @param buffer
-/// @return Returns de size of a text line without '\0'
 size_t	ft_linesize(const char *buffer)
 {
 	size_t	size;
@@ -34,9 +31,6 @@ size_t	ft_linesize(const char *buffer)
 	return (size);
 }
 
-/// @brief Tells if there is a jump line inside the buffer
-/// @param buffer
-/// @return Returns a bool value
 size_t	ft_isnewline(const char *buffer, size_t bytes_read)
 {
 	size_t	i;

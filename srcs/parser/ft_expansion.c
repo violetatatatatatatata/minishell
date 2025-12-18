@@ -6,7 +6,7 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*   Updated: 2025/12/18 14:14:35 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ static void	ft_expand_braced_var(t_expand_data *data)
 	free(prev_str);
 }
 
+static void	increase_index(t_expand_data *data)
+{
+	while (ft_isalnum(data->content[*data->index])
+		|| data->content[*data->index] == '_')
+		(*data->index)++;
+}
+
 static void	ft_expand_simple_var(t_expand_data *data)
 {
 	int		start;
@@ -68,9 +75,7 @@ static void	ft_expand_simple_var(t_expand_data *data)
 
 	sub_end = *data->index;
 	start = *data->index;
-	while (ft_isalnum(data->content[*data->index])
-		|| data->content[*data->index] == '_')
-		(*data->index)++;
+	increase_index(data);
 	name = ft_substr(data->content + start, 0, *data->index - start);
 	tmp_start = (*data->sub_start);
 	if (*data->sub_start > 0)

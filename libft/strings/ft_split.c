@@ -1,36 +1,16 @@
-#include "../Includes/libft.h"
-/*
-char	**ft_split(char const *s, char c)
-{
-	char	**r;
-	size_t	p;
-	size_t	i;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/18 16:52:21 by avelandr          #+#    #+#             */
+/*   Updated: 2025/12/18 16:56:07 by avelandr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-	p = 1;
-	i = 0;
-	while (*s)
-	{
-		if (*s == c)
-			p++;
-		s++;
-	}
-	r = (char **)malloc(sizeof(char *) * p);
-	if (!r)
-		return (NULL);
-	while (i < p)
-	{
-		while (*s != c)
-		{
-			*r[i] = *s;
-			s++;
-			r[i]++;
-		}
-		*r[i] = 0;
-		i++;
-	}
-	r[i] = NULL;
-	return (r);
-}*/
+#include "../Includes/libft.h"
 
 static int	count(const char *str, char c)
 {
