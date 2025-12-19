@@ -6,18 +6,36 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/12/17 18:25:26 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/06/02 10:55:31 by aalcaide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*static char	*ft_remove_outer_quotes(char *str)
+{
+	size_t	len;
+
+	if (!str)
+		return (NULL);
+	len = ft_strlen(str);
+	if (len >= 2 && ((str[0] == '\'' && str[len - 1] == '\'')
+			|| (str[0] == '"' && str[len - 1] == '"')))
+	{
+		ft_memmove(str, str + 1, len - 2);
+		str[len - 2] = '\0';
+	}
+	return (str);
+}*/
+
 static void	ft_path_error_message(char **argv)
 {
+	//print_msg(NULL, NOT_CMD_MSG, 2);
 	if (!argv || !argv[0])
 		ft_putstr_fd("pipex: command not found\n", 2);
 	else
 	{
+		//print_msg(argv[0], NOT_CMD_MSG, 2);
 		ft_putstr_fd("pipex: ", 2);
 		ft_putstr_fd(argv[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
@@ -55,11 +73,8 @@ int	ft_exec_args(t_values *vals, t_shell *data)
 		return (return_val);
 	env = env_to_array(data->env);
 	execve(cmd_path, vals->args, env);
-	if (env)
-		ft_free_split(env);
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(vals->args[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
+	ft_free_split(env);
+	print_msg(cmd_path, NOT_CMD_MSG, 2);
 	free(cmd_path);
 	return (127);
 }

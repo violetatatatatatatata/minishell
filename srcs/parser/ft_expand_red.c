@@ -23,7 +23,7 @@ void	ft_expand_red(t_list *cmd_list, t_shell *data)
 		token = table->token;
 		while (token)
 		{
-			if (token->type == REDIR)
+			if (token->type == REDIR && token->redir->redir_type != HEREDOC)
 			{
 				ft_expand_token_list(token->redir->redir_content, data);
 				ft_process_token_list(token->redir->redir_content);

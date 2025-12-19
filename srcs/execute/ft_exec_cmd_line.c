@@ -6,86 +6,180 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/12/17 19:50:12 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/11/28 12:47:05 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	ft_init_exec_vars(t_values *vals, t_shell *data, t_list *cmd_list)
+void	debug_fd(int fd) //ELIMINAR PARA LA ENTREGA FINAL
 {
-	vals->val_env = data;
-	vals->fd_prev = -1;
-	vals->index = 0;
-	vals->cmds_size = ft_lstsize(cmd_list);
-	vals->cmd_list = cmd_list;
-}
+	char	buffer[1024];
+	ssize_t	n;
 
-static int	ft_handle_single_builtin(t_values *vals, t_shell *data)
-{
-	t_cmd_table	*table;
-
-	table = (t_cmd_table *)vals->cmd_list->content;
-	if (vals->cmds_size == 1 && ft_is_buitlin(table->token->content))
+	if (fd < 0)
 	{
-		vals->token = table->token;
-		vals->args = table->args;
-		return (ft_exec_builtin(vals, data));
+		printf("fd inválido\n");
+		return ;
 	}
-	return (-1);
+	lseek(fd, 0, SEEK_SET);
+	n = read(fd, buffer, sizeof(buffer) - 1);
+	while (n > 0)
+	{
+		buffer[n] = '\0';
+		printf("%s", buffer);
+		n = read(fd, buffer, sizeof(buffer) - 1);
+	}
+	printf("\n");
 }
 
-static int	ft_finish_execution(t_values *vals)
+static void	ft_child_body(t_values *vals)
 {
-	int	ret_val;
+	int	fd_out;
+	int	return_val;
 
+	free(vals->pids);
+	vals->pids = NULL;
+	ft_close_pipes(vals);
+	if (vals->fd_in != STDIN_FILENO)
+		dup2(vals->fd_in, STDIN_FILENO);
+	fd_out = STDOUT_FILENO;
+	if (vals->exit_val == EXIT_SUCCESS)
+		fd_out = ft_open_outfile(vals->token, &vals->exit_val);
+	if (fd_out > 2)
+	{
+		dup2(fd_out, STDOUT_FILENO);
+		close(fd_out);
+	}
+	else
+		dup2(vals->pipes[vals->index][1], STDOUT_FILENO);
+	close(vals->pipes[vals->index][0]);
+	close(vals->pipes[vals->index][1]);
 	if (vals->fd_in > 2)
 		close(vals->fd_in);
-	if (vals->fd_prev > 2 && vals->fd_prev != vals->fd_in)
-		close(vals->fd_prev);
-	ft_free_pipes(vals, vals->cmds_size - 1);
-	ret_val = ft_wait_children(vals->cmds_size, vals->pids);
-	free(vals->pids);
-	return (ret_val);
+	if (vals->exit_val != EXIT_SUCCESS)
+		ft_free_vals(vals, vals->exit_val, TRUE);
+	return_val = ft_exec_args(vals, vals->val_env);
+	ft_free_vals(vals, return_val, TRUE);
 }
 
-static void	ft_loop_pipeline(t_values *vals)
+static void	ft_last_cmd(t_values *vals)
 {
-	t_cmd_table	*table;
+	int	fd_out;
+	int	return_val;
+	int	tmp_in;
 
-	while (vals->cmd_list)
+	vals->exit_val = 0;
+	tmp_in = ft_open_infile(vals->token, &vals->exit_val, vals->val_env);
+	if (vals->fd_prev == -1)
+		vals->fd_in = tmp_in;
+	else
 	{
-		table = (t_cmd_table *)vals->cmd_list->content;
-		vals->token = table->token;
-		vals->args = table->args;
-		if (!vals->cmd_list->next)
+		if (tmp_in != STDIN_FILENO)
+			vals->fd_in = tmp_in;
+		else
+			vals->fd_in = vals->fd_prev;
+	}
+	vals->pids[vals->index] = fork();
+	if (vals->pids[vals->index] == -1)
+		return (perror("Couldn't create child"),
+			free(vals->pids));
+	if (vals->pids[vals->index] == 0)
+	{
+		free(vals->pids);
+		vals->pids = NULL;
+		ft_close_pipes(vals);
+		dup2(vals->fd_in, STDIN_FILENO);
+		if (vals->fd_in > 0)
+			close(vals->fd_in);
+		if (vals->fd_prev > 2 && vals->fd_prev != vals->fd_in)
+			close(vals->fd_prev);
+		fd_out = STDOUT_FILENO;
+		if (vals->exit_val == EXIT_SUCCESS)
+			fd_out = ft_open_outfile(vals->token, &vals->exit_val);
+		if (fd_out > 2)
 		{
-			ft_last_cmd(vals);
-			break ;
+			dup2(fd_out, STDOUT_FILENO);
+			close(fd_out);
 		}
-		ft_command_loop(vals);
-		vals->index++;
-		vals->cmd_list = vals->cmd_list->next;
+		if (vals->exit_val != EXIT_SUCCESS)
+			ft_free_vals(vals, vals->exit_val, TRUE);
+		return_val = ft_exec_args(vals, vals->val_env);
+		if (vals->exit_val == EXIT_SUCCESS)
+			ft_free_vals(vals, return_val, TRUE);
+		ft_free_vals(vals, vals->exit_val, TRUE);
+	}
+}
+
+static void	ft_command_loop(t_values *vals)
+{
+	int	tmp_in;
+
+	vals->exit_val = 0;
+	tmp_in = ft_open_infile(vals->token, &vals->exit_val, vals->val_env);
+	if (vals->fd_prev == -1)
+		vals->fd_in = tmp_in;
+	else
+	{
+		if (tmp_in != STDIN_FILENO)
+			vals->fd_in = tmp_in;
+		else
+			vals->fd_in = vals->fd_prev;
+	}
+	vals->pids[vals->index] = fork();
+	if (vals->pids[vals->index] == -1)
+		return (perror("Couldn't create child"),
+			free(vals->pids));
+	if (vals->pids[vals->index] == 0)
+		ft_child_body(vals);
+	else
+	{
+		close(vals->pipes[vals->index][1]);
+		if (vals->fd_prev != vals->fd_in && vals->fd_prev > 2)
+			close(vals->fd_prev);
+		vals->fd_prev = vals->pipes[vals->index][0];
 	}
 }
 
 int	ft_exec_cmd_line(t_list *cmd_list, t_shell *data)
 {
+	int			ret_val;
 	t_values	vals;
-	int			builtin_ret;
+	t_cmd_table	*table;
 
-	ft_init_exec_vars(&vals, data, cmd_list);
-	if (ft_set_pipes(&vals) != 0)
-		return (EXIT_FAILURE);
-	builtin_ret = ft_handle_single_builtin(&vals, data);
-	if (builtin_ret != -1)
-		return (builtin_ret);
-	vals.pids = malloc(sizeof(pid_t) * vals.cmds_size);
-	if (!vals.pids)
+	vals.val_env = data;
+	vals.fd_prev = -1;
+	vals.index = 0;
+	vals.cmds_size = ft_lstsize(cmd_list);
+	vals.cmd_list = cmd_list;
+	table = (t_cmd_table *)cmd_list->content;
+	ft_set_pipes(&vals);
+	if (vals.cmds_size == 1 && ft_is_buitlin(table->token->content))
 	{
-		ft_free_pipes(&vals, vals.cmds_size - 1);
-		return (perror("malloc"), EXIT_FAILURE);
+		vals.token = table->token;
+		vals.args = table->args;
+		return (ft_exec_builtin(&vals, data));
 	}
-	ft_loop_pipeline(&vals);
-	return (ft_finish_execution(&vals));
+	vals.pids = malloc(sizeof(pid_t) * vals.cmds_size);
+	while (cmd_list)
+	{
+		table = (t_cmd_table *)cmd_list->content;
+		vals.token = table->token;
+		vals.args = table->args;
+		if (!cmd_list->next)
+		{
+			ft_last_cmd(&vals);
+			break ;
+		}
+		ft_command_loop(&vals);
+		vals.index++;
+		cmd_list = cmd_list->next;
+	}
+	if (vals.fd_in > 2)
+		close(vals.fd_in);
+	if (vals.fd_prev > 2 && vals.fd_prev != vals.fd_in)
+		close(vals.fd_prev);
+	ft_free_pipes(&vals, vals.cmds_size - 1);
+	ret_val = ft_wait_children(vals.cmds_size, vals.pids);
+	return (ret_val);
 }

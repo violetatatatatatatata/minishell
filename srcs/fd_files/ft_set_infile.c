@@ -39,7 +39,8 @@ static int	ft_check_sig_stop(char *line, int *ret_val)
 	return (0);
 }
 
-static void	ft_get_text(const char *limiter, int *fd_write, int *ret_val)
+static void	ft_get_text(const char *limiter, int *fd_write, int *ret_val,
+	t_shell *data)
 {
 	char	*line;
 	size_t	limiter_len;
@@ -47,9 +48,8 @@ static void	ft_get_text(const char *limiter, int *fd_write, int *ret_val)
 	limiter_len = ft_strlen(limiter);
 	while (1)
 	{
-		printf("heredoc> ");
+		ft_putstr_fd("heredoc> ", STDIN_FILENO);
 		line = get_next_line(STDIN_FILENO);
-		printf("LINE: %s\n", line);
 		if (ft_check_sig_stop(line, ret_val))
 			break ;
 		if (!line)
@@ -59,13 +59,14 @@ static void	ft_get_text(const char *limiter, int *fd_write, int *ret_val)
 			free(line);
 			break ;
 		}
+		ft_expand_heredoc(&line, data);
 		ft_putstr_fd(line, *fd_write);
 		free(line);
 	}
 }
 
 int	ft_set_infile(int *fd_write,
-	const char *limiter)
+	const char *limiter, t_shell *data)
 {
 	int	ret_val;
 
@@ -74,7 +75,7 @@ int	ft_set_infile(int *fd_write,
 		perror("Limiter not found");
 	g_status = 0;
 	signals_heredoc();
-	ft_get_text(limiter, fd_write, &ret_val);
+	ft_get_text(limiter, fd_write, &ret_val, data);
 	set_signals_handlers_exec();
 	return (ret_val);
 }
