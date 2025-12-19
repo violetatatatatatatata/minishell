@@ -3,40 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_args.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: avelandr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/02 10:55:27 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/06/02 10:55:31 by aalcaide         ###   ########.fr       */
+/*   Created: 2025/12/19 16:09:25 by avelandr          #+#    #+#             */
+/*   Updated: 2025/12/19 16:12:06 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-/*static char	*ft_remove_outer_quotes(char *str)
-{
-	size_t	len;
-
-	if (!str)
-		return (NULL);
-	len = ft_strlen(str);
-	if (len >= 2 && ((str[0] == '\'' && str[len - 1] == '\'')
-			|| (str[0] == '"' && str[len - 1] == '"')))
-	{
-		ft_memmove(str, str + 1, len - 2);
-		str[len - 2] = '\0';
-	}
-	return (str);
-}*/
+#include <minishell.h>
 
 static void	ft_path_error_message(char **argv)
 {
-	//print_msg(NULL, NOT_CMD_MSG, 2);
 	if (!argv || !argv[0])
-		ft_putstr_fd("pipex: command not found\n", 2);
+		ft_putstr_fd("minishell: command not found\n", 2);
 	else
 	{
-		//print_msg(argv[0], NOT_CMD_MSG, 2);
-		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(argv[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 	}
@@ -44,7 +26,7 @@ static void	ft_path_error_message(char **argv)
 
 static int	ft_prepare_exec(char **args, t_shell *data, char **cmd_path)
 {
-	if (!args)
+	if (!args || !args[0])
 	{
 		ft_path_error_message(args);
 		return (127);
@@ -65,9 +47,7 @@ int	ft_exec_args(t_values *vals, t_shell *data)
 	char	**env;
 
 	if (ft_is_buitlin(vals->args[0]))
-	{
 		return (ft_exec_builtin(vals, data));
-	}
 	return_val = ft_prepare_exec(vals->args, data, &cmd_path);
 	if (return_val > EXIT_SUCCESS)
 		return (return_val);

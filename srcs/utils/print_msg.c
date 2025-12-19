@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 01:15:52 by avelandr          #+#    #+#             */
-/*   Updated: 2025/11/23 01:16:24 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/19 17:40:00 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 int	print_msg(char *function, char *msg, int exit)
 {
-	printf("minishell: ");
+	ft_putstr_fd("minishell: ", 2);
 	if (function)
-		printf("%s: ", function);
-	printf("%s\n", msg);
+	{
+		ft_putstr_fd(function, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
 	return (exit);
 }
