@@ -39,19 +39,20 @@ static int	ft_open_fdin(char *str, int *ret_val)
 	return (fd_in);
 }
 
-static int	ft_handle_heredoc(char *str_lim, int *ret_val)
+static int	ft_handle_heredoc(char *str_lim, int *ret_val, t_shell *data)
 {
 	char	*limiter;
 	int		fd_in;
 
 	fd_in = -1;
 	limiter = ft_strdup(str_lim);
-	*ret_val = ft_here_doc(&fd_in, limiter);
+	*ret_val = ft_here_doc(&fd_in, limiter, data);
 	free(limiter);
 	return (fd_in);
 }
 
-static void	ft_open_infile_type(t_token *token, int *fd_in, int *ret_val)
+static void	ft_open_infile_type(t_token *token, int *fd_in, int *ret_val,
+	t_shell *data)
 {
 	int	result;
 
@@ -62,7 +63,8 @@ static void	ft_open_infile_type(t_token *token, int *fd_in, int *ret_val)
 		if (*fd_in > 2)
 			close(*fd_in);
 		*fd_in
-			= ft_handle_heredoc(token->redir->redir_content->content, ret_val);
+			= ft_handle_heredoc(token->redir->redir_content->content, ret_val,
+				data);
 	}
 	else if (result == 2)
 	{
@@ -72,7 +74,7 @@ static void	ft_open_infile_type(t_token *token, int *fd_in, int *ret_val)
 	}
 }
 
-int	ft_open_infile(t_token *token, int *ret_val)
+int	ft_open_infile(t_token *token, int *ret_val, t_shell *data)
 {
 	int	fd_in;
 
@@ -85,7 +87,9 @@ int	ft_open_infile(t_token *token, int *ret_val)
 			token = token->right_side;
 			continue ;
 		}
-		ft_open_infile_type(token, &fd_in, ret_val);
+		if (token->redir->redir_content->expand_size != 1)
+			return (*ret_val = print_msg(NULL, AMBIGUOUS_RED, 1), -1);
+		ft_open_infile_type(token, &fd_in, ret_val, data);
 		token = token->right_side;
 	}
 	return (fd_in);

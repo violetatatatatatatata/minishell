@@ -23,11 +23,12 @@
 # define NOT_CMD_MSG "command not found"
 # define NOT_INFILE_MSG "no such file or directory"
 # define NOT_PERMISSION_MSG "permission denied"
+# define AMBIGUOUS_RED "ambiguous redirect"
 
 // ERRORES
 # define MANY_ARGS "too many arguments"
 // errores en los builtins
-# define ACCES_MSG			"Search permissions denie for one of the components of path"
+# define ACCES_MSG	"Search permissions denie for one of the components of path"
 # define ENOENT_MSG			"No such file or directory"
 # define ENAMETOOLONG_MSG	"path is too long"
 

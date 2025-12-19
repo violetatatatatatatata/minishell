@@ -36,7 +36,7 @@ void	ft_first_expansion(char ****dolars_ex,
 }
 
 static void	ft_join_first_token(char *prev_content, char **word_split,
-		t_token **token)
+		t_token **token, int expansion_size)
 {
 	char	*tmp_content;
 	char	*cpy_str;
@@ -57,6 +57,7 @@ static void	ft_join_first_token(char *prev_content, char **word_split,
 		free(tmp_content);
 		(*token)->content = cpy_str;
 	}
+	(*token)->expand_size = expansion_size;
 }
 
 static void	ft_add_remaining_tokens(char **word_split, int tokens_count,
@@ -92,8 +93,11 @@ void	ft_word_split(char *env_var, char *prev_content, t_token **token)
 	}
 	tokens_count = ft_double_arr_size(word_split);
 	if (tokens_count == 0)
+	{
+		(*token)->expand_size = tokens_count;
 		return ;
-	ft_join_first_token(prev_content, word_split, token);
+	}
+	ft_join_first_token(prev_content, word_split, token, tokens_count);
 	if (tokens_count > 1)
 		ft_add_remaining_tokens(word_split, tokens_count, token);
 	ft_free_split(word_split);

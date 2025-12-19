@@ -124,6 +124,7 @@ typedef struct s_redir
 {
 	t_token			*redir_content;
 	t_redir_type	redir_type;
+	int				size;
 }	t_redir;
 
 typedef struct s_token
@@ -133,6 +134,7 @@ typedef struct s_token
 	char			*content;
 	t_token_type	type;
 	t_redir			*redir;
+	int				expand_size;
 }	t_token;
 
 typedef struct s_cmd_table
@@ -192,10 +194,10 @@ void	ft_free_double(char **arr);
 void	ft_free_cmd_list(t_cmd_table *table);
 void	ft_free_vals(t_values *vals, int exit_status, int is_exit);
 void	terminator(t_shell *data, int exit_status, int is_exit);
-int		ft_here_doc(int *fd_in,	const char *limiter);
-int		ft_open_infile(t_token *token, int *ret_val);
+int		ft_here_doc(int *fd_in,	const char *limiter, t_shell *data);
+int		ft_open_infile(t_token *token, int *ret_val, t_shell *data);
 int		ft_open_outfile(t_token *token, int *ret_val);
-int		ft_set_infile(int *fd_write, const char *limiter);
+int		ft_set_infile(int *fd_write, const char *limiter, t_shell *data);
 int		ft_exec_args(t_values *vals, t_shell *data);
 void	debug_fd(int fd);
 int		ft_exec_builtin(t_values *data, t_shell *shell);
@@ -258,5 +260,6 @@ void	ft_expand_red(t_list *cmd_list, t_shell *data);
 int		ft_set_pipes(t_values *vals);
 void	ft_free_pipes(t_values *vals, int size);
 void	ft_close_pipes(t_values *vals);
+void	ft_expand_heredoc(char **line, t_shell *data);
 
 #endif

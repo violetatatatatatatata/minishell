@@ -70,7 +70,7 @@ static void	ft_last_cmd(t_values *vals)
 	int	tmp_in;
 
 	vals->exit_val = 0;
-	tmp_in = ft_open_infile(vals->token, &vals->exit_val);
+	tmp_in = ft_open_infile(vals->token, &vals->exit_val, vals->val_env);
 	if (vals->fd_prev == -1)
 		vals->fd_in = tmp_in;
 	else
@@ -116,7 +116,7 @@ static void	ft_command_loop(t_values *vals)
 	int	tmp_in;
 
 	vals->exit_val = 0;
-	tmp_in = ft_open_infile(vals->token, &vals->exit_val);
+	tmp_in = ft_open_infile(vals->token, &vals->exit_val, vals->val_env);
 	if (vals->fd_prev == -1)
 		vals->fd_in = tmp_in;
 	else

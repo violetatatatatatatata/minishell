@@ -22,7 +22,7 @@ static void	ft_restore(int saved_stdin, int saved_stdout)
 
 static int	ft_redirections(t_values *data)
 {
-	data->fd_in = ft_open_infile(data->token, &data->exit_val);
+	data->fd_in = ft_open_infile(data->token, &data->exit_val, data->val_env);
 	if (data->exit_val == EXIT_SUCCESS)
 		data->fd_out = ft_open_outfile(data->token, &data->exit_val);
 	if (data->exit_val == EXIT_FAILURE)
