@@ -53,8 +53,6 @@ static char	*ft_get_env_value(t_expand_data *data, char **name)
 void	ft_insert_env_value(t_expand_data *data,
 	char *env_var, char *prev_str)
 {
-	if (!env_var)
-		return ;
 	if (data->current_quote == DEFAULT)
 		ft_word_split(env_var, prev_str, data->token);
 	else
@@ -67,8 +65,5 @@ void	ft_handle_env_var(t_expand_data *data,
 	char	*env_var;
 
 	env_var = ft_get_env_value(data, name);
-	if (env_var)
-	{
-		ft_insert_env_value(data, env_var, prev_str);
-	}
+	ft_insert_env_value(data, env_var, prev_str);
 }

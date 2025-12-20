@@ -74,21 +74,28 @@ static void	ft_add_remaining_tokens(char **word_split, int tokens_count,
 	}
 }
 
+static void	ft_handle_no_split(char *prev_content, t_token **token)
+{
+	if (prev_content && ft_strlen(prev_content) > 0)
+		(*token)->content = ft_strdup(prev_content);
+	else
+	{
+		(*token)->content = malloc(1);
+		(*token)->content[0] = '\0';
+	}
+}
+
 void	ft_word_split(char *env_var, char *prev_content, t_token **token)
 {
 	char	**word_split;
 	int		tokens_count;
 
-	word_split = ft_split(env_var, ' ');
+	word_split = NULL;
+	if (env_var)
+		word_split = ft_split(env_var, ' ');
 	if (!word_split)
 	{
-		if (prev_content && ft_strlen(prev_content) > 0)
-			(*token)->content = ft_strdup(prev_content);
-		else
-		{
-			(*token)->content = malloc(1);
-			(*token)->content[0] = '\0';
-		}
+		ft_handle_no_split(prev_content, token);
 		return ;
 	}
 	tokens_count = ft_double_arr_size(word_split);

@@ -45,7 +45,6 @@ static int	ft_finish_execution(t_values *vals)
 		close(vals->fd_prev);
 	ft_free_pipes(vals, vals->cmds_size - 1);
 	ret_val = ft_wait_children(vals->cmds_size, vals->pids);
-	free(vals->pids);
 	return (ret_val);
 }
 
