@@ -19,7 +19,8 @@ int	ft_args_count(t_token *token)
 	i = 0;
 	while (token)
 	{
-		i++;
+		if (token->type == WORD)
+			i++;
 		token = token->right_side;
 	}
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: avelandr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 16:09:25 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/19 16:12:06 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/21 19:10:37 by aalcaide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	ft_exec_args(t_values *vals, t_shell *data)
 	int		return_val;
 	char	**env;
 
+	if (!vals->args)
+		return (0);
 	if (ft_is_buitlin(vals->args[0]))
 		return (ft_exec_builtin(vals, data));
 	return_val = ft_prepare_exec(vals->args, data, &cmd_path);

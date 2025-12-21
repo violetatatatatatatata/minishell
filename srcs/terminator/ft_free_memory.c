@@ -29,7 +29,7 @@ void	ft_free_double(char **arr)
 {
 	int	i;
 
-	if (!arr ||!*arr)
+	if (!arr)
 		return ;
 	i = 0;
 	while (arr[i])

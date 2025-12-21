@@ -43,21 +43,16 @@ static char	*ft_check_null_char(char *token)
 static void	fill_cmd_args(t_cmd_table *cmd_table, int size)
 {
 	t_token	*current_token;
-	char	*str;
 	int		i;
 
 	current_token = cmd_table->token;
 	i = 0;
-	while (i < size)
+	while (i < size && current_token)
 	{
-		if (!current_token->content || current_token->type == REDIR)
+		if (current_token->content && current_token->type != REDIR)
 		{
-			current_token = current_token->right_side;
-			size--;
-			continue ;
+			cmd_table->args[i++] = ft_check_null_char(current_token->content);
 		}
-		str = ft_check_null_char(current_token->content);
-		cmd_table->args[i++] = str;
 		current_token = current_token->right_side;
 	}
 	cmd_table->args[i] = NULL;
@@ -72,9 +67,13 @@ static void	ft_set_args(t_list *cmd_tables)
 	{
 		cmd_table = (t_cmd_table *)cmd_tables->content;
 		size = ft_args_count(cmd_table->token);
-		cmd_table->args = malloc(sizeof(char *) * (size + 1));
-		if (cmd_table->args)
-			fill_cmd_args(cmd_table, size);
+		cmd_table->args = NULL;
+		if (size > 0)
+		{
+			cmd_table->args = malloc(sizeof(char *) * (size + 1));
+			if (cmd_table->args)
+				fill_cmd_args(cmd_table, size);
+		}
 		cmd_tables = cmd_tables->next;
 	}
 }

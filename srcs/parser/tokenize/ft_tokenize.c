@@ -32,6 +32,8 @@ char	**ft_tokenize(char *text)
 	int		num_tokens;
 	int		i;
 
+	while (ft_isspace(*text))
+		text++;
 	num_tokens = ft_tokens_count(text);
 	tokens = malloc(sizeof(char *) * (num_tokens + 1));
 	i = 0;
