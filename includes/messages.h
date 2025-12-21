@@ -21,6 +21,7 @@
 # define NOT_CMD_MSG "command not found"
 # define NOT_INFILE_MSG "no such file or directory"
 # define NOT_PERMISSION_MSG "permission denied"
+# define IS_DIRECORY "Is a directory"
 # define AMBIGUOUS_RED "ambiguous redirect"
 
 # define MANY_ARGS "too many arguments"

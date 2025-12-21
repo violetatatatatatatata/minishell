@@ -37,10 +37,7 @@ void	ft_last_cmd(t_values *vals)
 		return ;
 	}
 	if (vals->pids[vals->index] == 0)
-	{
-		printf("PUTO HIJO N: %i\n", getpid());
 		exec_last_child(vals);
-	}
 	else
 	{
 		ft_close_pipes(vals);
