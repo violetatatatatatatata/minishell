@@ -35,27 +35,22 @@ void	ft_first_expansion(char ****dolars_ex,
 	return ;
 }
 
-static void	ft_join_first_token(char *prev_content, char **word_split,
+static void	ft_join_first_token(char *prev_str, char **word_split,
 		t_token **token, int expansion_size)
 {
-	char	*tmp_content;
-	char	*cpy_str;
+	char	*tmp;
 
 	if (!(*token)->content)
 	{
-		tmp_content = ft_strjoin(prev_content, word_split[0]);
-		free((*token)->content);
-		(*token)->content = tmp_content;
+		tmp = ft_strjoin(prev_str, word_split[0]);
+		(*token)->content = tmp;
 	}
 	else
 	{
-		cpy_str = ft_strdup((*token)->content);
+		tmp = ft_strjoin((*token)->content, prev_str);
 		free((*token)->content);
-		tmp_content = ft_strjoin(cpy_str, prev_content);
-		free(cpy_str);
-		cpy_str = ft_strjoin(tmp_content, word_split[0]);
-		free(tmp_content);
-		(*token)->content = cpy_str;
+		(*token)->content = ft_strjoin(tmp, word_split[0]);
+		free(tmp);
 	}
 	(*token)->expand_size = expansion_size;
 }
