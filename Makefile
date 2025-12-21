@@ -15,7 +15,7 @@ NAME = minishell
 CC = cc
 
 # Compiler flags
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 RDFLAG = -lreadline
 
 #Libs

@@ -12,29 +12,32 @@
 
 #include "../../includes/minishell.h"
 
-static void	ft_free_token(t_token *token)
+static void	ft_free_tokens(t_token *token)
 {
 	t_token	*tmp_token;
 
 	while (token)
 	{
-		free(token->content);
+		tmp_token = token->right_side;
+		if (token->content)
+			free(token->content);
 		if (token->type != WORD && token->redir)
 		{
-			ft_free_token(token->redir->redir_content);
+			ft_free_tokens(token->redir->redir_content);
 			free(token->redir);
 		}
-		tmp_token = token;
-		token = token->right_side;
-		free(tmp_token);
+		free(token);
+		token = tmp_token;
 	}
 }
 
 void	ft_free_cmd_list(t_cmd_table *table)
 {
-	t_token	*token;
-
-	token = table->token;
-	ft_free_token(token);
+	if (!table)
+		return ;
+	if (table->token)
+		ft_free_tokens(table->token);
+	if (table->args)
+		ft_free_double(table->args);
 	free(table);
 }

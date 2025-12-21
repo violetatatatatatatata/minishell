@@ -90,9 +90,9 @@ t_list	*ft_build_cmd_table(t_list *tokens)
 	{
 		token = (t_token *)tokens->content;
 		ft_lstadd_back(&cmd_list, ft_add_cmd_table(token));
-		tmp_tokens = tokens;
-		tokens = tokens->next;
-		free(tmp_tokens);
+		tmp_tokens = tokens->next;
+		free(tokens);
+		tokens = tmp_tokens;
 	}
 	ft_set_args(cmd_list);
 	return (cmd_list);

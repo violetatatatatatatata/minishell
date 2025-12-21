@@ -30,6 +30,8 @@ t_token	*ft_build_token(char *str_token)
 	t_token	*token;
 
 	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
 	token->content = str_token;
 	token->left_side = NULL;
 	token->right_side = NULL;

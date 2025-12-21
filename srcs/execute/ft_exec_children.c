@@ -62,6 +62,8 @@ void	ft_child_body(t_values *vals)
 	if (vals->exit_val != EXIT_SUCCESS)
 		ft_free_vals(vals, vals->exit_val, TRUE);
 	return_val = ft_exec_args(vals, vals->val_env);
+	ft_putendl_fd("HE FALLADO PADRE PUTENDL", 2);
+	printf("HE FALLADO PADRE\n");
 	ft_free_vals(vals, return_val, TRUE);
 }
 
@@ -103,7 +105,10 @@ void	ft_command_loop(t_values *vals)
 		return ;
 	}
 	if (vals->pids[vals->index] == 0)
+	{
+		printf("PUTO HIJO N: %i\n", getpid());
 		ft_child_body(vals);
+	}
 	else
 	{
 		close(vals->pipes[vals->index][1]);
