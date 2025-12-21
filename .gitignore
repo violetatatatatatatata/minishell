@@ -57,5 +57,10 @@ dkms.conf
 # visual studio
 *.vscode
 
+#ZED
+.clangd
+
+readline.supp
+
 # Program name
 minishell
