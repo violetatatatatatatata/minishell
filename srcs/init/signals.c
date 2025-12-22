@@ -12,7 +12,6 @@
 
 #include <minishell.h>
 
-// g_status = 130 (128 + 2) deberia ser relevante para las expansiones de $?
 void	sig_interactive(int sign)
 {
 	rl_on_new_line();

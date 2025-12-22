@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 17:01:18 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/18 17:13:22 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/22 13:43:42 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,9 @@ typedef struct s_get_next_line_var
 	char	*str;
 }	t_get_next_line_var;
 
-// Conversions
 int		ft_atoi(const char *n);
 char	*ft_itoa(int n);
 
-// Memory
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nelem, size_t elsize);
 void	*ft_memchr(const void *s, int c, size_t n);
@@ -50,20 +48,17 @@ void	*ft_memcpy(void *dest, const void *src, size_t c);
 void	*ft_memmove(void *dest, const void *src, size_t c);
 void	*ft_memset(void *dest, int c, size_t count);
 
-// Compares
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
 
-// File descriptors
 void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char const *s, int fd);
 void	ft_putnbr_fd(int num, int fd);
 void	ft_putstr_fd(char const *s, int fd);
 
-// Strings
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strdup(char *string);
@@ -80,7 +75,6 @@ char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(char const *s, char c);
 
-// Listas
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstnew(void *content);
 void	ft_lstdelone(t_list *lst, void (*del)(void *));
@@ -89,7 +83,6 @@ t_list	*ft_lstlast(t_list *lst);
 void	ft_lstadd_back(t_list **lst, t_list *new_lst);
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 
-// Get Next Line
 char	*get_next_line(int fd);
 int		ft_read_loop(int fd, char *buffer, char **temp_str);
 char	*ft_extract_line(char *buffer, char **temp_str, char **temp_buffer,
