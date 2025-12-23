@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 static t_token	*ft_add_new_token(t_list **split_tokens, char *token_str)
 {

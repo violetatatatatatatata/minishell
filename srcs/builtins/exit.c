@@ -55,7 +55,7 @@ int	bt_exit(t_shell *data, char **args, t_list *table_lst)
 {
 	int	exit_code;
 
-	ft_putendl_fd("exit", 2);
+	ft_putendl_fd("exit", 1);
 	if (!args[1])
 	{
 		ft_lstclear(&table_lst, free_cmd);

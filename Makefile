@@ -6,7 +6,7 @@
 #    By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/18 20:09:52 by avelandr          #+#    #+#              #
-#    Updated: 2025/12/21 15:04:06 by avelandr         ###   ########.fr        #
+#    Updated: 2025/12/22 16:40:23 by aalcaide         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 CC = cc
 
 # Compiler flags
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 RDFLAG = -lreadline
 
 #Libs

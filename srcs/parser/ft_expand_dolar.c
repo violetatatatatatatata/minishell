@@ -34,7 +34,7 @@ static void	ft_finalize_token_expansion(t_token *token,
 }
 
 static void	ft_process_char(t_process_vars *v, t_expand_data *data,
-	char *content, t_token *token)
+	char *content)
 {
 	if (content[v->i] == '"' || content[v->i] == '\'')
 		v->current_quote = ft_check_quotes(&content[v->i], v->current_quote);
@@ -44,7 +44,6 @@ static void	ft_process_char(t_process_vars *v, t_expand_data *data,
 	{
 		v->is_expanded = 1;
 		data->content = content;
-		data->token = &token;
 		data->index = &v->i;
 		data->sub_start = &v->sub_start;
 		data->current_quote = v->current_quote;
@@ -63,9 +62,10 @@ static void	ft_process_content(char *content, t_token *token, t_shell *dat_env)
 	v.i = 0;
 	data.val = dat_env;
 	data.exit_status = &dat_env->exit_status;
+	data.token = &token;
 	while (content[v.i])
 	{
-		ft_process_char(&v, &data, content, token);
+		ft_process_char(&v, &data, content);
 		v.i++;
 	}
 	ft_finalize_token_expansion(token, content, v.sub_start, v.is_expanded);

@@ -51,20 +51,22 @@ static int	ft_finish_execution(t_values *vals)
 void	ft_loop_pipeline(t_values *vals)
 {
 	t_cmd_table	*table;
+	t_list		*current_cmd_table;
 
+	current_cmd_table = vals->cmd_list;
 	while (vals->cmd_list)
 	{
-		table = (t_cmd_table *)vals->cmd_list->content;
+		table = (t_cmd_table *)current_cmd_table->content;
 		vals->token = table->token;
 		vals->args = table->args;
-		if (!vals->cmd_list->next)
+		if (!current_cmd_table->next)
 		{
 			ft_last_cmd(vals);
 			break ;
 		}
 		ft_command_loop(vals);
 		vals->index++;
-		vals->cmd_list = vals->cmd_list->next;
+		current_cmd_table = current_cmd_table->next;
 	}
 }
 
