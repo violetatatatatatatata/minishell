@@ -6,7 +6,7 @@
 /*   By: avelandr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 16:21:07 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/19 16:27:08 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:16:28 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,27 @@ void	ft_last_cmd(t_values *vals)
 		if (vals->fd_prev > 2 && vals->fd_prev != vals->fd_in)
 			close(vals->fd_prev);
 	}
+}
+
+void	ft_first_expansion(char ****dolars_ex,
+	char **word_split, int tokens_count)
+{
+	int		i;
+	char	***tmp;
+
+	tmp = malloc(sizeof(char **) * (tokens_count + 1));
+	if (!tmp)
+		return ;
+	i = 0;
+	while (i < tokens_count)
+	{
+		tmp[i] = malloc(sizeof(char *) * 2);
+		tmp[i][0] = ft_strdup(word_split[i]);
+		tmp[i][1] = NULL;
+		i++;
+	}
+	tmp[i] = NULL;
+	ft_free_double(word_split);
+	*dolars_ex = tmp;
+	return ;
 }
