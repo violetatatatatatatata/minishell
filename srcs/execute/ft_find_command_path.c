@@ -45,19 +45,16 @@ static char	*find_correct_path(char **paths, char *cmd_name)
 char	*ft_find_command_path(char *cmd, t_shell *data)
 {
 	char	**paths;
-	char	**prefixes;
 	char	*env_path;
 	char	*final_path;
 
-	env_path = ft_getenv("PATH", data->env);
-	if (env_path == NULL)
+	if (ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
+	env_path = ft_getenv("PATH", data->env);
+	if (!env_path)
+		return (NULL);
 	paths = ft_split(env_path, ':');
-	prefixes = ft_split(cmd, ' ');
-	final_path = find_correct_path(paths, prefixes[0]);
+	final_path = find_correct_path(paths, cmd);
 	ft_free_memory(paths);
-	ft_free_memory(prefixes);
-	if (final_path)
-		return (final_path);
-	return (ft_strdup(cmd));
+	return (final_path);
 }

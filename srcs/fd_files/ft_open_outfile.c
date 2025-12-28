@@ -33,7 +33,7 @@ static int	ft_open_output_file(char *filename, int mode, int *ret_val)
 		flags |= O_APPEND;
 	fd_out = open(filename, flags, 0644);
 	if (fd_out < 0)
-		if (access(filename, W_OK) == 0)
+		if (access(filename, W_OK) != 0)
 			*ret_val = print_msg(NOT_PERMISSION_MSG, filename, 1);
 	return (fd_out);
 }
