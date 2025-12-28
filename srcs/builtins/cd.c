@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 19:00:11 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/22 13:56:22 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/28 17:04:13 by aalcaide         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int	bt_cd(char **args, t_values *data)
 	char	*path;
 
 	path = NULL;
-	if (args[2])
+	if (args && args[1] && args[2])
 		return (print_msg("cd", DIR_FAILED, EXIT_FAILURE));
-	if (ft_isspace(args[1][0]) || ft_strncmp(args[1], "~", 2) == 0 || !args ||
-		!args[1] || args[1][0] == '\0' || ft_strncmp(args[1], "--", 3) == 0)
+	if (!args || !args[1] || ft_isspace(args[1][0]) || args[1][0] == '\0'
+		|| !ft_strncmp(args[1], "~", 2) || !ft_strncmp(args[1], "--", 3))
 	{
 		path = ft_getenv("HOME", data->val_env->env);
 		if (!path || *path == '\0' || ft_isspace(*path))
