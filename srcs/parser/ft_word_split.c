@@ -6,34 +6,11 @@
 /*   By: aalcaide <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:35:45 by aalcaide          #+#    #+#             */
-/*   Updated: 2025/09/10 11:35:47 by aalcaide         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:15:42 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	ft_first_expansion(char ****dolars_ex,
-	char **word_split, int tokens_count)
-{
-	int		i;
-	char	***tmp;
-
-	tmp = malloc(sizeof(char **) * (tokens_count + 1));
-	if (!tmp)
-		return ;
-	i = 0;
-	while (i < tokens_count)
-	{
-		tmp[i] = malloc(sizeof(char *) * 2);
-		tmp[i][0] = ft_strdup(word_split[i]);
-		tmp[i][1] = NULL;
-		i++;
-	}
-	tmp[i] = NULL;
-	ft_free_double(word_split);
-	*dolars_ex = tmp;
-	return ;
-}
 
 static void	ft_join_first_token(char *prev_str, char *word_split,
 		t_token **token, int expansion_size)
@@ -80,11 +57,29 @@ static void	ft_handle_no_split(char *prev_content, t_token **token)
 	}
 }
 
+void	no_tokens_count(char *prev_content, char **word_split, char *env_var,
+		t_token **token)
+{
+	char	*tmp;
+	int		tokens_count;
+
+	tokens_count = ft_double_arr_size(word_split);
+	ft_free_split(word_split);
+	(*token)->expand_size = tokens_count;
+	if (env_var[0] == ' ' && (!prev_content || prev_content[0] == '\0'))
+		ft_join_first_token(prev_content, NULL, token, tokens_count);
+	else
+	{
+		tmp = ft_strdup(" ");
+		ft_join_first_token(prev_content, tmp, token, tokens_count);
+		free(tmp);
+	}
+}
+
 void	ft_word_split(char *env_var, char *prev_content, t_token **token)
 {
 	char	**word_split;
 	int		tokens_count;
-	char	*tmp;
 
 	word_split = NULL;
 	if (env_var)
@@ -97,16 +92,7 @@ void	ft_word_split(char *env_var, char *prev_content, t_token **token)
 	tokens_count = ft_double_arr_size(word_split);
 	if (tokens_count == 0)
 	{
-		ft_free_split(word_split);
-		(*token)->expand_size = tokens_count;
-		if (env_var[0] == ' ' && (!prev_content || prev_content[0] == '\0'))
-			ft_join_first_token(prev_content, NULL, token, tokens_count);
-		else
-		{
-			tmp = ft_strdup(" ");
-			ft_join_first_token(prev_content, tmp, token, tokens_count);
-			free(tmp);
-		}
+		no_tokens_count(prev_content, word_split, env_var, token);
 		return ;
 	}
 	ft_join_first_token(prev_content, word_split[0], token, tokens_count);
