@@ -34,8 +34,8 @@ int	ft_exec_args(t_values *vals, t_shell *data)
 	int		return_val;
 	char	**env;
 
-	if (!vals->args)
-		return (0);
+	if (!vals->args || !vals->args[0] || vals->args[0][0] == '\0')
+		return (EXIT_SUCCESS);
 	if (ft_is_buitlin(vals->args[0]))
 		return (ft_exec_builtin(vals, data));
 	return_val = ft_prepare_exec(vals->args, data, &cmd_path);
