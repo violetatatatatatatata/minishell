@@ -6,111 +6,114 @@
 #    By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/18 20:09:52 by avelandr          #+#    #+#              #
-#    Updated: 2025/12/22 16:40:23 by aalcaide         ###   ########.fr        #
+#    Updated: 2025/12/29 12:29:25 by avelandr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Executable name
-NAME = minishell
-CC = cc
+RESET	= \033[0m
+VIOLET	= \033[38;2;185;39;233m
+PINK	= \033[38;2;233;39;197m
+BLUE	= \033[38;2;132;0;255m
+RED		= \033[38;2;255;0;140m
 
-# Compiler flags
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
-RDFLAG = -lreadline
+NAME        = minishell
+CC          = cc
+CFLAGS      = -Wall -Werror -Wextra -g #-fsanitize=address
+RDFLAG      = -lreadline
 
-#Libs
-LIBFT_DIR = libft
+LIBFT_DIR   = libft
+SRC_DIR     = srcs
+OBJ_DIR     = objs
+LIB_DIR     = libs
+INC_DIR     = ./includes/
+DEPS_DIR    = deps
 
-# Directories
-SRC_DIR		= srcs
-OBJ_DIR		= objs
-LIB_DIR		= libs
-INC_DIR		= ./includes/
-DEPS_DIR	= deps
+CLIB        = .a
+LIBFT       = $(LIB_DIR)/$(LIBFT_DIR)$(CLIB)
 
-# Source files
 SRC_FILES = \
-	srcs/main.c \
-	srcs/builtins/cd.c \
-	srcs/builtins/echo.c \
-	srcs/builtins/env.c \
-	srcs/builtins/exit.c \
-	srcs/builtins/export.c \
-	srcs/builtins/pwd.c \
-	srcs/builtins/unset.c \
-	srcs/env/env_setandget.c \
-	srcs/env/env_to_array.c \
-	srcs/env/env_utils.c \
-	srcs/env/init_env.c \
-	srcs/execute/ft_close_pipes.c \
-	srcs/execute/ft_exec_args.c \
-	srcs/execute/ft_exec_builtin.c \
-	srcs/execute/ft_exec_cmd_line.c \
-	srcs/execute/ft_exec_children.c \
-	srcs/execute/ft_find_command_path.c \
-	srcs/execute/ft_free_pipes.c \
-	srcs/execute/ft_set_pipes.c \
-	srcs/execute/ft_wait_children.c \
-	srcs/execute/ft_wait_fork.c \
-	srcs/fd_files/ft_here_doc.c \
-	srcs/fd_files/ft_open_infile.c \
-	srcs/fd_files/ft_open_outfile.c \
-	srcs/fd_files/ft_expand_heredoc.c \
-	srcs/fd_files/ft_set_infile.c \
-	srcs/init/minishell.c \
-	srcs/init/shell_loop.c \
-	srcs/init/signals.c \
-	srcs/init/signals_heredoc.c \
-	srcs/lexer/ft_lexer.c \
-	srcs/parser/ft_add_tokentolist.c \
-	srcs/parser/ft_build_cmd_table.c \
-	srcs/parser/ft_build_token.c \
-	srcs/parser/ft_check_quotes.c \
-	srcs/parser/ft_expand_dolar.c \
-	srcs/parser/ft_expand_red.c \
-	srcs/parser/ft_expansion.c \
-	srcs/parser/ft_handle_env_var.c \
-	srcs/parser/ft_insert_exit_value.c \
-	srcs/parser/ft_parse.c \
-	srcs/parser/ft_remove_quotes.c \
-	srcs/parser/ft_split_tokens.c \
-	srcs/parser/ft_word_split.c \
-	srcs/parser/tokenize/ft_get_token.c \
-	srcs/parser/tokenize/ft_tokenize.c \
-	srcs/parser/tokenize/ft_tokens_count.c \
-	srcs/terminator/ft_free_cmd_list.c \
-	srcs/terminator/ft_free_memory.c \
-	srcs/terminator/ft_free_split.c \
-	srcs/terminator/terminator.c \
-	srcs/utils/export_utils.c \
-	srcs/utils/ft_double_arr_size.c \
-	srcs/utils/is_definition/ft_is_builtin.c \
-	srcs/utils/is_definition/ft_is_pipe.c \
-	srcs/utils/is_definition/ft_is_redirection.c \
-	srcs/utils/is_definition/ft_isblank.c \
-	srcs/utils/is_definition/ft_ismeta.c \
-	srcs/utils/is_definition/ft_isspace.c \
-	srcs/utils/is_definition/is_controlop.c \
-	srcs/utils/is_definition/is_filename.c \
-	srcs/utils/is_definition/is_redop.c \
-	srcs/utils/is_definition/is_token.c \
-	srcs/utils/is_definition/is_word.c \
-	srcs/utils/print_msg.c \
-	srcs/utils/prompt.c \
-	srcs/utils/utils.c
+    srcs/main.c \
+    srcs/builtins/cd.c \
+    srcs/builtins/echo.c \
+    srcs/builtins/env.c \
+    srcs/builtins/exit.c \
+    srcs/builtins/export.c \
+    srcs/builtins/pwd.c \
+    srcs/builtins/unset.c \
+    srcs/env/env_setandget.c \
+    srcs/env/env_to_array.c \
+    srcs/env/env_utils.c \
+    srcs/env/init_env.c \
+    srcs/execute/ft_close_pipes.c \
+    srcs/execute/ft_exec_args.c \
+    srcs/execute/ft_exec_builtin.c \
+    srcs/execute/ft_exec_cmd_line.c \
+    srcs/execute/ft_exec_children.c \
+    srcs/execute/ft_find_command_path.c \
+    srcs/execute/ft_free_pipes.c \
+    srcs/execute/ft_set_pipes.c \
+    srcs/execute/ft_wait_children.c \
+    srcs/execute/ft_wait_fork.c \
+    srcs/fd_files/ft_here_doc.c \
+    srcs/fd_files/ft_open_infile.c \
+    srcs/fd_files/ft_open_outfile.c \
+    srcs/fd_files/ft_expand_heredoc.c \
+    srcs/fd_files/ft_set_infile.c \
+    srcs/init/minishell.c \
+    srcs/init/shell_loop.c \
+    srcs/init/signals.c \
+    srcs/init/signals_heredoc.c \
+    srcs/lexer/ft_lexer.c \
+    srcs/parser/ft_add_tokentolist.c \
+    srcs/parser/ft_build_cmd_table.c \
+    srcs/parser/ft_build_token.c \
+    srcs/parser/ft_check_quotes.c \
+    srcs/parser/ft_expand_dolar.c \
+    srcs/parser/ft_expand_red.c \
+    srcs/parser/ft_expansion.c \
+    srcs/parser/ft_handle_env_var.c \
+    srcs/parser/ft_insert_exit_value.c \
+    srcs/parser/ft_parse.c \
+    srcs/parser/ft_remove_quotes.c \
+    srcs/parser/ft_split_tokens.c \
+    srcs/parser/ft_word_split.c \
+    srcs/parser/tokenize/ft_get_token.c \
+    srcs/parser/tokenize/ft_tokenize.c \
+    srcs/parser/tokenize/ft_tokens_count.c \
+    srcs/terminator/ft_free_cmd_list.c \
+    srcs/terminator/ft_free_memory.c \
+    srcs/terminator/ft_free_split.c \
+    srcs/terminator/terminator.c \
+    srcs/utils/export_utils.c \
+    srcs/utils/ft_double_arr_size.c \
+    srcs/utils/is_definition/ft_is_builtin.c \
+    srcs/utils/is_definition/ft_is_pipe.c \
+    srcs/utils/is_definition/ft_is_redirection.c \
+    srcs/utils/is_definition/ft_isblank.c \
+    srcs/utils/is_definition/ft_ismeta.c \
+    srcs/utils/is_definition/ft_isspace.c \
+    srcs/utils/is_definition/is_controlop.c \
+    srcs/utils/is_definition/is_filename.c \
+    srcs/utils/is_definition/is_redop.c \
+    srcs/utils/is_definition/is_token.c \
+    srcs/utils/is_definition/is_word.c \
+    srcs/utils/print_msg.c \
+    srcs/utils/prompt.c \
+    srcs/utils/utils.c
+
 OBJ_FILES = $(SRC_FILES:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEP_FILES = $(SRC_FILES:$(SRC_DIR)/%.c=$(DEPS_DIR)/%.d)
-CLIB = .a
 
-# Rules
+TOTAL_SRCS := $(words $(SRC_FILES))
+
 all: $(NAME)
-	echo "Minishell done."
 
-$(NAME): $(OBJ_FILES) $(LIB_DIR)/$(LIBFT_DIR)$(CLIB)
-	$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft $(RDFLAG)
+$(NAME): $(OBJ_FILES) $(LIBFT)
+	@$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft $(RDFLAG)
+	@echo "$(PINK)✨ Minishell compiled successfully! ✨$(RESET)"
 
-$(LIB_DIR)/$(LIBFT_DIR)$(CLIB):
-	@make -C $(LIBFT_DIR)
+$(LIBFT):
+	@make -C $(LIBFT_DIR) --no-print-directory
 	@mkdir -p $(LIB_DIR)
 	@cp -a $(LIBFT_DIR)/$(LIBFT_DIR)$(CLIB) $(LIB_DIR)/
 
@@ -118,29 +121,44 @@ $(INC_DIR):
 	@mkdir -p $(INC_DIR)
 	@cp -a $(LIBFT_DIR)/$(INC_DIR)/*.h $(INC_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c libs/libft.a Makefile
 	@mkdir -p $(dir $@)
 	@mkdir -p $(dir $(DEPS_DIR)/$*.d)
-	$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(DEPS_DIR)/$*.d -I $(INC_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(DEPS_DIR)/$*.d -I $(INC_DIR)
+	@curr=$$(find $(OBJ_DIR) -name "*.o" | wc -l); \
+	percent=$$(( $$curr * 100 / $(TOTAL_SRCS) )); \
+	bar_len=$$(( $$percent / 2 )); \
+	bar_str=""; \
+	i=0; \
+	while [ $$i -lt $$bar_len ]; do bar_str="$${bar_str}▓"; i=$$((i+1)); done; \
+	spaces=""; \
+	i=0; \
+	rest=$$((50 - $$bar_len)); \
+	while [ $$i -lt $$rest ]; do spaces="$${spaces}░"; i=$$((i+1)); done; \
+	printf "\r$(BLUE)Compiling Minishell: $(VIOLET)[$$bar_str$$spaces] $(PINK)$$percent%% $(RESET)"; \
+	if [ $$percent -eq 100 ]; then \
+		echo ""; \
+	fi
 
 -include $(DEP_FILES)
 
 norm:
-	norminette $(Includes) $(SRC_DIR)# $(LIBFT_DIR)
+	norminette $(INC_DIR) $(SRC_DIR)
 
 mem:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=readline.supp ./$(NAME)
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@rm -rf $(LIB_DIR)
 	@rm -rf $(DEPS_DIR)
-	@make fclean -C $(LIBFT_DIR)
-	echo "Minishell cleaned."
+	@make clean -C $(LIBFT_DIR) --no-print-directory
+	@echo "$(RED)Minishell cleaned.$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
-	echo "Everything erased."
+	@rm -rf $(LIB_DIR)
+	@make fclean -C $(LIBFT_DIR) --no-print-director
+	@echo "$(RED)Everything erased.$(RESET)"
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/22 13:45:12 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/29 11:13:01 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	bt_export(t_shell *data, char **args)
 	{
 		if (!is_valid_id(args[i]))
 		{
-			return (print_msg("export", "not a valid identifier", 1));
+			print_msg("export", "not a valid identifier", 1);
 			exit_status = EXIT_FAILURE;
 		}
 		handle_export(data, args[i]);
