@@ -6,7 +6,7 @@
 /*   By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 00:58:49 by avelandr          #+#    #+#             */
-/*   Updated: 2025/12/29 11:13:01 by avelandr         ###   ########.fr       */
+/*   Updated: 2025/12/29 13:40:32 by avelandr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int	bt_export(t_shell *data, char **args)
 			print_msg("export", "not a valid identifier", 1);
 			exit_status = EXIT_FAILURE;
 		}
-		handle_export(data, args[i]);
+		else
+			handle_export(data, args[i]);
 		i++;
 	}
 	return (exit_status);

@@ -6,7 +6,7 @@
 #    By: avelandr <avelandr@student.42barcelon      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/18 20:09:52 by avelandr          #+#    #+#              #
-#    Updated: 2025/12/29 12:29:25 by avelandr         ###   ########.fr        #
+#    Updated: 2025/12/29 12:59:20 by avelandr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,6 +109,7 @@ TOTAL_SRCS := $(words $(SRC_FILES))
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIBFT)
+	@echo ""
 	@$(CC) $(CFLAGS) -o $@ $(OBJ_FILES) -I $(INC_DIR) -L $(LIB_DIR) -lft $(RDFLAG)
 	@echo "$(PINK)✨ Minishell compiled successfully! ✨$(RESET)"
 
@@ -135,10 +136,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c libs/libft.a Makefile
 	i=0; \
 	rest=$$((50 - $$bar_len)); \
 	while [ $$i -lt $$rest ]; do spaces="$${spaces}░"; i=$$((i+1)); done; \
-	printf "\r$(BLUE)Compiling Minishell: $(VIOLET)[$$bar_str$$spaces] $(PINK)$$percent%% $(RESET)"; \
-	if [ $$percent -eq 100 ]; then \
-		echo ""; \
-	fi
+	printf "\r$(BLUE)Compiling Minishell: $(VIOLET)[$$bar_str$$spaces] $(PINK)$$percent%% $(RESET)"
 
 -include $(DEP_FILES)
 
