@@ -1,13 +1,17 @@
-<div align=center>
-<h1 align="center">Minishell</h1>
-  <h2 align="center">A basic implementation of a Unix shell created as part of the 42 curriculum. This project reproduces the core functionalities of a shell, including command execution, pipeline management, and redirections.
-</h2>
-    ![til](https://tenor.com/ca/view/soy-concha-entro-aqui-no-gif-24842247)
+<div align="center">
+  <h1>Minishell</h1>
+  <p>
+    A basic implementation of a Unix shell created as part of the 42 curriculum.
+    This project reproduces the core functionalities of a shell, including command execution, pipeline management, and redirections.
+  </p>
+  <img src="https://media.tenor.com/2s3qQ-hL7kEAAAAC/soy-concha-entro-aqui.gif" alt="Minishell GIF" width="400"/>
 </div>
+
 ---
+
 ## Features
 * **Interactive Prompt**: Displays a prompt and waits for user input using the readline library.
-* **Command Execution**: Executes system binaries found in the PATH or via absolute/relative paths.
+* **Command Execution**: Executes system binaries found in the `PATH` or via absolute/relative paths.
 * **Pipelines**: Supports multiple command sequences connected by pipes (`|`).
 * **Redirections**:
   * Input redirection (`<`)
@@ -42,13 +46,13 @@ Once it's compiled, run:
 ./minishell
 ```
 
-<div align=center>
-<h1 align="center">Project Functions</h1>
-<h2>Core Implementation</h2>
-  
+<div align="center">
+  <h1>Project Functions</h1>
+## Core Implementation
+
 ### Builtins
 | Function | File Path | Description |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | **bt_cd** | `srcs/builtins/cd.c` | Changes the current working directory and updates PWD/OLDPWD. |
 | **bt_echo** | `srcs/builtins/echo.c` | Outputs strings to stdout with optional `-n` flag support. |
 | **bt_env** | `srcs/builtins/env.c` | Prints the current environment variables marked as visible. |
@@ -59,7 +63,7 @@ Once it's compiled, run:
 
 ### Environment
 | Function | File Path | Description |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | **init_env** | `srcs/env/init_env.c` | Converts the system `char **env` into a custom linked list. |
 | **ft_getenv** | `srcs/env/env_setandget.c` | Searches and returns the value of a specific key in the env list. |
 | **ft_setenv** | `srcs/env/env_setandget.c` | Updates or creates a new node in the environment list. |
@@ -67,7 +71,7 @@ Once it's compiled, run:
 
 ### Execution
 | Function | File Path | Description |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | **ft_exec_cmd_line**| `srcs/execute/ft_exec_cmd_line.c` | Main execution loop that iterates through the command table. |
 | **ft_exec_builtin** | `srcs/execute/ft_exec_builtin.c` | Dispatches execution to the corresponding internal builtin function. |
 | **ft_find_command_path** | `srcs/execute/ft_find_command_path.c` | Searches the `PATH` variable to find the binary's absolute path. |
@@ -76,7 +80,7 @@ Once it's compiled, run:
 
 ### Parsing & Lexing
 | Function | File Path | Description |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | **ft_lexer** | `srcs/lexer/ft_lexer.c` | Performs initial syntax validation (pipes, quotes, redirections). |
 | **ft_parse** | `srcs/parser/ft_parse.c` | Orchestrates the transformation from raw input to command structures. |
 | **ft_tokenize** | `srcs/parser/tokenize/...` | Breaks the input string into a list of meaningful raw tokens. |
@@ -86,14 +90,14 @@ Once it's compiled, run:
 
 ### File Descriptors & Redirections
 | Function | File Path | Description |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | **ft_here_doc** | `srcs/fd_files/ft_here_doc.c` | Manages the `<<` input redirection until the delimiter is found. |
 | **ft_open_infile** | `srcs/fd_files/ft_open_infile.c` | Opens and validates the input files for a specific command. |
 | **ft_open_outfile** | `srcs/fd_files/ft_open_outfile.c` | Handles `>` and `>>` by opening or creating files. |
 
 ### Lifecycle & Terminator
 | Function | File Path | Description |
-| :-- | :-- | :-- |
+| :--- | :--- | :--- |
 | **minishell** | `srcs/init/minishell.c` | Main initialization function that sets up the environment. |
 | **shell_loop** | `srcs/init/shell_loop.c` | The main interactive loop (Readline -> Lexer -> Parse -> Exec). |
 | **terminator** | `srcs/terminator/terminator.c` | Centralized exit point that ensures no memory leaks on shutdown. |
@@ -101,4 +105,8 @@ Once it's compiled, run:
 
 </div>
 
-<img align=center src="https://github.com/violetatatatatatatata/minishell/blob/main/image.png">
+<div align="center">
+  <img src="https://github.com/violetatatatatatatata/minishell/raw/main/image.png" alt="Minishell Preview" width="100%">
+</div>
+
+<div align="center"> <img src="https://www.google.com/search?q=https://github.com/violetatatatatatatata/minishell/raw/main/image.png" alt="Minishell Preview" width="100%"> </div>
