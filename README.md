@@ -45,7 +45,7 @@ Once it's compiled, run:
 ./minishell
 ```
 
-![til](https://c.tenor.com/LjUbpboqU5MAAAAC/tenor.gif)
+![til](https://c.tenor.com/RwfbgWd1G_AAAAAd/tenor.gif)
 
 <div align="center">
   <h1>Project Functions</h1>
