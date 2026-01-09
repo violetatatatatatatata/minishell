@@ -4,7 +4,7 @@
     A basic implementation of a Unix shell created as part of the 42 curriculum.
     This project reproduces the core functionalities of a shell, including command execution, pipeline management, and redirections.
   </p>
-  <img src="https://media.tenor.com/2s3qQ-hL7kEAAAAC/soy-concha-entro-aqui.gif" alt="Minishell GIF" width="400"/>
+  <img src="https://c.tenor.com/RwfbgWd1G_AAAAAd/tenor.gif" alt="Minishell GIF" width="400"/>
 </div>
 
 ---
