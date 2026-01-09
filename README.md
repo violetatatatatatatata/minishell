@@ -2,8 +2,8 @@
 <h1 align="center">Minishell</h1>
   <h2 align="center">A basic implementation of a Unix shell created as part of the 42 curriculum. This project reproduces the core functionalities of a shell, including command execution, pipeline management, and redirections.
 </h2>
-
-  ![til](https://tenor.com/bQoLz.gif)
+    ![til](https://tenor.com/ca/view/soy-concha-entro-aqui-no-gif-24842247)
+</div>
 ---
 ## Features
 * **Interactive Prompt**: Displays a prompt and waits for user input using the readline library.
@@ -45,6 +45,7 @@ Once it's compiled, run:
 <div align=center>
 <h1 align="center">Project Functions</h1>
 <h2>Core Implementation</h2>
+  
 ### Builtins
 | Function | File Path | Description |
 | :-- | :-- | :-- |
