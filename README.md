@@ -5,6 +5,7 @@
     This project reproduces the core functionalities of a shell, including command execution, pipeline management, and redirections.
   </p>
 </div>
+<div class="tenor-gif-embed" data-postid="24842247" data-share-method="host" data-aspect-ratio="1.3278" data-width="100%"><a href="https://tenor.com/view/soy-concha-entro-aqui-no-gif-24842247">Soy Concha GIF</a>from <a href="https://tenor.com/search/soy-gifs">Soy GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 
 ---
 
@@ -44,9 +45,6 @@ Once it's compiled, run:
 ```bash
 ./minishell
 ```
-
-![til](https://c.tenor.com/RwfbgWd1G_AAAAAd/tenor.gif)
-En honor a Joan y Alba
 
 <div align="center">
   <h1>Project Functions</h1>
