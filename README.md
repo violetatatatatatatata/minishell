@@ -45,9 +45,7 @@ Once it's compiled, run:
 ./minishell
 ```
 
-<div align="center">
-  <img src="https://media.tenor.com/2s3qQ-hL7kEAAAAC/soy-concha-entro-aqui.gif" alt="Soy Concha GIF" width="100%"/>
-</div>
+![til](https://c.tenor.com/LjUbpboqU5MAAAAC/tenor.gif)
 
 <div align="center">
   <h1>Project Functions</h1>
