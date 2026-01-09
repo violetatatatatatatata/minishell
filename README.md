@@ -48,7 +48,7 @@ Once it's compiled, run:
 
 <div align="center">
   <h1>Project Functions</h1>
-## Core Implementation
+Core Implementation
 
 ### Builtins
 | Function | File Path | Description |
@@ -108,5 +108,3 @@ Once it's compiled, run:
 <div align="center">
   <img src="https://github.com/violetatatatatatatata/minishell/raw/main/image.png" alt="Minishell Preview" width="100%">
 </div>
-
-<div align="center"> <img src="https://www.google.com/search?q=https://github.com/violetatatatatatatata/minishell/raw/main/image.png" alt="Minishell Preview" width="100%"> </div>
