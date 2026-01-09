@@ -4,8 +4,8 @@
     A basic implementation of a Unix shell created as part of the 42 curriculum.
     This project reproduces the core functionalities of a shell, including command execution, pipeline management, and redirections.
   </p>
+  <img src="https://media.tenor.com/2s3qQ-hL7kEAAAAC/soy-concha-entro-aqui.gif" alt="Soy Concha GIF" width="100%"/>
 </div>
-<div class="tenor-gif-embed" data-postid="24842247" data-share-method="host" data-aspect-ratio="1.3278" data-width="100%"><a href="https://tenor.com/view/soy-concha-entro-aqui-no-gif-24842247">Soy Concha GIF</a>from <a href="https://tenor.com/search/soy-gifs">Soy GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 
 ---
 
